@@ -1,5 +1,6 @@
 <html>
-<body bgcolor="#E6E6FA">
+<body bgcolor="#00FFFF">
+
 <h1>Ontology based Testcase Generation</h1>
 
 
