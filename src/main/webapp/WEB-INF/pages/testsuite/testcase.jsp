@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Test Suite</title>
+<title>test case</title>
 </head>
 <body>
-<jsp:include page="..//header.jsp" />
-Collection of Test cases
+
 </body>
 </html>

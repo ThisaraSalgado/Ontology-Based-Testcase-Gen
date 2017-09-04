@@ -20,7 +20,7 @@
 		
 		<ul class="nav navbar-nav">
 		<li class="active"><a href="#">User Story</a></li>
-		<li><a href="#">Test Suite</a></li>
+		<li><a href="testhome.jsp">Test Suite</a></li>
 		</ul>
 	</div>
 </nav>
