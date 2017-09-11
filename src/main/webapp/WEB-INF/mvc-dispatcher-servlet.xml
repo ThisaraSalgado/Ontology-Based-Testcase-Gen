@@ -51,6 +51,7 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>com.finalyrSE.model.Fulluserstory</value>
+				<value>com.finalyrSE.model.User</value>
 			</list>
 		</property>
 		

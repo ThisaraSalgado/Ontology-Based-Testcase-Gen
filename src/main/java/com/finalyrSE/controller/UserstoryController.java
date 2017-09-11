@@ -22,14 +22,14 @@ public class UserstoryController {
 	@Autowired
 	UserstoryService userstoryService;
 	
-	@RequestMapping(value="/", method=RequestMethod.GET)
+	/*@RequestMapping(value="/", method=RequestMethod.GET)
 	public String sayHello(ModelMap model,Map<String,Object> map){
 		//model.addAttribute("message", "ONTOLOGY BASED TEST CASE GENERATION");
 		System.out.println("yes");
 		map.put("fulluserstory", new Fulluserstory());
 		map.put("storyList", userstoryService.getAll());
 		return "index";
-	}
+	}*/
 	
 	@RequestMapping(value="/createnewstory",method=RequestMethod.POST)
 	public String createNewStory(Map<String,Object> map,@ModelAttribute("fulluserstory") Fulluserstory fulluserstory,@RequestParam String actionButton,HttpServletRequest request){
