@@ -35,6 +35,15 @@ button {
     width: 100%;
 }
 
+.msgError{
+
+    color:red;
+    font-family: "Verdana", Times, serif;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
 button:hover {
     opacity: 0.8;
 }
@@ -95,8 +104,9 @@ span.psw {
     <!-- <button type="submit">Login</button> -->
     <input type="submit"  value="Login"/>
     <input type="checkbox" checked="checked"> Remember me
+    
+  <div class="msgError">${message}</div>
   
-
   <div class="container" style="background-color:#f1f1f1">
     <button type="button" class="cancelbtn">Cancel</button>
     <span class="psw">Forgot <a href="#">password?</a></span>
