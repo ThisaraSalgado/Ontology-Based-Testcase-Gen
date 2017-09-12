@@ -14,4 +14,22 @@
 
 Test case view
 </body>
+<h3>Generated Test Case</h3>
+
+	<c:url var="action" value="#"></c:url>
+	
+	<form:form method="post" action="${action}" modelAttribute="fulluserstory">
+	<div>
+	
+	</div>
+	<br></br>
+	
+	<div>	
+			<input type="submit" class="btn-lg btn-primary" value="Save"/>
+		
+			<input type="submit" class="btn-lg btn-primary" value="Save and Generate"/>
+		
+		</div>
+	
+	</form:form>
 </html>
