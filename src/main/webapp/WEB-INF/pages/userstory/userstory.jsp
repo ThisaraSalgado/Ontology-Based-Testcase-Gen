@@ -38,7 +38,7 @@
 		</table>
 		</c:if>
 		<div>		
-			<input id="editButton" class="btn-lg btn-primary pull-right" type="submit"  value="Edit"></input>
+			<input id="editButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Edit"></input>
 			<input id="deleteButton" class="btn-lg btn-primary pull-right" type="submit"  value="Delete"></input>
 		</div>
 		
