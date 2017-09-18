@@ -1,9 +1,11 @@
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <html>
 <head>
@@ -81,7 +83,7 @@ button {
 <jsp:include page="..//header.jsp" />
 
 	<c:url var="action" value="/addnewstory"></c:url>
-	
+
 	<form:form method="post" action="${action}" modelAttribute="fulluserstory">
 	<div>
 	
@@ -134,17 +136,15 @@ button {
 			<form:label path="duedate">Due date</form:label>
 			<form:input type="date" name="duedate"  path="duedate"/>
 		</div>
-		
-	</div>
-	<br></br>
-	
-	<div>	
-			<input type="submit" class="btn-lg btn-primary" value="Save"/>
-		
-			<input type="submit" class="btn-lg btn-primary" value="Save and Generate"/>
-		
+    
 		</div>
-	
+		<br></br>
+
+		<div>
+			<input type="submit" class="btn-lg btn-primary" name="actionButton" value="Save" /> 
+			<input type="submit" class="btn-lg btn-primary" name="actionButton" value="Save and Generate" />
+		</div>
+
 	</form:form>
 
 </body>
