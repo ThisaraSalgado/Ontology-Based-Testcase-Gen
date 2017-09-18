@@ -12,10 +12,4 @@
 <%-- <spring:url value="/" var="urlHome" />
 <spring:url value="/users/add" var="urlAddUser" /> --%>
 
-<nav class="navbar navbar-inverse ">
-	<div class="container">
-		<div class="navbar-header">
-			<a class="navbar-brand" href="${urlHome}">ONTOLOGY BASED TEST CASE GENERATION</a>
-		</div>
-	</div>
-</nav>
+<jsp:include page="navbar.jsp" />
