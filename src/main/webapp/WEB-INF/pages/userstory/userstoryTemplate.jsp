@@ -66,14 +66,6 @@ button {
   margin-left: .5em;
 }
 
-.styleheading{
-    font-weight: bold;
-    font-style: italic;
-    border-bottom: 2px solid #ddd;
-    margin-bottom: 20px;
-    font-size: 15px;
-    padding-bottom: 3px;
-    }
 </style>
 <title>User Story Template</title>
 </head>
@@ -82,10 +74,10 @@ button {
 
 	<c:url var="action" value="/addnewstory"></c:url>
 	
-	<form:form method="post" action="${action}" modelAttribute="fulluserstory">
+	<form:form method="post" action="${action}" align="center" modelAttribute="fulluserstory">
 	<div>
 	
-		<div class=".styleheading">User Story Form</div>
+		<h2 align="center">User Story Form</h2>
 		<div>
 			<form:label  path="userstoryname">User Story Name </form:label>
 			<form:textarea path="userstoryname"/>
