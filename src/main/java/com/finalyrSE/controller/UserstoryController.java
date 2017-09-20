@@ -1,5 +1,8 @@
 package com.finalyrSE.controller;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finalyrSE.model.Fulluserstory;
+import com.finalyrSE.service.EntityExtractionService;
 import com.finalyrSE.service.UserstoryService;
 
 @Controller
@@ -22,14 +26,17 @@ public class UserstoryController {
 	@Autowired
 	UserstoryService userstoryService;
 	
-	@RequestMapping(value="/", method=RequestMethod.GET)
+	@Autowired
+	EntityExtractionService entityextractor;
+	
+	/*@RequestMapping(value="/", method=RequestMethod.GET)
 	public String sayHello(ModelMap model,Map<String,Object> map){
 		//model.addAttribute("message", "ONTOLOGY BASED TEST CASE GENERATION");
 		System.out.println("yes");
 		map.put("fulluserstory", new Fulluserstory());
 		map.put("storyList", userstoryService.getAll());
 		return "index";
-	}
+	}*/
 	
 	@RequestMapping(value="/createnewstory",method=RequestMethod.POST)
 	public String createNewStory(Map<String,Object> map,@ModelAttribute("fulluserstory") Fulluserstory fulluserstory,@RequestParam String actionButton,HttpServletRequest request){
@@ -39,13 +46,27 @@ public class UserstoryController {
 	}
 	
 	@RequestMapping(value="/addnewstory",method=RequestMethod.POST)
-	public String addNewStory(Fulluserstory fulluserstory,Map<String,Object> map){
+	public String addNewStory(Fulluserstory fulluserstory,Map<String,Object> map,@RequestParam String actionButton) throws IOException{
 		System.out.println("in addNewStory");
-		map.put("userstoryname",fulluserstory.getUserstoryname());
-		map.put("status",fulluserstory.getStatus());
-		userstoryService.create(fulluserstory);
-		map.put("storyList", userstoryService.getAll());
-		return "index"; 
+		if(actionButton.equals("Save")){
+			map.put("userstoryname",fulluserstory.getUserstoryname());
+			map.put("status",fulluserstory.getStatus());
+			userstoryService.create(fulluserstory);
+			map.put("storyList", userstoryService.getAll());
+			return "index";
+		}
+		else if(actionButton.equals("Save and Generate")){
+			System.out.println("in Save and Generate");
+			map.put("userstoryname",fulluserstory.getUserstoryname());
+			map.put("status",fulluserstory.getStatus());
+			userstoryService.create(fulluserstory);
+			ArrayList<String> entitylist=entityextractor.entityEx();
+			System.out.println("Entity List = "+entitylist);
+			//have to call jena here with these entities given as itsparameters//
+			map.put("storyList", userstoryService.getAll());
+			return "index";
+		}
+		 return "index";
 	}
 	
 
@@ -60,8 +81,9 @@ public class UserstoryController {
 	}
 	
 	@RequestMapping(value="/viewuserstory/editdeletestory/{userstoryId}",method=RequestMethod.GET)
-	public String editstory(@PathVariable("userstoryId") int userstoryId, Map<String,Object> map){
+	public String editstory(@PathVariable("userstoryId") int userstoryId, Map<String,Object> map,@RequestParam String actionButton){
 		System.out.println("in edit");
+		System.out.println(actionButton);
 		System.out.println("edit num"+userstoryId);
 		Fulluserstory full=userstoryService.find(userstoryId);
 		map.put("fulluserstory", full);

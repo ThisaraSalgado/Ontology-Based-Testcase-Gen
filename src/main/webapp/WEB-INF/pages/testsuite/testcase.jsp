@@ -11,6 +11,7 @@
 </head>
 <body>
 <jsp:include page="..//header.jsp" />
+
 Test case view
 </body>
 <h3>Generated Test Case</h3>
