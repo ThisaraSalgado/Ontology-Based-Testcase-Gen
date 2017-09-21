@@ -27,8 +27,8 @@ import edu.stanford.nlp.util.CoreMap;
 public class EntityExtractionServiceImpl implements EntityExtractionService{
 
 	@Override
-	public ArrayList<String> entityEx() throws IOException {
-		String text="As a User Admin, I need to be able to add a new user group to the system, so that I can add users to that group and manage them easily.";
+	public ArrayList<String> entityEx(String text) throws IOException {
+		//String text="As a User Admin, I need to be able to add a new user group to the system, so that I can add users to that group and manage them easily.";
 		PrintWriter out;
 		out=new PrintWriter(System.out);
 		
@@ -39,11 +39,11 @@ public class EntityExtractionServiceImpl implements EntityExtractionService{
 		Annotation document=new Annotation(text); //creates an empty annotation with the given text string//
 		pipeline.annotate(document); //run all annotations in this text//
 		
-		pipeline.prettyPrint(document, out);
+		//pipeline.prettyPrint(document, out);
 		
 		//sentences//
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
-		System.out.println("sentences are: " + sentences);
+		//System.out.println("sentences are: " + sentences);
 		
 		ArrayList<String> array = new ArrayList<String>();
 		

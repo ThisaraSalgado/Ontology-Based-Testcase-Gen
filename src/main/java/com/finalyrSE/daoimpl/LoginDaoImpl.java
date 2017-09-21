@@ -22,7 +22,7 @@ public class LoginDaoImpl implements LoginDao{
 
 	@Override
 	public boolean Checklogin(String username, String password) {
-		System.out.println("in loginDaoImpl");
+		//System.out.println("in loginDaoImpl");
 		Session session = sessionFactory.openSession();
 		boolean userFound = false;
 		//Query using Hibernate Query Language

@@ -5,6 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public interface EntityExtractionService {
-	public ArrayList<String> entityEx() throws FileNotFoundException, IOException;
+	public ArrayList<String> entityEx(String text) throws FileNotFoundException, IOException;
 
 }

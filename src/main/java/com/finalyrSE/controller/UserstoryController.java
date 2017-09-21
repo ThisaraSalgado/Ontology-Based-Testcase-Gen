@@ -60,11 +60,15 @@ public class UserstoryController {
 			map.put("userstoryname",fulluserstory.getUserstoryname());
 			map.put("status",fulluserstory.getStatus());
 			userstoryService.create(fulluserstory);
-			ArrayList<String> entitylist=entityextractor.entityEx();
+			String userstorytext=fulluserstory.getUserstoryname();
+			String text=userstorytext.substring(0,userstorytext.indexOf("so that"));
+			//System.out.println(text);
+			ArrayList<String> entitylist=entityextractor.entityEx(text);
 			System.out.println("Entity List = "+entitylist);
 			//have to call jena here with these entities given as itsparameters//
 			map.put("storyList", userstoryService.getAll());
-			return "index";
+			map.put("entity", entitylist);
+			return "userstory/entities";
 		}
 		 return "index";
 	}

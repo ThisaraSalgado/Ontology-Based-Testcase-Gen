@@ -50,7 +50,7 @@ public class UserstoryDaoImpl implements UserstoryDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Fulluserstory> getAll() {
-		System.out.println("get all called");
+		//System.out.println("get all called");
 		return currentSession().createCriteria(Fulluserstory.class).list();
 		
 		
