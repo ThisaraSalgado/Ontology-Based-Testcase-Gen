@@ -96,12 +96,12 @@
 
 		<!-- apache jena depndncies -->
 <!-- https://mvnrepository.com/artifact/org.apache.jena/apache-jena-libs -->
-		<dependency>
+		<!-- <dependency>
 		    <groupId>org.apache.jena</groupId>
 		    <artifactId>apache-jena-libs</artifactId>
 		    <version>3.4.0</version>
 		    <type>pom</type>
-		</dependency>
+		</dependency> -->
 
 		
 		<!-- hibernate depndncies -->
