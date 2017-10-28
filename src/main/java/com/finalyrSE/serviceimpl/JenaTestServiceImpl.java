@@ -15,13 +15,15 @@ import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.util.FileManager;
+import org.springframework.stereotype.Service;
 import org.apache.jena.rdf.model.Resource;
 import com.finalyrSE.service.JenaTestService;
 
+@Service("jenatest")
 public class JenaTestServiceImpl implements JenaTestService {
 	
 	@Override
-	public void testJena(){
+	public String testJena(){
 		String filename = "C://grpManagementNewTest.rdf";
 		
 		// Create an empty model
@@ -58,10 +60,13 @@ public class JenaTestServiceImpl implements JenaTestService {
 			QuerySolution binding = results.nextSolution();
 			Resource subj = (Resource) binding.get("instance_of");
 		    String resultString = subj.getURI();
-		    
+		    String result;
 		    //get result as string without URI prefix, but different approach to get in from the query execution
 		    System.out.println(resultString.substring(resultString.lastIndexOf("#") +1));
+		    result = resultString.substring(resultString.lastIndexOf("#") +1);
+		    
 		}
+		return null;
 	}
 
 }
