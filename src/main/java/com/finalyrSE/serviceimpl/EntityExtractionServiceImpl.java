@@ -32,6 +32,7 @@ public class EntityExtractionServiceImpl implements EntityExtractionService{
 		PrintWriter out;
 		out=new PrintWriter(System.out);
 		
+	//cretaes a stanford object, with POS tagging, lemmatization,NER,parsing and coreference resolution// 	
 		Properties props=new Properties();
 		props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,parse,dcoref");
 		
