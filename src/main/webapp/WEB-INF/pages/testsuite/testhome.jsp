@@ -11,6 +11,14 @@
 </head>
 <body>
 <jsp:include page="..//header.jsp" />
+	<c:url var="action" value="/jenatest"></c:url>
+	<form:form method="get" action="${action}">
+	<div>
+			${result}
+			<input type="submit" class="btn-lg btn-primary" name="actionButton" value="Local Retrieval" /> 
+			<input type="submit" class="btn-lg btn-primary" name="actionButton" value="Hosted Retrieval" />
+	</div>
+	</form:form>
 Collection of Test cases
 </body>
 </html>
