@@ -24,8 +24,8 @@ public class JenaTestServiceImpl implements JenaTestService {
 	
 	@Override
 	public String testJena(){
-		String filename = "C://grpManagementNewTest.rdf";
-		
+		String filename = "C:/Users/ThisaraPC/common1.rdf";
+		System.out.println("file loaded");
 		// Create an empty model
 		Model model = ModelFactory.createDefaultModel();
 				
@@ -43,13 +43,13 @@ public class JenaTestServiceImpl implements JenaTestService {
 				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
 						"PREFIX owl: <http://www.w3.org/2002/07/owl#>"+
 						"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-						"PREFIX : <http://www.semanticweb.org/prabhavi/ontologies/2017/7/untitled-ontology-32#>" +
+						"PREFIX : <http://www.semanticweb.org/prabhavi/ontologies/2017/9/untitled-ontology-53#>" +
 						"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
 						"PREFIX skos: <http://www.w3.org/2004/02/skos/core#>" +
 						"SELECT ?instance_of " +
 						"WHERE {" +
 						" ?instance_of rdf:type ?type."+
-						" ?type owl:NamedIndividual* :Actor."+
+						" ?type owl:NamedIndividual* :Action."+
 						"}";
 		Query query = QueryFactory.create(queryString);
 		QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
@@ -57,6 +57,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 		
 		while (results.hasNext())
 		{
+			System.out.println("in file");
 			QuerySolution binding = results.nextSolution();
 			Resource subj = (Resource) binding.get("instance_of");
 		    String resultString = subj.getURI();

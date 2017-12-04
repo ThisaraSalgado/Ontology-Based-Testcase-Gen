@@ -17,23 +17,25 @@ public class TestcaseController {
 	@Autowired
 	JenaTestService jenatest;
 	
-
+	
 	@RequestMapping(value = "/testhome",method=RequestMethod.GET)
 	public String ViewTestHome() throws IOException{
 		System.out.println("in jena test");
-		/*if(Button.equals("Local Retrieval")){
+		/*if(actionButton.equals("Local Retrieval")){
+			System.out.println("action button called");
 			map.put("result", jenatest.testJena());
 		}*/
 		return "testsuite/testhome";
 	}
-	/*@RequestMapping(value = "/jenatest",method=RequestMethod.GET)
+	@RequestMapping(value = "/jenatest",method=RequestMethod.GET)
 	public String ViewJenaTest(Map<String,Object> map,@RequestParam String actionButton) throws IOException{
 		System.out.println("in jena test loacal");
 		if(actionButton.equals("Local Retrieval")){
+			System.out.println("action button called");
 			map.put("result", jenatest.testJena());
 		}
 		return "testsuite/testhome";
-	}*/
+	}
 	
 	@RequestMapping(value = "/testcase")
 	public String CreateTestCase(){
