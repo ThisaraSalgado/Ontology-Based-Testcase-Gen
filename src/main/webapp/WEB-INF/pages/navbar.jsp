@@ -9,7 +9,7 @@
 			<a class="navbar-brand" href="#">Ontology Based Test Case Generation</a>
 		</div>
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="#">User Story</a></li>
+			<li class="active"><a href="<c:url value='/backtouserstory'/>">User Story</a></li>
 			<li><a href="<c:url value='/testhome'/>">Test Suite</a></li>
 			
 		</ul>

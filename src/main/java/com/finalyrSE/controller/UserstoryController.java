@@ -1,6 +1,5 @@
 package com.finalyrSE.controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,12 +87,23 @@ public class UserstoryController {
 	
 	@RequestMapping(value="/viewuserstory/editdeletestory/{userstoryId}",method=RequestMethod.GET)
 	public String editstory(@PathVariable("userstoryId") int userstoryId, Map<String,Object> map,@RequestParam String actionButton){
-		System.out.println("in edit");
-		System.out.println(actionButton);
-		System.out.println("edit num"+userstoryId);
-		Fulluserstory full=userstoryService.find(userstoryId);
-		map.put("fulluserstory", full);
-		return "userstory/edit";
+		if(actionButton.equals("Edit")){
+			System.out.println("in edit");
+			//System.out.println(actionButton);
+			//System.out.println("edit num "+userstoryId);
+			Fulluserstory full=userstoryService.find(userstoryId);
+			map.put("fulluserstory", full);
+			return "userstory/edit";
+		}
+		else if(actionButton.equals("Delete")){
+			System.out.println("in delete");
+			//System.out.println(actionButton);
+			//System.out.println("delete num "+userstoryId);
+			userstoryService.delete(userstoryId);
+			System.out.println("deleted");
+			return "redirect:/backtouserstory";
+		}
+		return null;
 	}
 	
 	@RequestMapping(value="/updatestory/{userstoryId}",method=RequestMethod.POST)
@@ -106,7 +116,12 @@ public class UserstoryController {
 		return "userstory/userstory";
 	}
 	
-	
+	@RequestMapping(value="/backtouserstory",method=RequestMethod.GET)
+	public String backbutton(Map<String,Object> map){
+		map.put("fulluserstory", new Fulluserstory());
+		map.put("storyList", userstoryService.getAll());
+		return "index";
+	}
 	
 	
 	
