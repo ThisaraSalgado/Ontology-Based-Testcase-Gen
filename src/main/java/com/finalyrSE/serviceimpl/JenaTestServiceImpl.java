@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.jena.query.ParameterizedSparqlString;
 //import org.apache.http.client.cache.Resource;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
@@ -24,7 +25,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 	
 	@Override
 	public String testJena(){
-		String filename = "C:/Users/ThisaraPC/common1.rdf";
+		String filename = "C:/Users/ThisaraPC/common12-Copy.rdf";
 		System.out.println("file loaded");
 		// Create an empty model
 		Model model = ModelFactory.createDefaultModel();
@@ -37,29 +38,33 @@ public class JenaTestServiceImpl implements JenaTestService {
 
 		// Read the RDF/XML file
 		model.read(in, null);
+		String par = "Create";
+		ParameterizedSparqlString pss = new ParameterizedSparqlString();
 		
+		//pss.setLiteral(par, "Create");
 		// List all the resources with the property "vcard:FN"
-		String queryString = 
-				"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+		pss.setCommandText("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
 						"PREFIX owl: <http://www.w3.org/2002/07/owl#>"+
 						"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-						"PREFIX : <http://www.semanticweb.org/prabhavi/ontologies/2017/9/untitled-ontology-53#>" +
+						"PREFIX test: <http://www.semanticweb.org/prabhavi/ontologies/2017/9/untitled-ontology-53#>" +
 						"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
 						"PREFIX skos: <http://www.w3.org/2004/02/skos/core#>" +
-						"SELECT ?instance_of " +
+						"SELECT ?x " +
 						"WHERE {" +
-						" ?instance_of rdf:type ?type."+
-						" ?type owl:NamedIndividual* :Action."+
-						"}";
+						" test:"+par+" test:hasObject ?x ."+
+						"}");
+		
+		String queryString = pss.toString();
+		System.out.println(queryString);
 		Query query = QueryFactory.create(queryString);
 		QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
 		ResultSet results = qexec.execSelect() ;
 		
 		while (results.hasNext())
 		{
-			System.out.println("in file");
+			System.out.println("in file 1");
 			QuerySolution binding = results.nextSolution();
-			Resource subj = (Resource) binding.get("instance_of");
+			Resource subj = (Resource) binding.get("x");
 		    String resultString = subj.getURI();
 		    String result;
 		    //get result as string without URI prefix, but different approach to get in from the query execution
