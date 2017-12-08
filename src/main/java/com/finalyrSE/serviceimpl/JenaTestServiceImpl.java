@@ -38,7 +38,9 @@ public class JenaTestServiceImpl implements JenaTestService {
 
 		// Read the RDF/XML file
 		model.read(in, null);
+		String actor = "Admin";
 		String par = "Create";
+		String obj = "Group";
 		ParameterizedSparqlString pss = new ParameterizedSparqlString();
 		
 		//pss.setLiteral(par, "Create");
@@ -51,7 +53,9 @@ public class JenaTestServiceImpl implements JenaTestService {
 						"PREFIX skos: <http://www.w3.org/2004/02/skos/core#>" +
 						"SELECT ?x " +
 						"WHERE {" +
-						" test:"+par+" test:hasObject ?x ."+
+						" test:"+actor+" test:hasAction test:"+par+" ."+
+						" test:"+par+" test:hasObject test:"+obj+" ."+
+						" test:"+obj+" test:* ?x ."+
 						"}");
 		
 		String queryString = pss.toString();

@@ -41,4 +41,10 @@ public class TestcaseController {
 	public String CreateTestCase(){
 		return "testsuite/testcase";
 	}
+	
+	@RequestMapping(value = "/tempview",method=RequestMethod.GET)
+	public String ViewTempTestSuite() throws IOException{
+		System.out.println("In temp view");
+		return "testsuite/tempview";
+	}
 }
