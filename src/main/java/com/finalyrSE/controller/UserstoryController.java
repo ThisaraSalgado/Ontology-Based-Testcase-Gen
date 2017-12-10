@@ -60,13 +60,18 @@ public class UserstoryController {
 			map.put("status",fulluserstory.getStatus());
 			userstoryService.create(fulluserstory);
 			String userstorytext=fulluserstory.getUserstoryname();
-			String text=userstorytext.substring(0,userstorytext.indexOf("so that"));
-			System.out.println(text);
-			String t=text.replace("I need to be able to", "");
-			System.out.println("t= "+t);
-			ArrayList<String> entitylist=entityextractor.entityEx(t);
+		
+			//ArrayList<String> t=entityextractor.sentenceTokenize(userstorytext);
+			//ArrayList<ArrayList<String>> entitylist=entityextractor.entityEx(t);
+			
+			ArrayList<String> entitylist=entityextractor.extractEntity(userstorytext);
 			System.out.println("Entity List = "+entitylist);
+			String user=entitylist.get(0);
+			String predicate=entitylist.get(1);
+			String object=entitylist.get(2);
+			System.out.println(user+" "+predicate+" "+object);
 			//have to call jena here with these entities given as itsparameters//
+			
 			map.put("storyList", userstoryService.getAll());
 			map.put("entity", entitylist);
 			return "userstory/entities";

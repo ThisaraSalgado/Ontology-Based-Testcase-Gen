@@ -32,8 +32,8 @@ public class LoginController {
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public String login(Map<String,Object> map,@ModelAttribute("user")User user,BindingResult result,Model model){
-		System.out.println("user name= "+user.getUsername());
-		System.out.println("password= "+user.getPassword());
+		//System.out.println("user name= "+user.getUsername());
+		//System.out.println("password= "+user.getPassword());
 		
 		boolean userExists = loginservice.CheckLogin(user.getUsername(),user.getPassword());
 		if(userExists){
