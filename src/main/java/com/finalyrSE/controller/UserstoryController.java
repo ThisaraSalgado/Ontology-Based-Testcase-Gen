@@ -39,9 +39,28 @@ public class UserstoryController {
 	
 	@RequestMapping(value="/createnewstory",method=RequestMethod.POST)
 	public String createNewStory(Map<String,Object> map,@ModelAttribute("fulluserstory") Fulluserstory fulluserstory,@RequestParam String actionButton,HttpServletRequest request){
+		if (actionButton.equals("Create new Userstory")){
 		System.out.println("in createNewStory");
 		map.put("fulluserstory", new Fulluserstory());
 		return "userstory/userstoryTemplate"; 
+		}
+		if (actionButton.equals("Delete Selected")){
+			 int [] checkedlist={35,36,37,38,39,40};
+			 for(int i=0;i<checkedlist.length;i++){
+				 int userstoryId=checkedlist[i];
+				 userstoryService.delete(userstoryId);
+				 System.out.println(checkedlist[i]);
+				 System.out.println("delete#######selected inside for");
+			 }
+			 
+			 System.out.println("delete#######selected");
+			
+			map.put("storyList", userstoryService.getAll());
+			//System.out.println(a);
+			return "index"; 
+			}
+		
+		return null;
 	}
 	
 	@RequestMapping(value="/addnewstory",method=RequestMethod.POST)
@@ -57,6 +76,7 @@ public class UserstoryController {
 		else if(actionButton.equals("Save and Generate")){
 			System.out.println("in Save and Generate");
 			map.put("userstoryname",fulluserstory.getUserstoryname());
+			System.out.println(fulluserstory.getUserstoryname());
 			map.put("status",fulluserstory.getStatus());
 			userstoryService.create(fulluserstory);
 			String userstorytext=fulluserstory.getUserstoryname();
@@ -76,7 +96,7 @@ public class UserstoryController {
 			map.put("entity", entitylist);
 			return "userstory/entities";
 		}
-		 return "index";
+		 return null ;
 	}
 	
 
@@ -100,13 +120,35 @@ public class UserstoryController {
 			map.put("fulluserstory", full);
 			return "userstory/edit";
 		}
-		else if(actionButton.equals("Delete")){
+		if(actionButton.equals("Delete")){
 			System.out.println("in delete");
 			//System.out.println(actionButton);
 			//System.out.println("delete num "+userstoryId);
 			userstoryService.delete(userstoryId);
 			System.out.println("deleted");
 			return "redirect:/backtouserstory";
+		}
+		else if(actionButton.equals("Generate")){
+			System.out.println(actionButton);
+			Fulluserstory full=userstoryService.find(userstoryId);
+			System.out.println("in Generate >>>updatestory/editdeletestory");
+			System.out.println(userstoryId);
+			map.put("userstoryname",full.getUserstoryname());
+			System.out.println(full.getUserstoryname());
+			map.put("status",full.getStatus());
+			userstoryService.create(full);
+			String userstorytext=full.getUserstoryname();
+			
+			String text=userstorytext.substring(0,userstorytext.indexOf("so that"));
+			System.out.println(text);
+			String t=text.replace("I need to be able to", "");
+			System.out.println("t= "+t);
+			/*ArrayList<String> entitylist=entityextractor.entityEx(t);
+			System.out.println("Entity List = "+entitylist);
+			//have to call jena here with these entities given as itsparameters//
+			map.put("storyList", userstoryService.getAll());
+			map.put("entity", entitylist);*/
+			return "userstory/entities";
 		}
 		return null;
 	}
@@ -118,8 +160,57 @@ public class UserstoryController {
 		userstoryService.update(fulluserstory);
 		Fulluserstory full=userstoryService.find(userstoryId);
 		map.put("storyList", full);
+		
+		System.out.print(full.getAssignee());
 		return "userstory/userstory";
 	}
+	
+	@RequestMapping(value="/updatestory/editdeletestory/{userstoryId}",method=RequestMethod.GET)
+	public String editstoryu(@PathVariable("userstoryId") int userstoryId, Map<String,Object> map,@RequestParam String actionButton){
+		if(actionButton.equals("Edit")){
+			System.out.println("in edit");
+			//System.out.println(actionButton);
+			//System.out.println("edit num "+userstoryId);
+			Fulluserstory full=userstoryService.find(userstoryId);
+			map.put("fulluserstory", full);
+			return "userstory/edit";
+		}
+		if(actionButton.equals("Delete")){
+			System.out.println("in delete");
+			//System.out.println(actionButton);
+			//System.out.println("delete num "+userstoryId);
+			userstoryService.delete(userstoryId);
+			System.out.println("deleted");
+			return "redirect:/backtouserstory";
+		}
+		else if(actionButton.equals("Generate")){
+			System.out.println(actionButton);
+			Fulluserstory full=userstoryService.find(userstoryId);
+			System.out.println("in Generate >>>updatestory/editdeletestory");
+			System.out.println(userstoryId);
+			map.put("userstoryname",full.getUserstoryname());
+			System.out.println(full.getUserstoryname());
+			map.put("status",full.getStatus());
+			userstoryService.create(full);
+			String userstorytext=full.getUserstoryname();
+			
+			String text=userstorytext.substring(0,userstorytext.indexOf("so that"));
+			System.out.println(text);
+			String t=text.replace("I need to be able to", "");
+			System.out.println("t= "+t);
+			/*ArrayList<String> entitylist=entityextractor.entityEx(t);
+			System.out.println("Entity List = "+entitylist);
+			//have to call jena here with these entities given as itsparameters//
+			map.put("storyList", userstoryService.getAll());
+			map.put("entity", entitylist);*/
+			return "userstory/entities";
+			//return "redirect:/addnewstory";
+		}
+		return null;
+	}
+	
+
+	
 	
 	@RequestMapping(value="/backtouserstory",method=RequestMethod.GET)
 	public String backbutton(Map<String,Object> map){
