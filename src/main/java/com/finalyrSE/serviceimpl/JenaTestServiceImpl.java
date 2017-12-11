@@ -80,7 +80,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 
 	@Override
 	public String jenaWithParam(String actor, String action, String object) {
-		String filename = "C:/Users/ThisaraPC/common12-Copy.rdf";
+		String filename = "C:/common12-Copy.rdf";
 		System.out.println("file loaded");
 		// Create an empty model
 		Model model = ModelFactory.createDefaultModel();
