@@ -8,6 +8,27 @@
 
 <head>
 <title>home page</title>
+<link href="${pageContext.request.contextPath}/resources/css/core/test.css"
+    rel="stylesheet">
+
+
+<style type="text/css">
+#addButton{
+    background: olivedrab;
+    border: none;
+    padding: 8px 10px 8px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-family:serif;
+    position: absolute;
+   left: 1250px;
+    top: 100px
+}
+
+
+
+</style>
 </head>
 <body>
 <jsp:include page="header.jsp" />
@@ -17,10 +38,11 @@
 
 		<form:form method="post" action="createnewstory" modelAttribute="fulluserstory">
 		<form:hidden path="userstoryId"/>
-		<div>
+		<div class="addButton" >
 				
-				<input id="addButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Create new Userstory"></input>
+				<input id="addButton" class="btn-lg" type="submit" name="actionButton" value="Create new Userstory"></input>
 			</div>
+			
 
 		<jsp:include page="userstory/userstoryview.jsp" />
 

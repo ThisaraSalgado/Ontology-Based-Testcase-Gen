@@ -8,6 +8,59 @@
 <html>
 <head>
 	<title>user story</title>
+	
+	<style>
+	
+	form{
+	/*background-color: springgreen;*/
+	background-color: #F8F8F8;
+	position: relative;
+	left: 150px;
+    top: 50px;
+    width: 80%;
+	}
+	th{
+	font-family:serif;
+	font-weight: bold;
+	color:black;
+	}
+	td{
+	font-family:serif;
+	color:black;
+	}	
+	#deletebutton{
+	 background: crimson;
+    border: none;
+    padding: 8px 30px 8px 30px;
+    border-radius: 5px;
+    margin-right: 30px;
+    color: white;
+    font-weight: bold;
+    font-family:serif;
+	}	
+	#editButton{
+	background: midnightblue;
+    border: none;
+    padding: 8px 40px 8px 40px;
+    border-radius: 5px;
+    margin-right: 30px;
+    /*margin-left: 50px;*/
+    color: white;
+    font-weight: bold;
+    font-family:serif;
+	}
+	#generateButton{
+	background: olivedrab;
+    border: none;
+    padding: 8px 20px 8px 20px;
+    border-radius: 5px;
+    margin-right: 30px;
+    color: white;
+    font-weight: bold;
+    font-family:serif;
+	}
+	
+	</style>
 </head>
 
 <body>
@@ -37,9 +90,16 @@
 		
 		</table>
 		</c:if>
-		<div>		
-			<input id="editButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Edit"></input>
+		<div class="button">
+		<div>
 			<input id="deleteButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Delete"></input>
+		</div>
+		<div>
+			<input id="editButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Edit"></input>
+		</div>
+		<div>
+			<input id="generateButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Generate"></input>
+		</div>
 		</div>
 		
 		

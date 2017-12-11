@@ -18,7 +18,7 @@
 	
 	<form:form method="post" action="${action}" modelAttribute="fulluserstory">
 	<div>
-	<table>
+	<table class="table">
 		<tr>
 			<form:hidden path="userstoryId"/>
 			<td><form:label  path="userstoryname">User Story Name </form:label></td>

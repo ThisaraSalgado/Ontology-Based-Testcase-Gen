@@ -18,35 +18,43 @@ form {
   padding: 1em;
   border: 1px solid #CCC;
   border-radius: 1em;
+  background-color: #F8F8F8;
 }
 
-form div + div {
+form div  {
   margin-top: 1em;
 }
 
 label {
   /* To make sure that all labels have the same size and are properly aligned */
   display: inline-block;
-  width: 120px;
+  width: 220px;
   text-align: right;
+  font-family:serif;
+  font-weight: bold;
+  font-size:15px;
+  padding: 8px 40px 8px 40px;
 }
 
 input, textarea {
   /* To make sure that all text fields have the same font settings
      By default, textareas have a monospace font */
-  font: 1em sans-serif;
+  font: 1em serif;
 
   /* To give the same size to all text fields */
-  width: 300px;
+  width: 400px;
+  box-shadow: 3px 3px 5px olivedrab;
   box-sizing: border-box;
+  
 
   /* To harmonize the look & feel of text field border */
-  border: 1px solid #999;
+  border: 2px solid olivedrab;
+  border-radius: 4px;
 }
 
 input:focus, textarea:focus {
   /* To give a little highlight on active elements */
-  border-color: #000;
+  border-color: olivedrab;
 }
 
 textarea {
@@ -57,25 +65,45 @@ textarea {
   height: 5em;
 }
 
-.button {
-  /* To position the buttons to the same position of the text fields */
-  padding-left: 90px; /* same size as the label elements */
-}
-
-button {
-  /* This extra margin represent roughly the same space as the space
-     between the labels and their text fields */
-  margin-left: .5em;
-}
 
 .styleheading{
-    font-weight: bold;
-    font-style: italic;
+    background-color: olivedrab;
     border-bottom: 2px solid #ddd;
     margin-bottom: 20px;
-    font-size: 15px;
+    font-family:serif;
+    font-weight: bold;
+    /*font-style: italic;*/
+    font-size: 20px;
     padding-bottom: 3px;
+    color:white;
     }
+    
+     
+    select {
+    font-family: serif;
+    font-weight: bold;
+    width: 400px;
+  	box-shadow: 3px 3px 5px olivedrab;
+  	box-sizing: border-box;
+    border-radius: 4px;
+    font-size: 15px;
+    color:#8a97a0;
+    margin-bottom: 30px;
+    border: 2px solid olivedrab;
+  	border-radius: 4px;
+    
+}
+
+#save,#savegenerate{
+	
+    background: olivedrab;
+    border: none;
+    padding: 8px 5px 8px 5px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-family:serif;
+}
 </style>
 <title>User Story Template</title>
 </head>
@@ -87,7 +115,7 @@ button {
 	<form:form method="post" action="${action}" modelAttribute="fulluserstory">
 	<div>
 	
-		<div class=".styleheading">User Story Form</div>
+		<div align="center" class="styleheading">User Story Form</div>
 		<div>
 			<form:label  path="userstoryname">User Story Name </form:label>
 			<form:textarea path="userstoryname"/>
@@ -139,12 +167,14 @@ button {
     
 		</div>
 		<br></br>
-
+		<div class="button">
 		<div>
-			<input type="submit" class="btn-lg btn-primary" name="actionButton" value="Save" /> 
-			<input type="submit" class="btn-lg btn-primary" name="actionButton" value="Save and Generate" />
+			<input align="right" id="save" type="submit" class="btn-lg" name="actionButton" value="Save" /> 
 		</div>
-
+		<div>	
+			<input id="savegenerate" type="submit" class="btn-lg" name="actionButton" value="Save and Generate" />
+		</div>
+		</div>
 	</form:form>
 
 </body>
