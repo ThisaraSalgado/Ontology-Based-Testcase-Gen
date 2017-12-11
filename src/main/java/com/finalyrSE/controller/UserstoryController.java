@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.finalyrSE.model.Fulluserstory;
 import com.finalyrSE.service.EntityExtractionService;
+import com.finalyrSE.service.JenaTestService;
 import com.finalyrSE.service.UserstoryService;
 
 @Controller
@@ -27,6 +28,9 @@ public class UserstoryController {
 	
 	@Autowired
 	EntityExtractionService entityextractor;
+	
+	@Autowired
+	JenaTestService jenaService;
 	
 	/*@RequestMapping(value="/", method=RequestMethod.GET)
 	public String sayHello(ModelMap model,Map<String,Object> map){
@@ -91,6 +95,8 @@ public class UserstoryController {
 			String object=entitylist.get(2);
 			System.out.println(user+" "+predicate+" "+object);
 			//have to call jena here with these entities given as itsparameters//
+			
+			jenaService.jenaWithParam(user, predicate, object);
 			
 			map.put("storyList", userstoryService.getAll());
 			map.put("entity", entitylist);
