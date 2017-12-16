@@ -69,7 +69,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 		ArrayList<String> resultadoConsulta = new ArrayList<String>();
 		while (results.hasNext())
 		{
-			System.out.println("in file 1");
+			//System.out.println("in file 1");
 			QuerySolution binding = results.nextSolution();
 			Resource subj = (Resource) binding.get("x");
 		    String resultString = subj.getURI();
@@ -77,12 +77,19 @@ public class JenaTestServiceImpl implements JenaTestService {
 		    //get result as string without URI prefix, but different approach to get in from the query execution
 		    System.out.println(resultString.substring(resultString.lastIndexOf("#") +1));
 		    resultadoConsulta.add(resultString.substring(resultString.lastIndexOf("#") +1));
-		    System.out.println("from array " + resultadoConsulta.get(0));
-		    result = resultString.substring(resultString.lastIndexOf("#") +1);
 			/*String ob = binding.getLiteral("x").toString();
 			System.out.println();*/
 		    
 		}
+		if (resultadoConsulta.size()==0){
+			System.out.println("To such relationship, generate test cases manually");
+		}else{
+			for(int i = 0;i<resultadoConsulta.size();i++){
+		    	System.out.println("Create Group Using " + resultadoConsulta.get(i));
+		    	//result = resultString.substring(resultString.lastIndexOf("#") +1);
+		    }
+		}
+		
 		return null;
 	}
 
@@ -138,6 +145,12 @@ public class JenaTestServiceImpl implements JenaTestService {
 		    result = resultString.substring(resultString.lastIndexOf("#") +1);
 		    
 		}
+		return null;
+	}
+
+	@Override
+	public String checkImplicits(String action) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
