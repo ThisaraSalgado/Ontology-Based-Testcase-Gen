@@ -3,6 +3,7 @@ package com.finalyrSE.serviceimpl;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import org.apache.jena.query.ParameterizedSparqlString;
 //import org.apache.http.client.cache.Resource;
@@ -39,8 +40,8 @@ public class JenaTestServiceImpl implements JenaTestService {
 		// Read the RDF/XML file
 		model.read(in, null);
 		String actor = "Admin";
-		String par = "Add";
-		//String obj = "Group";
+		String par = "Create";
+		String obj = "Group";
 		ParameterizedSparqlString pss = new ParameterizedSparqlString();
 		
 		//pss.setLiteral(par, "Create");
@@ -51,10 +52,12 @@ public class JenaTestServiceImpl implements JenaTestService {
 						"PREFIX test: <http://www.semanticweb.org/prabhavi/ontologies/2017/9/untitled-ontology-53#>" +
 						"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
 						"PREFIX skos: <http://www.w3.org/2004/02/skos/core#>" +
-						"SELECT ?x " +
+						"SELECT ?x ?y " +
 						"WHERE {" +
 						" test:"+actor+" test:hasAction test:"+par+" ."+
-						" test:"+par+" test:hasObject ?x ."+
+						" test:"+par+" test:hasObject test:"+obj+" ."+
+						" test:"+obj+" ?x ?y ."+
+						" ?x a owl:DatatypeProperty ."+
 						"}");
 		
 		String queryString = pss.toString();
@@ -63,6 +66,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 		QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
 		ResultSet results = qexec.execSelect() ;
 		
+		ArrayList<String> resultadoConsulta = new ArrayList<String>();
 		while (results.hasNext())
 		{
 			System.out.println("in file 1");
@@ -72,7 +76,11 @@ public class JenaTestServiceImpl implements JenaTestService {
 		    String result;
 		    //get result as string without URI prefix, but different approach to get in from the query execution
 		    System.out.println(resultString.substring(resultString.lastIndexOf("#") +1));
+		    resultadoConsulta.add(resultString.substring(resultString.lastIndexOf("#") +1));
+		    System.out.println("from array " + resultadoConsulta.get(0));
 		    result = resultString.substring(resultString.lastIndexOf("#") +1);
+			/*String ob = binding.getLiteral("x").toString();
+			System.out.println();*/
 		    
 		}
 		return null;
