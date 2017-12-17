@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.finalyrSE.model.Fulluserstory;
 import com.finalyrSE.service.EntityExtractionService;
 import com.finalyrSE.service.JenaTestService;
+import com.finalyrSE.service.TripletExtracionService;
 import com.finalyrSE.service.UserstoryService;
 
 @Controller
@@ -28,6 +29,9 @@ public class UserstoryController {
 	
 	@Autowired
 	EntityExtractionService entityextractor;
+	
+	@Autowired
+	TripletExtracionService tripletex;
 	
 	@Autowired
 	JenaTestService jenaService;
@@ -85,17 +89,11 @@ public class UserstoryController {
 			userstoryService.create(fulluserstory);
 			String userstorytext=fulluserstory.getUserstoryname();
 		
-			//ArrayList<String> t=entityextractor.sentenceTokenize(userstorytext);
-			//ArrayList<ArrayList<String>> entitylist=entityextractor.entityEx(t);
-			
-			ArrayList<String> entitylist=entityextractor.extractEntity(userstorytext);
-			System.out.println("Entity List = "+entitylist);
+			//have to call jena here with these entities given as itsparameters//
+			ArrayList<String> entitylist=tripletex.extractTriplets(userstorytext);
 			String user=entitylist.get(0);
 			String predicate=entitylist.get(1);
 			String object=entitylist.get(2);
-			System.out.println(user+" "+predicate+" "+object);
-			//have to call jena here with these entities given as itsparameters//
-			
 			jenaService.jenaWithParam(user, predicate, object);
 			
 			map.put("storyList", userstoryService.getAll());

@@ -110,7 +110,9 @@ public class JenaTestServiceImpl implements JenaTestService {
 		model.read(in, null);
 		String act = actor;
 		String par = action;
+		//String obj = object;
 		//String obj = "Group";
+
 		ParameterizedSparqlString pss = new ParameterizedSparqlString();
 		
 		//pss.setLiteral(par, "Create");
