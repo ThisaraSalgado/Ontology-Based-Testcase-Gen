@@ -56,7 +56,7 @@ public class UserstoryController {
 			 int [] checkedlist={35,36,37,38,39,40};
 			 for(int i=0;i<checkedlist.length;i++){
 				 int userstoryId=checkedlist[i];
-				 userstoryService.delete(userstoryId);
+				 //userstoryService.delete(userstoryId);
 				 System.out.println(checkedlist[i]);
 				 System.out.println("delete#######selected inside for");
 			 }
