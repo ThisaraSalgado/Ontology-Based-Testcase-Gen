@@ -19,24 +19,18 @@
 
 
 <script type="text/javascript">
-function checkedList(){
-	a=["12","14","22"];
-	var boxes = $('input[name=checkbox]:checked').attr("id");
-	//var boxes = $('input[name=checkbox]:checked')
-	//document.write($boxes.attr("id"));
-	
-	//if ($('input[type=checkbox]').is(':checked')){
-		//var id=$(this).attr( "id" )
-		//a.push(id);
-		//document.write("inside if");
-	//}
-	for(i=0; i<boxes.length; i++){
-		document.write(boxes[i]);
+function selected(){
+	var all_checked = document.querySelectorAll('input[name=checkbox]:checked');
+	document.write(all_checked.length);
+	var selectedIds = [];
+
+	for(var x = 0, l = all_checked.length; x < l;  x++)
+	{
+		selectedIds.push(all_checked[x].value);
+	    //document.write(all_checked[x].value);
 	}
-	//}
-	return a;
-	}
-	
+	return selectedIds; 
+}
 
 
 </script>
@@ -99,7 +93,7 @@ color: green;
 <form:form method="post" action="createnewstory" modelAttribute="fulluserstory">
 <div class="container">
 <div class="deletebutton">
-<input id="deleteAllButton"  class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Delete Selected"></input>
+<input id="deleteAllButton" onclick= "selected()" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Delete Selected"></input>
 </div>
 <div class="content">
 <c:if test="${!empty storyList}">

@@ -123,8 +123,16 @@ public class JenaTestServiceImpl implements JenaTestService {
 	@Override
 	public String jenaWithParam(String actor, String action, String object) {
 		String act = actor;
+
 		String pred = action;
 		String obj = object;
+
+		String par = action;
+		//String obj = object;
+		//String obj = "Group";
+
+		ParameterizedSparqlString pss = new ParameterizedSparqlString();
+
 		
 		
 		ArrayList<String> resultDependency;

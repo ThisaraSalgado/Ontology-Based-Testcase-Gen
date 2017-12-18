@@ -8,10 +8,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Temp View</title>
+<style>
+body{
+      padding-top: 60px;
+      padding-bottom: 40px;
+      }
+
+.bs-example {
+  margin: 20px;
+}
+</style>
 </head>
 <body>
 <jsp:include page="..//header.jsp" />
-	
-Temporary View for Test suites view
+<div class="container">	
+<div class="bs-example"> 
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="span4 c=-llapse-group">
+          <h2>Heading</h2>
+           <p class="collapse" id="viewdetails">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+          <p><a class="btn" data-toggle="collapse" data-target="#viewdetails">View details &raquo;</a></p>
+        </div>
+      </div>
+      </div>
 </body>
 </html>
