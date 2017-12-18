@@ -122,57 +122,43 @@ public class JenaTestServiceImpl implements JenaTestService {
 
 	@Override
 	public String jenaWithParam(String actor, String action, String object) {
-		String filename = "C:/common12-Copy.rdf";
-		System.out.println("file loaded");
-		// Create an empty model
-		Model model = ModelFactory.createDefaultModel();
-				
-		// Use the FileManager to find the input file
-		InputStream in = FileManager.get().open(filename);
-
-		if (in == null)
-			throw new IllegalArgumentException("File: "+filename+" not found");
-
-		// Read the RDF/XML file
-		model.read(in, null);
 		String act = actor;
+
+		String pred = action;
+		String obj = object;
+
 		String par = action;
 		//String obj = object;
 		//String obj = "Group";
 
 		ParameterizedSparqlString pss = new ParameterizedSparqlString();
+
 		
-		//pss.setLiteral(par, "Create");
-		// List all the resources with the property "vcard:FN"
-		pss.setCommandText("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
-						"PREFIX owl: <http://www.w3.org/2002/07/owl#>"+
-						"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
-						"PREFIX test: <http://www.semanticweb.org/prabhavi/ontologies/2017/9/untitled-ontology-53#>" +
-						"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
-						"PREFIX skos: <http://www.w3.org/2004/02/skos/core#>" +
-						"SELECT ?x " +
-						"WHERE {" +
-						" test:"+act+" test:hasAction test:"+par+" ."+
-						" test:"+par+" test:hasObject ?x ."+
-						"}");
 		
-		String queryString = pss.toString();
-		System.out.println(queryString);
-		Query query = QueryFactory.create(queryString);
-		QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
-		ResultSet results = qexec.execSelect() ;
+		ArrayList<String> resultDependency;
+		resultDependency = checkImplicits(actor, pred);
+		resultDependency.add(pred);
 		
-		while (results.hasNext())
-		{
-			System.out.println("in file 1");
-			QuerySolution binding = results.nextSolution();
-			Resource subj = (Resource) binding.get("x");
-		    String resultString = subj.getURI();
-		    String result;
-		    //get result as string without URI prefix, but different approach to get in from the query execution
-		    System.out.println(resultString.substring(resultString.lastIndexOf("#") +1));
-		    result = resultString.substring(resultString.lastIndexOf("#") +1);
-		    
+		ArrayList<String> actionProperties;
+		actionProperties = getActionDataProperties(act,resultDependency);
+		
+		ArrayList<String> dataProperties;
+		dataProperties = getObjectDataProperties(act, pred, obj);
+		
+		System.out.println("size of result dependancy array " + resultDependency.size());
+		System.out.println("size of result actionproperty array " + actionProperties.size());
+		System.out.println("size of result dataproperty array " + dataProperties.size());
+	
+		for(int i = 0 ; i<resultDependency.size();i++){
+			System.out.println("has dependency " + resultDependency.get(i));
+		}
+		
+		for(int j = 0 ; j<actionProperties.size();j++){
+			System.out.println("action properties " + actionProperties.get(j));
+		}
+		
+		for(int k = 0 ; k<dataProperties.size();k++){
+			System.out.println("data properties " + dataProperties.get(k));
 		}
 		return null;
 	}
