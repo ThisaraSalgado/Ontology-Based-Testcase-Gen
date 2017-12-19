@@ -113,27 +113,44 @@ textarea {
 
 	<c:url var="action" value="/addnewstory"></c:url>
 
-	<form:form method="post" action="${action}" modelAttribute="fulluserstory">
+	<form:form method="post" action="${action}" modelAttribute="commonModel">
 	<div>
-	
 		<div align="center" class="styleheading">User Story Form</div>
+		
+		<%-- <c:forEach items="${epicList}" var="epics">
+		<c:out value="${epics.epicname}"/>
+		
 		<div>
-			<form:label  path="userstoryname">User Story Name </form:label>
-			<form:textarea path="userstoryname"/>
+			<form:label path="epic.epicname">Epic Name</form:label>
+			<form:select path="epic.epicname">
+        		<form:options items="${epics.epicname}" ></form:options>
+    		</form:select>
+		</div>
+		</c:forEach> --%>
+		<%-- <div>
+			<form:label path="userstory.Epic_ID">Epic No</form:label>
+			<select id="epic" name="epic">
+			  <option value="1">Group Management</option>
+  			  <option value="2">User Management</option>
+  			 </select>
+		
+		<div> --%>
+			<form:label  path="userstory.storyname">User Story Name </form:label>
+			<form:textarea path="userstory.storyname"/>
 		</div>
 		
 		<div>
-			<form:label path="assignee">Assignee</form:label>
-			<form:input path="assignee"/>
+			<form:label path="userstory.assignee">Assignee</form:label>
+			<form:input path="userstory.assignee"/>
 		</div>
 		
 		<div>
-			<form:label path="status">Status</form:label>
-			<form:input path="status"/>
+			<form:label path="userstory.status">Status</form:label>
+			<form:input path="userstory.status"/>
 		</div>
 		
 		<div>
-			<form:label path="priority">Priority</form:label>
+			<form:label path="userstory.priority">Priority</form:label>
 			<select id="job" name="field4">
 			  <option value="High">High</option>
   			  <option value="Medium">Medium</option>
@@ -142,28 +159,28 @@ textarea {
 		</div>
 		
 		<div>
-			<form:label path="prerequisites">Pre requisites</form:label>
-			<form:textarea path="prerequisites"/>
+			<form:label path="userstory.prerequites">Pre requisites</form:label>
+			<form:textarea path="userstory.prerequites"/>
 		</div>
 		
 		<div>
-			<form:label path="narratives">Narratives</form:label>
-			<form:textarea path="narratives"/>
+			<form:label path="userstory.narratives">Narratives</form:label>
+			<form:textarea path="userstory.narratives"/>
 		</div>
 		
 		<div>
-			<form:label path="acceptancecriteria">Acceptance Criteria</form:label>
-			<form:textarea path="acceptancecriteria"/>
+			<form:label path="userstory.acceptancecritirea">Acceptance Criteria</form:label>
+			<form:textarea path="userstory.acceptancecritirea"/>
 		</div>
 		
 		<div>
-			<form:label path="startdate">Start date</form:label>
-			<form:input type="date" name="startdate" path="startdate"/>
+			<form:label path="userstory.startdate">Start date</form:label>
+			<form:input type="date" name="startdate" path="userstory.startdate"/>
 		</div>
 		
 		<div>
-			<form:label path="duedate">Due date</form:label>
-			<form:input type="date" name="duedate"  path="duedate"/>
+			<form:label path="userstory.duedate">Due date</form:label>
+			<form:input type="date" name="duedate"  path="userstory.duedate"/>
 		</div>
     
 		</div>

@@ -2,6 +2,7 @@ package com.finalyrSE.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.finalyrSE.model.CommonModel;
+import com.finalyrSE.model.Epic;
 import com.finalyrSE.model.Fulluserstory;
+import com.finalyrSE.model.Userstory;
 import com.finalyrSE.service.EntityExtractionService;
+import com.finalyrSE.service.EpicService;
 import com.finalyrSE.service.JenaTestService;
 import com.finalyrSE.service.TripletExtracionService;
 import com.finalyrSE.service.UserstoryService;
@@ -26,6 +32,9 @@ public class UserstoryController {
 	
 	@Autowired
 	UserstoryService userstoryService;
+	
+	@Autowired
+	EpicService epicService;
 	
 	@Autowired
 	EntityExtractionService entityextractor;
@@ -46,13 +55,20 @@ public class UserstoryController {
 	}*/
 	
 	@RequestMapping(value="/createnewstory",method=RequestMethod.POST)
-	public String createNewStory(Map<String,Object> map,@ModelAttribute("fulluserstory") Fulluserstory fulluserstory,@RequestParam String actionButton,HttpServletRequest request){
-		if (actionButton.equals("Create new Userstory")){
+	public ModelAndView createNewStory(Map<String,Object> map,@ModelAttribute("commonModel") CommonModel commonModel,@RequestParam String actionButton,HttpServletRequest request){
 		System.out.println("in createNewStory");
-		map.put("fulluserstory", new Fulluserstory());
-		return "userstory/userstoryTemplate"; 
+		//map.put("fulluserstory", new CommonModel());
+		ModelAndView model=new ModelAndView();
+		//List<Epic> epicList=new ArrayList<Epic>();
+		if (actionButton.equals("Create new Userstory")){
+			//epicList= epicService.getAll();
+			//System.out.println(epicList+"epics");
+			model=new ModelAndView("userstory/userstoryTemplate", "commonModel", commonModel);
+			//model.addObject("epicList",epicList);
+			//return model; 
 		}
-		if (actionButton.equals("Delete Selected")){
+		
+		if (actionButton.equals("Delete Selected")){ //meka hdla naaa///
 			 int [] checkedlist={35,36,37,38,39,40};
 			 for(int i=0;i<checkedlist.length;i++){
 				 int userstoryId=checkedlist[i];
@@ -65,76 +81,92 @@ public class UserstoryController {
 			
 			map.put("storyList", userstoryService.getAll());
 			//System.out.println(a);
-			return "index"; 
+			//return "index"; 
 			}
 		
-		return null;
+		return model;
 	}
 	
 	@RequestMapping(value="/addnewstory",method=RequestMethod.POST)
-	public String addNewStory(Fulluserstory fulluserstory,Map<String,Object> map,@RequestParam String actionButton) throws IOException{
+	public ModelAndView addNewStory(CommonModel commonModel,Map<String,Object> map,@RequestParam String actionButton) throws IOException{
 		System.out.println("in addNewStory");
+		ModelAndView model=new ModelAndView();
+		List<Userstory> storyList=new ArrayList<Userstory>();
 		if(actionButton.equals("Save")){
-			map.put("userstoryname",fulluserstory.getUserstoryname());
-			map.put("status",fulluserstory.getStatus());
-			userstoryService.create(fulluserstory);
-			map.put("storyList", userstoryService.getAll());
-			return "index";
+			Userstory userstory=commonModel.getUserstory();
+			//Epic epic=new Epic();
+			//int epic_id=commonModel.getUserstory().getEpic().getEpic_id();
+			
+			userstoryService.create(userstory);
+			System.out.println("story added."); ///// epic id eka add wenne naaaa////
+			model=new ModelAndView("index", "commonModel", commonModel);		
+			storyList=userstoryService.getAll();
+			model.addObject("storyList",storyList);
+			return model;
 		}
 		else if(actionButton.equals("Save and Generate")){
 			System.out.println("in Save and Generate");
-			map.put("userstoryname",fulluserstory.getUserstoryname());
-			System.out.println(fulluserstory.getUserstoryname());
-			map.put("status",fulluserstory.getStatus());
-			userstoryService.create(fulluserstory);
-			String userstorytext=fulluserstory.getUserstoryname();
-		
-			//have to call jena here with these entities given as itsparameters//
+			Userstory userstory=commonModel.getUserstory();
+			userstoryService.create(userstory);
+			System.out.println("story added.");
+			String userstorytext=commonModel.getUserstory().getStoryname();
 			ArrayList<String> entitylist=tripletex.extractTriplets(userstorytext);
 			String user=entitylist.get(0);
 			String predicate=entitylist.get(1);
 			String object=entitylist.get(2);
 			jenaService.jenaWithParam(user, predicate, object);
-			
-			map.put("storyList", userstoryService.getAll());
-			map.put("entity", entitylist);
-			return "userstory/entities";
+			model=new ModelAndView("userstory/entities", "commonModel", commonModel);
+			model.addObject("entity",entitylist);
+			return model;
 		}
-		 return null ;
+		 return model ;
 	}
 	
 
 	@RequestMapping(value="/viewuserstory/{userstoryId}",method=RequestMethod.GET)
-	public String viewUserStory(@PathVariable("userstoryId") int userstoryId, Map<String,Object> map){
+	public ModelAndView viewUserStory(@PathVariable("userstoryId") int userstoryId, Map<String,Object> map){
 		System.out.println("in viewStory");
 		System.out.println(userstoryId);
-		Fulluserstory full=userstoryService.find(userstoryId);
+		
+		CommonModel commonModel=new CommonModel();
+		Userstory storyList=userstoryService.find(userstoryId);
+		System.out.println(storyList);
 		//map.put("storyList", userstoryService.getAll());
-		map.put("storyList", full);
-		return "userstory/userstory"; 
+		//map.put("storyList", full);
+		ModelAndView model=new ModelAndView("userstory/userstory", "commonModel", commonModel);
+		model.addObject("storyList",storyList);
+		return model;
+		
 	}
 	
 	@RequestMapping(value="/viewuserstory/editdeletestory/{userstoryId}",method=RequestMethod.GET)
-	public String editstory(@PathVariable("userstoryId") int userstoryId, Map<String,Object> map,@RequestParam String actionButton){
+	public ModelAndView editstory(CommonModel commonModel,@PathVariable("userstoryId") int userstoryId, Map<String,Object> map,@RequestParam String actionButton){
+		//CommonModel commonModel=new CommonModel();
 		if(actionButton.equals("Edit")){
 			System.out.println("in edit");
+			
 			//System.out.println(actionButton);
 			//System.out.println("edit num "+userstoryId);
-			Fulluserstory full=userstoryService.find(userstoryId);
-			map.put("fulluserstory", full);
-			return "userstory/edit";
+			Userstory full=userstoryService.find(userstoryId);
+			//map.put("fulluserstory", full);
+			commonModel.setUserstory(full);
+			ModelAndView model=new ModelAndView("userstory/edit", "commonModel", commonModel);
+			
+			return model;
 		}
-		if(actionButton.equals("Delete")){
+		//not working with new commonModel, have to update these..//
+	/*	if(actionButton.equals("Delete")){
 			System.out.println("in delete");
 			//System.out.println(actionButton);
 			//System.out.println("delete num "+userstoryId);
 			userstoryService.delete(userstoryId);
 			System.out.println("deleted");
-			return "redirect:/backtouserstory";
-		}
-		else if(actionButton.equals("Generate")){
+			ModelAndView model=new ModelAndView("redirect:/backtouserstory", "commonModel", commonModel);
+			return model;
+		}*/
+		/*else if(actionButton.equals("Generate")){
 			System.out.println(actionButton);
-			Fulluserstory full=userstoryService.find(userstoryId);
+			Userstory full=userstoryService.find(userstoryId);
 			System.out.println("in Generate >>>updatestory/editdeletestory");
 			System.out.println(userstoryId);
 			map.put("userstoryname",full.getUserstoryname());
@@ -147,29 +179,34 @@ public class UserstoryController {
 			System.out.println(text);
 			String t=text.replace("I need to be able to", "");
 			System.out.println("t= "+t);
-			/*ArrayList<String> entitylist=entityextractor.entityEx(t);
+			ArrayList<String> entitylist=entityextractor.entityEx(t);
 			System.out.println("Entity List = "+entitylist);
 			//have to call jena here with these entities given as itsparameters//
 			map.put("storyList", userstoryService.getAll());
-			map.put("entity", entitylist);*/
+			map.put("entity", entitylist);
 			return "userstory/entities";
-		}
+		}*/
 		return null;
 	}
 	
 	@RequestMapping(value="/updatestory/{userstoryId}",method=RequestMethod.POST)
-	public String update(Fulluserstory fulluserstory, @PathVariable("userstoryId") int userstoryId,Map<String,Object> map){
+	public ModelAndView update(CommonModel commonModel, @PathVariable("userstoryId") int userstoryId,Map<String,Object> map){
 		System.out.println("in update");
 		System.out.println("update num"+userstoryId);
-		userstoryService.update(fulluserstory);
-		Fulluserstory full=userstoryService.find(userstoryId);
-		map.put("storyList", full);
+		Userstory userstory=commonModel.getUserstory();
+		userstoryService.update(userstory);
 		
-		System.out.print(full.getAssignee());
-		return "userstory/userstory";
+		Userstory full=userstoryService.find(userstoryId);
+		//map.put("storyList", full);
+		
+		//System.out.print(full.getAssignee());
+		
+		ModelAndView model=new ModelAndView("userstory/userstory", "commonModel", commonModel);
+		model.addObject("storyList", full);
+		return model;
 	}
 	
-	@RequestMapping(value="/updatestory/editdeletestory/{userstoryId}",method=RequestMethod.GET)
+/*	@RequestMapping(value="/updatestory/editdeletestory/{userstoryId}",method=RequestMethod.GET)
 	public String editstoryu(@PathVariable("userstoryId") int userstoryId, Map<String,Object> map,@RequestParam String actionButton){
 		if(actionButton.equals("Edit")){
 			System.out.println("in edit");
@@ -202,25 +239,31 @@ public class UserstoryController {
 			System.out.println(text);
 			String t=text.replace("I need to be able to", "");
 			System.out.println("t= "+t);
-			/*ArrayList<String> entitylist=entityextractor.entityEx(t);
+			ArrayList<String> entitylist=entityextractor.entityEx(t);
 			System.out.println("Entity List = "+entitylist);
 			//have to call jena here with these entities given as itsparameters//
 			map.put("storyList", userstoryService.getAll());
-			map.put("entity", entitylist);*/
+			map.put("entity", entitylist);
 			return "userstory/entities";
 			//return "redirect:/addnewstory";
 		}
 		return null;
-	}
+	}*/
 	
 
 	
 	
 	@RequestMapping(value="/backtouserstory",method=RequestMethod.GET)
-	public String backbutton(Map<String,Object> map){
-		map.put("fulluserstory", new Fulluserstory());
+	public ModelAndView backbutton(Map<String,Object> map){
+		//map.put("fulluserstory", new Fulluserstory());
 		map.put("storyList", userstoryService.getAll());
-		return "index";
+		CommonModel commonModel=new CommonModel();
+		List<Userstory> storyList=new ArrayList<Userstory>();
+		storyList=userstoryService.getAll();
+		ModelAndView model=new ModelAndView("index", "commonModel", commonModel);
+		model.addObject("storyList",storyList);
+		return model;
+		
 	}
 	
 	
