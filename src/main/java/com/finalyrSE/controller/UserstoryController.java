@@ -2,6 +2,8 @@ package com.finalyrSE.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,12 +61,26 @@ public class UserstoryController {
 		System.out.println("in createNewStory");
 		//map.put("fulluserstory", new CommonModel());
 		ModelAndView model=new ModelAndView();
-		//List<Epic> epicList=new ArrayList<Epic>();
+		List<Epic> epicList=new ArrayList<Epic>();
+		
 		if (actionButton.equals("Create new Userstory")){
-			//epicList= epicService.getAll();
-			//System.out.println(epicList+"epics");
+			epicList= epicService.getAll();
+			
+			System.out.println(epicList+"epics");
+			
+			System.out.println(epicList.get(0).getEpic_ID());
+			System.out.println(epicList.get(0).getEpicname());
+			/*Map<String,String> epics = new LinkedHashMap<String,String>();
+			
+			epics.put(epicList.get(0).getEpic_id(), epicList.get(0).getEpicname());
+			epics.put(epicList.get(1).getEpic_id(), epicList.get(1).getEpicname());*/
+			//model.addObject("epicList",epicList);
+			
+			//commonModel.setEpicList(epics);
+			
 			model=new ModelAndView("userstory/userstoryTemplate", "commonModel", commonModel);
 			//model.addObject("epicList",epicList);
+			model.addObject("epicList",epicList);
 			//return model; 
 		}
 		
@@ -88,16 +104,16 @@ public class UserstoryController {
 	}
 	
 	@RequestMapping(value="/addnewstory",method=RequestMethod.POST)
-	public ModelAndView addNewStory(CommonModel commonModel,Map<String,Object> map,@RequestParam String actionButton) throws IOException{
+	public ModelAndView addNewStory(CommonModel commonModel,@RequestParam String actionButton) throws IOException{
 		System.out.println("in addNewStory");
 		ModelAndView model=new ModelAndView();
 		List<Userstory> storyList=new ArrayList<Userstory>();
 		if(actionButton.equals("Save")){
 			Userstory userstory=commonModel.getUserstory();
-			//Epic epic=new Epic();
-			//int epic_id=commonModel.getUserstory().getEpic().getEpic_id();
+			
 			
 			userstoryService.create(userstory);
+			
 			System.out.println("story added."); ///// epic id eka add wenne naaaa////
 			model=new ModelAndView("index", "commonModel", commonModel);		
 			storyList=userstoryService.getAll();
@@ -110,7 +126,7 @@ public class UserstoryController {
 			userstoryService.create(userstory);
 			System.out.println("story added.");
 			String userstorytext=commonModel.getUserstory().getStoryname();
-			ArrayList<String> entitylist=tripletex.extractTriplets(userstorytext);
+			ArrayList<String> entitylist=entityextractor.extractTriplets(userstorytext);
 			String user=entitylist.get(0);
 			String predicate=entitylist.get(1);
 			String object=entitylist.get(2);
@@ -265,6 +281,8 @@ public class UserstoryController {
 		return model;
 		
 	}
+	
+
 	
 	
 	

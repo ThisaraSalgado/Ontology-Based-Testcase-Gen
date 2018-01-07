@@ -1,6 +1,7 @@
 package com.finalyrSE.serviceimpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,12 @@ public class EpicServiceImpl implements EpicService {
 	public List<Epic> getAll() {
 		
 		return epicDao.getAll();
+	}
+
+	@Override
+	public List<Map> getEpicnames() {
+		
+		return epicDao.getEpicnames();
 	}
 
 }

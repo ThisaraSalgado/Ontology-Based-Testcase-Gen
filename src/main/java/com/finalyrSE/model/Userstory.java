@@ -1,11 +1,17 @@
 package com.finalyrSE.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class Userstory {
@@ -21,6 +27,31 @@ public class Userstory {
 	private String acceptancecritirea;
 	private String startdate;
 	private String duedate;
+/*	
+	@ManyToOne
+	@Column(name ="Epic_ID")
+	private Set<Epic> epicid;*/
+	
+	private Epic epic;
+	
+	public Userstory(){
+		
+	}
+	
+	public Userstory(String storyname,String assignee,String status,String priority,String prerequites,
+			String narratives,String acceptancecritirea,String startdate,String duedate,Epic epic){
+		
+		this.storyname=storyname;
+		this.assignee=assignee;
+		this.status=status;
+		this.priority=priority;
+		this.prerequites=prerequites;
+		this.narratives=narratives;
+		this.acceptancecritirea=acceptancecritirea;
+		this.startdate=startdate;
+		this.duedate=duedate;
+		this.epic = epic;
+	}
 	
 	@Id
     @Column(name = "Story_ID")
@@ -86,38 +117,12 @@ public class Userstory {
 		this.duedate = duedate;
 	}
 	
-	public Userstory(){
-		
-	}
-	
-	public Userstory(String storyname,String assignee,String status,String priority,String prerequites,
-			String narratives,String acceptancecritirea,String startdate,String duedate,Epic epic){
-		this.storyname=storyname;
-		this.assignee=assignee;
-		this.status=status;
-		this.priority=priority;
-		this.prerequites=prerequites;
-		this.narratives=narratives;
-		this.acceptancecritirea=acceptancecritirea;
-		this.startdate=startdate;
-		this.duedate=duedate;
-		this.epic=epic;
-		
-	}
-		
-	private Epic epic;
-	
-	@ManyToOne
-    @JoinColumn(name = "Epic_ID")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "Epic_ID", nullable = false)
 	public Epic getEpic() {
 		return epic;
 	}
 	public void setEpic(Epic epic) {
 		this.epic = epic;
 	}
-
-	
-	
-	
-
 }

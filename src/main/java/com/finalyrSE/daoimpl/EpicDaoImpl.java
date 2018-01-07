@@ -1,6 +1,7 @@
 package com.finalyrSE.daoimpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,6 +30,16 @@ public class EpicDaoImpl implements EpicDao{
 	public List<Epic> getAll() {
 		return (List<Epic>) currentSession().createCriteria(Epic.class).list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Map> getEpicnames() {
+		
+		System.out.println("awa");
+		return (List<Map>) currentSession().createCriteria(Epic.class).list();
+	}
+
+	
 
 
 }

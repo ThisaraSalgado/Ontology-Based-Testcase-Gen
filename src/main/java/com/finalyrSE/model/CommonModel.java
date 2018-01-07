@@ -1,6 +1,7 @@
 package com.finalyrSE.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class CommonModel {
 	private Epic epic;
@@ -8,6 +9,14 @@ public class CommonModel {
 	private Userstory userstory;
 	private User user;
 	private List<String> epicNameList;
+	Map<String,String> epicList;
+	
+	public Map<String, String> getEpicList() {
+		return epicList;
+	}
+	public void setEpicList(Map<String, String> epicList) {
+		this.epicList = epicList;
+	}
 	
 	public List<String> getEpicNameList() {
 		return epicNameList;

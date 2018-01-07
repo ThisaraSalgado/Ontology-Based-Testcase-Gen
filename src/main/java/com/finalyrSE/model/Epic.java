@@ -1,52 +1,65 @@
 package com.finalyrSE.model;
 
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
 
 @Entity
 public class Epic {
 	
-	private int epic_id;
+	private int Epic_ID;
 	private String epicname;
 	
+	private Set<Userstory> story = new HashSet<Userstory>(0);
+		
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "epic")
+	public Set<Userstory> getStory() {
+		return story;
+	}
+
+	public void setStory(Set<Userstory> story) {
+		this.story = story;
+	}
+
 	public Epic(){}
 	
-	public Epic(String epicname){
-		this.epicname=epicname;
+	public Epic(String epicname, Set<Userstory> story){
+		this.epicname = epicname;
+		this.story = story;
+	}
+	@Id
+    @GeneratedValue
+    @Column(name = "Epic_ID")
+	public int getEpic_ID() {
+		return Epic_ID;
 	}
 	
-	@Id
-    @Column(name = "Epic_ID")
-    @GeneratedValue
-	public int getEpic_id() {
-		return epic_id;
+	public void setEpic_ID(int Epic_ID) {
+		this.Epic_ID = Epic_ID;
 	}
-	public void setEpic_id(int epic_id) {
-		this.epic_id = epic_id;
-	}
+	
 	public String getEpicname() {
 		return epicname;
 	}
 	public void setEpicname(String epicname) {
 		this.epicname = epicname;
 	}
-		
-	private Set<Userstory> userstorys;
 	
-	@OneToMany(mappedBy = "epic", cascade = CascadeType.ALL)
-	public Set<Userstory> getUserstorys() {
-		return userstorys;
-	}
-
-	public void setUserstorys(Set<Userstory> userstorys) {
-		this.userstorys = userstorys;
-	}
+	
 
 
 

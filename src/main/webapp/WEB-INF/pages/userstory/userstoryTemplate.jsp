@@ -117,16 +117,16 @@ textarea {
 	<div>
 		<div align="center" class="styleheading">User Story Form</div>
 		
-		<%-- <c:forEach items="${epicList}" var="epics">
-		<c:out value="${epics.epicname}"/>
-		
 		<div>
-			<form:label path="epic.epicname">Epic Name</form:label>
-			<form:select path="epic.epicname">
-        		<form:options items="${epics.epicname}" ></form:options>
+			<form:label path="userstory.epic.Epic_ID">Epic Name</form:label>
+			<form:select path="userstory.epic.Epic_ID">
+       		    <c:forEach var="item" items="${epicList}">
+       				<option value="${item.epic_ID}">${item.epicname}</option>
+   				</c:forEach>
     		</form:select>
 		</div>
-		</c:forEach> --%>
+		
+		
 		<%-- <div>
 			<form:label path="userstory.Epic_ID">Epic No</form:label>
 			<select id="epic" name="epic">
