@@ -126,15 +126,6 @@ textarea {
     		</form:select>
 		</div>
 		
-		
-		<%-- <div>
-			<form:label path="userstory.Epic_ID">Epic No</form:label>
-			<select id="epic" name="epic">
-			  <option value="1">Group Management</option>
-  			  <option value="2">User Management</option>
-  			 </select>
-		
-		<div> --%>
 			<form:label  path="userstory.storyname">User Story Name </form:label>
 			<form:textarea path="userstory.storyname"/>
 		</div>
@@ -151,11 +142,11 @@ textarea {
 		
 		<div>
 			<form:label path="userstory.priority">Priority</form:label>
-			<select id="job" name="field4">
+			<form:select path="userstory.priority">
 			  <option value="High">High</option>
   			  <option value="Medium">Medium</option>
   			  <option value="Low">Low</option>
-  			 </select>
+  			 </form:select>
 		</div>
 		
 		<div>
