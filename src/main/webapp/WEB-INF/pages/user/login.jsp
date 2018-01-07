@@ -8,12 +8,11 @@
 </head>
 
 <style>
-form {
-    
-    width: 320px;
-    padding: 10px;
-    border: 8px solid #f1f1f1;
-    margin: auto;
+
+.loginform {
+    border: 3px solid darkseagreen;
+    margin: 100px auto 75px auto;
+    background-color: darkcyan;
 }
 
 input[type=text], input[type=password] {
@@ -26,7 +25,7 @@ input[type=text], input[type=password] {
 }
 
 button {
-    background-color: #4CAF50;
+    background-color: #4CAF22;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -64,6 +63,17 @@ img.avatar {
     border-radius: 50%;
 }
 
+.logincontainer {
+    text-align: center;
+    color: white;
+    margin: 24px 0 12px 0;
+    font-size: 30px;
+}
+
+label {
+	color: white;
+}
+
 .container {
     
     max-width: 280px;
@@ -93,8 +103,10 @@ span.psw {
 <body>
 
 <form:form method="post" action="login" modelAttribute="user">
-  <div class="container">
-  <h2>Login</h2>
+  <div class="loginform container">
+    <div class="logincontainer">
+    	<label> User Login</label>
+    </div>
     <form:label path="username">Username</form:label>
     <form:input path="username" placeholder="Enter Username"/>
 
@@ -102,17 +114,16 @@ span.psw {
     <form:input path="password" type="password" placeholder="Enter Password"/>
         
     <!-- <button type="submit">Login</button> -->
-    <input type="submit"  value="Login"/>
+    <button type="submit">Login</button>
     <input type="checkbox" checked="checked"> Remember me
     
-  <div class="msgError">${message}</div>
+  	<div class="msgError">${message}</div>
   
-  <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn">Cancel</button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
-  </div>
+  	<div class="container" style="background-color:#f1f1f1">
+    	<button type="button" class="cancelbtn">Cancel</button>
+    	<span class="psw">Forgot <a href="#">password?</a></span>
+  	</div>
   </div>
 </form:form>
-
 </body>
 </html>

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.finalyrSE.dao.UserstoryDao;
+import com.finalyrSE.model.CommonModel;
 import com.finalyrSE.model.Fulluserstory;
+import com.finalyrSE.model.Userstory;
 import com.finalyrSE.service.UserstoryService;
 
 @Service("userstoryService")
@@ -18,19 +20,19 @@ public class UserstoryServiceImpl implements UserstoryService {
 	UserstoryDao userstoryDao;
 
 	@Override
-	public void create(Fulluserstory fulluserstory) {
-		userstoryDao.create(fulluserstory);
+	public void create(Userstory userstory) {
+		userstoryDao.create(userstory);
 		
 	}
 
 	@Override
-	public void update(Fulluserstory fulluserstory) {
-		userstoryDao.update(fulluserstory);
+	public void update(Userstory userstory) {
+		userstoryDao.update(userstory);
 		
 	}
 
 	@Override
-	public Fulluserstory edit(int userstoryId) {
+	public Userstory edit(int userstoryId) {
 		return userstoryDao.edit(userstoryId);
 	}
 
@@ -41,13 +43,19 @@ public class UserstoryServiceImpl implements UserstoryService {
 	}
 
 	@Override
-	public Fulluserstory find(int userstoryId) {
+	public Userstory find(int userstoryId) {
 		return userstoryDao.find(userstoryId);
 	}
 
 	@Override
-	public List<Fulluserstory> getAll() {
+	public List<Userstory> getAll() {
 		return userstoryDao.getAll();
+	}
+
+	@Override
+	public void create(CommonModel commonModel) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
