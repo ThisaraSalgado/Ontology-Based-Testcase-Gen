@@ -1,5 +1,6 @@
 package com.finalyrSE.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,7 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
+import junit.framework.TestCase;
 
 @Entity
 public class Userstory {
@@ -34,6 +38,17 @@ public class Userstory {
 	
 	private Epic epic;
 	
+	private Set<Testcase> testcase = new HashSet<Testcase>(0);
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userstory")
+	public Set<Testcase> getStory() {
+		return testcase;
+	}
+
+	public void setStory(Set<Testcase> testcase) {
+		this.testcase = testcase;
+	}
+	
 	public Userstory(){
 		
 	}
@@ -51,6 +66,17 @@ public class Userstory {
 		this.startdate=startdate;
 		this.duedate=duedate;
 		this.epic = epic;
+	}
+	
+	public Userstory(String storyname,String assignee,String status,String priority,String prerequites,
+			String narratives,String acceptancecritirea,String startdate,String duedate,Set<Testcase> testcase){
+		this.priority=priority;
+		this.prerequites=prerequites;
+		this.narratives=narratives;
+		this.acceptancecritirea=acceptancecritirea;
+		this.startdate=startdate;
+		this.duedate=duedate;
+		this.testcase = testcase;
 	}
 	
 	@Id

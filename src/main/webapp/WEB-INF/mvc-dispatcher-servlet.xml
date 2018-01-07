@@ -55,6 +55,7 @@
 				<value>com.finalyrSE.model.Epic</value>
 				<value>com.finalyrSE.model.Userstory</value>
 				<value>com.finalyrSE.model.CommonModel</value>
+				<value>com.finalyrSE.model.Testcase</value>
 			</list>
 		</property>
 		
