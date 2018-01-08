@@ -485,4 +485,52 @@ public class JenaTestServiceImpl implements JenaTestService {
 		return result;
 	}
 
+	@Override
+	public String findPrecondition(String action) {
+		String filename = "C:/common12-Copy-Copy.rdf";
+		System.out.println("called here");
+		// Create an empty model
+		Model model = ModelFactory.createDefaultModel();
+				
+		// Use the FileManager to find the input file
+		InputStream in = FileManager.get().open(filename);
+
+		if (in == null)
+			throw new IllegalArgumentException("File: "+filename+" not found");
+
+		// Read the RDF/XML file
+		model.read(in, null);
+		String pred = action;
+		ParameterizedSparqlString pss = new ParameterizedSparqlString();
+		// List all the resources with the property "vcard:FN"
+		pss.setCommandText("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+						"PREFIX owl: <http://www.w3.org/2002/07/owl#>"+
+						"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+						"PREFIX test: <http://www.semanticweb.org/prabhavi/ontologies/2017/9/untitled-ontology-53#>" +
+						"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
+						"PREFIX skos: <http://www.w3.org/2004/02/skos/core#>" +
+						"SELECT ?x "+
+						"WHERE {" +
+						" test:"+action+" test:hasPreCondition ?x ."+
+						"}");
+		String queryString = pss.toString();
+		System.out.println(queryString);
+		Query query = QueryFactory.create(queryString);
+		QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
+		ResultSet results = qexec.execSelect() ;
+		String result = "";
+		while (results.hasNext())
+		{
+			System.out.println("in file find pre condition class");
+			QuerySolution binding = results.nextSolution();
+			Resource subj = (Resource) binding.get("x");
+		    String resultString = subj.getURI();
+		    
+		    result = resultString.substring(resultString.lastIndexOf("#") +1);
+		    //get result as string without URI prefix, but different approach to get in from the query execution
+		    System.out.println("precondition is " + resultString.substring(resultString.lastIndexOf("#") +1));
+		}
+		return null;
+	}
+
 }
