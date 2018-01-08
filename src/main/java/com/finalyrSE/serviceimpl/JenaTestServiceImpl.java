@@ -133,8 +133,8 @@ public class JenaTestServiceImpl implements JenaTestService {
 
 		ParameterizedSparqlString pss = new ParameterizedSparqlString();
 
-		
-		
+		//String actex = checkActor(actor, action);
+		System.out.println(findSubclass(action));
 		ArrayList<String> resultDependency;
 		resultDependency = checkImplicits(actor, pred);
 		resultDependency.add(pred);
@@ -368,6 +368,107 @@ public class JenaTestServiceImpl implements JenaTestService {
 		    }
 		}
 		return resultadoConsulta;
+	}
+
+	@Override
+	public String checkActor(String actor, String action) {
+		String filename = "C:/common12-Copy-Copy.rdf";
+		System.out.println("file loaded");
+		System.out.println("check actor called");
+		// Create an empty model
+		Model model = ModelFactory.createDefaultModel();
+				
+		// Use the FileManager to find the input file
+		InputStream in = FileManager.get().open(filename);
+
+		if (in == null)
+			throw new IllegalArgumentException("File: "+filename+" not found");
+
+		// Read the RDF/XML file
+		//have to delete this code segment
+		model.read(in, null);
+		ParameterizedSparqlString pss = new ParameterizedSparqlString();
+		//pss.setLiteral(par, "Create");
+		// List all the resources with the property "vcard:FN"
+		pss.setCommandText("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+						"PREFIX owl: <http://www.w3.org/2002/07/owl#>"+
+						"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+						"PREFIX test: <http://www.semanticweb.org/prabhavi/ontologies/2017/9/untitled-ontology-53#>" +
+						"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
+						"PREFIX skos: <http://www.w3.org/2004/02/skos/core#>" +
+						"ASK {" +
+						" ?x rdf:type test:"+actor+" ."+
+						"}");
+		
+		String queryString = pss.toString();
+		System.out.println(queryString);
+		Query query = QueryFactory.create(queryString);
+		QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
+		ResultSet results = qexec.execSelect() ;
+		while (results.hasNext())
+		{
+			//System.out.println("in file 1");
+			QuerySolution binding = results.nextSolution();
+			Resource subj = (Resource) binding.get("x");
+		    String resultString = subj.getURI();
+		    String result;
+		    //get result as string without URI prefix, but different approach to get in from the query execution
+		    System.out.println(resultString.substring(resultString.lastIndexOf("#") +1));
+		}
+		
+		return null;
+	}
+
+	@Override
+	public String findSubclass(String action) {
+		String filename = "C:/common12-Copy-Copy.rdf";
+		System.out.println("file loaded");
+		System.out.println("check actor called");
+		// Create an empty model
+		Model model = ModelFactory.createDefaultModel();
+				
+		// Use the FileManager to find the input file
+		InputStream in = FileManager.get().open(filename);
+
+		if (in == null)
+			throw new IllegalArgumentException("File: "+filename+" not found");
+
+		// Read the RDF/XML file
+		//have to delete this code segment
+		model.read(in, null);
+		ParameterizedSparqlString pss = new ParameterizedSparqlString();
+		//pss.setLiteral(par, "Create");
+		// List all the resources with the property "vcard:FN"
+		pss.setCommandText("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+						"PREFIX owl: <http://www.w3.org/2002/07/owl#>"+
+						"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
+						"PREFIX test: <http://www.semanticweb.org/prabhavi/ontologies/2017/9/untitled-ontology-53#>" +
+						"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
+						"PREFIX skos: <http://www.w3.org/2004/02/skos/core#>" +
+						"SELECT ?t " +
+						"WHERE {" +
+						" test:"+action+" rdfs:domain ?t ."+
+						"}");
+		
+		String queryString = pss.toString();
+		System.out.println(queryString);
+		Query query = QueryFactory.create(queryString);
+		QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
+		ResultSet results = qexec.execSelect() ;
+		String result = "";
+		while (results.hasNext())
+		{
+			System.out.println("in file 1");
+			QuerySolution binding = results.nextSolution();
+			Resource subj = (Resource) binding.get("t");
+		    String resultString = subj.getURI();
+		    
+		    result = resultString.substring(resultString.lastIndexOf("#") +1);
+		    //get result as string without URI prefix, but different approach to get in from the query execution
+		    System.out.println("sub class is" + resultString.substring(resultString.lastIndexOf("#") +1));
+		}
+		
+		return result;
 	}
 
 }

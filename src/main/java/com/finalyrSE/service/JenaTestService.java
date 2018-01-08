@@ -9,4 +9,6 @@ public interface JenaTestService {
 	public ArrayList<String> checkImplicits(String actor, String action);
 	public ArrayList<String> getObjectDataProperties(String actor, String action, String object);
 	public ArrayList<String> getActionDataProperties(String actor,ArrayList<String> actions);
+	public String checkActor(String actor, String action);
+	public String findSubclass(String action);
 }
