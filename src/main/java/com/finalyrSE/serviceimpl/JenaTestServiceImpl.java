@@ -172,7 +172,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 			System.out.println("something went wrong");
 		}
 		
-		System.out.println("size of result dependancy array " + resultDependency.size());
+		//System.out.println("size of result dependancy array " + resultDependency.size());
 	
 		return null;
 	}
@@ -226,7 +226,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 		    String resultString = subj.getURI();
 		    String result;
 		    //get result as string without URI prefix, but different approach to get in from the query execution
-		    System.out.println(resultString.substring(resultString.lastIndexOf("#") +1));
+		    //System.out.println(resultString.substring(resultString.lastIndexOf("#") +1));
 		    hasDependecyList.add(resultString.substring(resultString.lastIndexOf("#") +1));
 			/*String ob = binding.getLiteral("x").toString();
 			System.out.println();*/
@@ -239,10 +239,10 @@ public class JenaTestServiceImpl implements JenaTestService {
 		}
 		else{
 			System.out.println("has dependency array");
-			for(int i = 0;i<hasDependecyList.size();i++){
+			/*for(int i = 0;i<hasDependecyList.size();i++){
 		    	System.out.println("has dependency " + hasDependecyList.get(i));
 		    	//result = resultString.substring(resultString.lastIndexOf("#") +1);
-		    }
+		    }*/
 			return hasDependecyList;
 		}
 		
@@ -283,7 +283,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 							"}");
 			
 			String queryString = pss.toString();
-			System.out.println(queryString);
+			//System.out.println(queryString); 
 			Query query = QueryFactory.create(queryString);
 			QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
 			ResultSet results = qexec.execSelect() ;
@@ -296,7 +296,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 			    String resultString = subj.getURI();
 			    String result;
 			    //get result as string without URI prefix, but different approach to get in from the query execution
-			    System.out.println(resultString.substring(resultString.lastIndexOf("#") +1));
+			    //System.out.println(resultString.substring(resultString.lastIndexOf("#") +1));
 			    resultadoConsulta.add(resultString.substring(resultString.lastIndexOf("#") +1));
 				/*String ob = binding.getLiteral("x").toString();
 				System.out.println();*/
@@ -307,10 +307,10 @@ public class JenaTestServiceImpl implements JenaTestService {
 				//return resultadoConsulta;
 			}
 			else{
-				for(int j = 0;j<resultadoConsulta.size();j++){
+				/*for(int j = 0;j<resultadoConsulta.size();j++){
 			    	System.out.println("Create Group Using " + resultadoConsulta.get(j));
 			    	//result = resultString.substring(resultString.lastIndexOf("#") +1);
-			    }
+			    }*/
 				
 			}
 		}
@@ -369,17 +369,17 @@ public class JenaTestServiceImpl implements JenaTestService {
 		    String resultString = subj.getURI();
 		    String result;
 		    //get result as string without URI prefix, but different approach to get in from the query execution
-		    System.out.println(resultString.substring(resultString.lastIndexOf("#") +1));
+		    //System.out.println(resultString.substring(resultString.lastIndexOf("#") +1));
 		    resultadoConsulta.add(resultString.substring(resultString.lastIndexOf("#") +1));
 		}
 		if (resultadoConsulta.size()==0){
 			System.out.println("To such relationship, generate test cases manually");
 		}
 		else{
-			for(int i = 0;i<resultadoConsulta.size();i++){
+			/*for(int i = 0;i<resultadoConsulta.size();i++){
 		    	System.out.println("Create Group Using " + resultadoConsulta.get(i));
 		    	//result = resultString.substring(resultString.lastIndexOf("#") +1);
-		    }
+		    }*/
 		}
 		return resultadoConsulta;
 	}
@@ -479,7 +479,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 		    
 		    result = resultString.substring(resultString.lastIndexOf("#") +1);
 		    //get result as string without URI prefix, but different approach to get in from the query execution
-		    System.out.println("sub class is" + resultString.substring(resultString.lastIndexOf("#") +1));
+		    //System.out.println("sub class is" + resultString.substring(resultString.lastIndexOf("#") +1));
 		}
 		
 		return result;
@@ -528,7 +528,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 		    
 		    result = resultString.substring(resultString.lastIndexOf("#") +1);
 		    //get result as string without URI prefix, but different approach to get in from the query execution
-		    System.out.println("precondition is " + resultString.substring(resultString.lastIndexOf("#") +1));
+		    //System.out.println("precondition is " + resultString.substring(resultString.lastIndexOf("#") +1));
 		}
 		return null;
 	}
