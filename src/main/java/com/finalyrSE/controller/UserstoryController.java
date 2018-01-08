@@ -110,30 +110,35 @@ public class UserstoryController {
 		List<Userstory> storyList=new ArrayList<Userstory>();
 		if(actionButton.equals("Save")){
 			Userstory userstory=commonModel.getUserstory();
-			
-			
 			userstoryService.create(userstory);
-			
-			System.out.println("story added."); ///// epic id eka add wenne naaaa////
+			System.out.println("story added."); 
 			model=new ModelAndView("index", "commonModel", commonModel);		
 			storyList=userstoryService.getAll();
 			model.addObject("storyList",storyList);
 			return model;
 		}
+		
 		else if(actionButton.equals("Save and Generate")){
 			System.out.println("in Save and Generate");
 			Userstory userstory=commonModel.getUserstory();
-			userstoryService.create(userstory);
-			System.out.println("story added.");
 			String userstorytext=commonModel.getUserstory().getStoryname();
 			ArrayList<String> entitylist=entityextractor.extractTriplets(userstorytext);
-			String user=entitylist.get(0);
-			String predicate=entitylist.get(1);
-			String object=entitylist.get(2);
-			jenaService.jenaWithParam(user, predicate, object);
-			model=new ModelAndView("userstory/entities", "commonModel", commonModel);
-			model.addObject("entity",entitylist);
-			return model;
+			if(entitylist.size()!= 3){
+				System.out.println("Sentence does not match with the actor, action, object concept.");
+			}
+			else{
+				userstoryService.create(userstory);
+				System.out.println("story added to userstory table.");
+				String user=entitylist.get(0);
+				String predicate=entitylist.get(1);
+				String object=entitylist.get(2);
+				jenaService.jenaWithParam(user, predicate, object);
+				model=new ModelAndView("userstory/entities", "commonModel", commonModel);
+				model.addObject("entity",entitylist);
+				return model;
+			}
+			
+			
 		}
 		 return model ;
 	}

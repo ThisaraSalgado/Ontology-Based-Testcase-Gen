@@ -38,9 +38,9 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
 	@SuppressWarnings("deprecation")
 	@Override
 	public ArrayList<String> extractTriplets(String text) {
-		String actor;
-		String predicate;
-		String Object;
+		String actor=null;
+		String predicate = null;
+		String Object = null;
 		ArrayList<String> strary=new ArrayList<String>();
 		ArrayList<String> straryactor=new ArrayList<String>();
 		ArrayList<String> returnArray=new ArrayList<String>();
@@ -48,7 +48,7 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
 		String text1 = null;
 		
 		String processedWord=preProcess(text);
-		System.out.println(processedWord);
+		//System.out.println(processedWord);
 		if(processedWord.contains("so that")){
 			text1=processedWord.substring(0, processedWord.indexOf("so that"));
 		}
@@ -56,23 +56,19 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
 			text1=processedWord;
 		}
 		
-		System.out.println(text1);
+		//System.out.println(text1);
 		
 		if(text1.contains("want")){
 			text2 = text1.split("i want to"); // I want phrase get removed//
 			System.out.println(text2[0]); // eg: As an admin//
 			System.out.println(text2[1]); // eg: add a new user group to the system//
 		}
-	/*	String act=text2[0].substring(text2[0].indexOf("as a"));
-		System.out.println(act);*/
 		
 		if(text1.contains("need")){
 			text2 = text1.split("i need to be able to"); // this phrase get removed//
 		}
 		 
-		
-		/*String sent1=text2[1].trim();
-		String sent2=text2[0].trim();*/
+
 		
 		Properties props=new Properties();
 		props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,parse");
@@ -105,12 +101,6 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
 					
 				}
 					if(i==0){
-						//straryactor.add(word);
-						Tree tree=sentence.get(TreeAnnotation.class);
-					/*	System.out.println("tree is this");
-						System.out.println(tree);
-						System.out.println(" ====================================");*/
-						
 						
 						SemanticGraph dependencies = sentence.get(CollapsedCCProcessedDependenciesAnnotation.class);
 						Collection<TypedDependency> tdl=dependencies.typedDependencies();
@@ -118,59 +108,55 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
 
 						for (Object obj : tdl.toArray()) {
 							TypedDependency dep = (TypedDependency) obj;
-							/*System.out.println(dep);
-							System.out.println("@@@@@@@@@@@@@@@@@@");
-							System.out.println(dep.reln());
-							System.out.println("[[[[[[[[");*/
+							
 							String wordGov = dep.gov().toString();
 							String wordDep = dep.dep().toString();
 							String word=wordDep.substring(0,wordDep.indexOf("/"));
 							
-							//String posGov = posInfo.get(wordGov);
-							//String posDep = posInfo.get(wordDep);
-							//String dependencyString = dep.reln().toString() + "(" + dep.gov().pennString().trim() + "-" + posGov + ", " + dep.dep().pennString().trim() + "-" + posDep + ")";
-							//output.add(dependencyString);
-							/*System.out.println(wordGov);
-							System.out.println(wordDep);
-							System.out.println(word);*/
-							String outword=wordDep.substring(0,wordDep.indexOf("/"));
+							
+							String[] dependent_word=wordDep.split("/");
+							String depword=dependent_word[0];//eg: admin
+							String POS_tag=dependent_word[1];//eg: NN
 							
 							if(dep.reln().toString().equals("root")){
-								actor=outword;
+								if(POS_tag.equals("NN")){
+									actor=depword;
+								}
+								else{
+									System.out.println("actor not valid");
+								}
 								Annotation tokenAnnotation = new Annotation(actor);
 								pipeline.annotate(tokenAnnotation);  // necessary for the LemmaAnnotation to be set.
 								List<CoreMap> list = tokenAnnotation.get(SentencesAnnotation.class);
 								String tokenLemma = list.get(0).get(TokensAnnotation.class).get(0).get(LemmaAnnotation.class);
 								//System.out.println(tokenLemma);
 								returnArray.add(0,tokenLemma);
-								System.out.println("actor= "+tokenLemma);
+								System.out.println("actor= "+tokenLemma);			
 							}
 							
 						}
 					}
 					else if(i==1){
-						//strary.add(word);
-						Tree tree=sentence.get(TreeAnnotation.class);
-						/*System.out.println("tree is this");
-						System.out.println(tree);
-						System.out.println(" ====================================");*/
-						
-						
 						SemanticGraph dependencies = sentence.get(CollapsedCCProcessedDependenciesAnnotation.class);
 						Collection<TypedDependency> tdl=dependencies.typedDependencies();
 						System.out.println(tdl);
 						
 						for (Object obj : tdl.toArray()) {
 							TypedDependency dep = (TypedDependency) obj;
-							/*System.out.println(dep.reln());
-							System.out.println("[[[[[[[[");*/
+							
 							String wordGov = dep.gov().toString();
 							String wordDep = dep.dep().toString();
 							String outword=wordDep.substring(0,wordDep.indexOf("/"));
+							String[] dependent_word=wordDep.split("/");
+							String depword=dependent_word[0];//eg: admin
+							String POS_tag=dependent_word[1];//eg: NN
 							
-							/*System.out.println("wordGov "+wordGov);
-							System.out.println("wordDep "+wordDep);
-							System.out.println("outword "+outword);*/
+							String wordGovrnr=null;
+							if(wordGov.contains("/")){
+								wordGovrnr=wordGov.substring(0,wordGov.indexOf("/"));
+							}
+							
+							
 							
 							if(dep.reln().toString().equals("root")){
 								predicate=outword;
@@ -182,28 +168,25 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
 								returnArray.add(1,tokenLemma);
 								System.out.println("predicate= "+tokenLemma);
 							}
-							if(dep.reln().toString().equals("dobj")||dep.reln().toString().equals("dep")){
-								Object=outword;
-								Annotation tokenAnnotation = new Annotation(Object);
-								pipeline.annotate(tokenAnnotation);  // necessary for the LemmaAnnotation to be set.
-								List<CoreMap> list = tokenAnnotation.get(SentencesAnnotation.class);
-								String tokenLemma = list.get(0).get(TokensAnnotation.class).get(0).get(LemmaAnnotation.class);
-								//System.out.println(tokenLemma);
-								returnArray.add(2,tokenLemma);
-								System.out.println("object= "+tokenLemma);
-							}
 							
-						}
-					
-					}
-					
-				
-				
-			}
-		
-		
-		
-		
+							if(dep.reln().toString().equals("dobj")||dep.reln().toString().equals("dep")){
+								if(wordGovrnr.equals(predicate)){
+									Object=depword;
+									Annotation tokenAnnotation = new Annotation(Object);
+									pipeline.annotate(tokenAnnotation);  // necessary for the LemmaAnnotation to be set.
+									List<CoreMap> list = tokenAnnotation.get(SentencesAnnotation.class);
+									String tokenLemma = list.get(0).get(TokensAnnotation.class).get(0).get(LemmaAnnotation.class);
+									//System.out.println(tokenLemma);
+									returnArray.add(2,tokenLemma);
+									System.out.println("object= "+tokenLemma);
+								}
+								else{
+									System.out.println("Invalid object");
+								}		
+							}						
+						}				
+					}												
+			}		
 	}
 		
 		System.out.println(returnArray);
@@ -213,9 +196,8 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
 
 	@Override
 	public String preProcess(String text) {
-		
-		String preproceSent=text.toLowerCase().replaceAll("[^a-zA-Z ]", "");
-		
+		String preproceSent=text.toLowerCase().replaceAll("[^a-zA-Z ]", "");	
 		return preproceSent;
 	}
+	
 }
