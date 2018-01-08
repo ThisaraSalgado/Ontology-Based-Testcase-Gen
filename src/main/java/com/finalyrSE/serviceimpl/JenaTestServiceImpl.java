@@ -128,38 +128,52 @@ public class JenaTestServiceImpl implements JenaTestService {
 		String obj = object;
 
 		String par = action;
-		//String obj = object;
-		//String obj = "Group";
 
 		ParameterizedSparqlString pss = new ParameterizedSparqlString();
 
 		//String actex = checkActor(actor, action);
-		System.out.println(findSubclass(action));
-		ArrayList<String> resultDependency;
-		resultDependency = checkImplicits(actor, pred);
+		
+		String subClassofAction = findSubclass(action);
+		System.out.println( "derived subclass is " + subClassofAction);
+		ArrayList<String> resultDependency; //arraylist for store implicit action dependencies
+		resultDependency = checkImplicits(actor, pred);//find implicit relationships of an given action
 		resultDependency.add(pred);
 		
-		ArrayList<String> actionProperties;
-		actionProperties = getActionDataProperties(act,resultDependency);
+		ArrayList<String> actionProperties;//arraylist to collect action properties
+		ArrayList<String> dataProperties; // arraylist to collect object data properties
 		
-		ArrayList<String> dataProperties;
-		dataProperties = getObjectDataProperties(act, pred, obj);
+		if(subClassofAction.equals("objectChange")){
+			actionProperties = getActionDataProperties(act,resultDependency);
+			dataProperties = getObjectDataProperties(act, pred, obj);
+			for(int j = 0 ; j<actionProperties.size();j++){
+				System.out.println("action properties " + actionProperties.get(j));
+			}
+			
+			for(int k = 0 ; k<dataProperties.size();k++){
+				System.out.println("data properties " + dataProperties.get(k));
+			}
+			System.out.println("size of result actionproperty array " + actionProperties.size());
+			System.out.println("size of result dataproperty array " + dataProperties.size());
+			for(int k = 0 ; k<dataProperties.size();k++){
+				System.out.println("data properties " + dataProperties.get(k));
+			}
+			for(int k = 0 ; k<actionProperties.size();k++){
+				System.out.println("data properties " + actionProperties.get(k));
+			}
+		}
+		else if(subClassofAction.equals("objectNotChange")){
+			actionProperties = getActionDataProperties(act,resultDependency);
+			for(int j = 0 ; j<actionProperties.size();j++){
+				System.out.println("action properties " + actionProperties.get(j));
+			}
+		}
+		
+		else{
+			System.out.println("something went wrong");
+		}
 		
 		System.out.println("size of result dependancy array " + resultDependency.size());
-		System.out.println("size of result actionproperty array " + actionProperties.size());
-		System.out.println("size of result dataproperty array " + dataProperties.size());
 	
-		for(int i = 0 ; i<resultDependency.size();i++){
-			System.out.println("has dependency " + resultDependency.get(i));
-		}
-		
-		for(int j = 0 ; j<actionProperties.size();j++){
-			System.out.println("action properties " + actionProperties.get(j));
-		}
-		
-		for(int k = 0 ; k<dataProperties.size();k++){
-			System.out.println("data properties " + dataProperties.get(k));
-		}
 		return null;
 	}
 
