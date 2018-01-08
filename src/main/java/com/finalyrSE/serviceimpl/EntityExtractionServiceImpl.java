@@ -179,9 +179,6 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
 									//System.out.println(tokenLemma);
 									returnArray.add(2,tokenLemma);
 									System.out.println("object= "+tokenLemma);
-								}
-								else{
-									System.out.println("Invalid object");
 								}		
 							}						
 						}				

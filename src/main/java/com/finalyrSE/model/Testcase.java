@@ -15,14 +15,14 @@ public class Testcase {
 	private String testcase_name;
 	private String pre_condition;
 	private String expected_result;
-	private boolean status;
+	private int status;
 	private String approveby;
 	
 	private Userstory userstory;
 	
 	public Testcase(){}
 	
-	public Testcase(String testcasename, String precondition, String result, boolean status,String approvedby, Userstory userstory ){
+	public Testcase(String testcasename, String precondition, String result, int status,String approvedby, Userstory userstory ){
 		this.testcase_name = testcasename;
 		this.pre_condition = precondition;
 		this.expected_result = result;
@@ -65,12 +65,13 @@ public class Testcase {
 	public void setExpected_result(String expected_result) {
 		this.expected_result = expected_result;
 	}
+	
 
-	public boolean isStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
