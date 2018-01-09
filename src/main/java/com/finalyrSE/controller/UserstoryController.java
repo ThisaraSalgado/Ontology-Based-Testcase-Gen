@@ -102,6 +102,7 @@ public class UserstoryController {
 		List<Userstory> storyList=new ArrayList<Userstory>();
 		if(actionButton.equals("Save")){
 			Userstory userstory=commonModel.getUserstory();
+			userstory.setStatus("Pending");
 			userstoryService.create(userstory);
 			System.out.println("story added."); 
 			model=new ModelAndView("index", "commonModel", commonModel);		
@@ -119,6 +120,7 @@ public class UserstoryController {
 				System.out.println("Sentence does not match with the actor, action, object concept.");
 			}
 			else{
+				userstory.setStatus("Generated");
 				userstoryService.create(userstory);
 				System.out.println("story added to userstory table.");
 				System.out.println(" ========== "+userstory.getStoryId());

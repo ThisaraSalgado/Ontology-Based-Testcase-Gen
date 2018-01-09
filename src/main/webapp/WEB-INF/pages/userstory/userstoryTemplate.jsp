@@ -138,10 +138,6 @@ textarea {
 			<form:input path="userstory.assignee"/>
 		</div>
 		
-		<div>
-			<form:label path="userstory.status">Status</form:label>
-			<form:input path="userstory.status"/>
-		</div>
 		
 		<div>
 			<form:label path="userstory.priority">Priority</form:label>
