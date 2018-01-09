@@ -97,14 +97,17 @@ font-size:20px;
 
 </head>
 <body>
-<form:form method="post" action="createnewstory/${userstoryId} }" modelAttribute="fulluserstory">
+
+
+<form:form method="post" action="createnewstory" modelAttribute="commonModel">
+
 <div class="container">
 <div class="deletebutton">
 <input id="deleteAllButton"  onClick="selected()" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Delete Selected"></input>
 </div>
 <div class="content">
-<c:if test="${!empty storyList}">
 
+<c:if test="${!empty storyList}">
 		<table class="table">
 		<thead>
 			<tr>
@@ -113,16 +116,16 @@ font-size:20px;
 				<th>User Story Name</th>
 				<th>Status</th>
 			</tr>
-			</thead>
+		</thead>
 			
 		<tbody>
 			<c:forEach items="${storyList}" var="userstory">
 			
 				<tr>
-				<td class="checkbox"><input name="checkbox" type="checkbox" value="${userstory.userstoryId}" id="####" ></td>
-				<td class="uId"><c:out value="${userstory.userstoryId}"/></td>
+				<td class="checkbox"><input name="checkbox" type="checkbox" value="${userstory.storyId}" id="####" ></td>
+				<td class="uId"><c:out value="${userstory.storyId}"/></td>
 				<td class="uName">
-					 <a href="<c:url value='/viewuserstory/${userstory.userstoryId}'/>"><c:out value="${userstory.userstoryname}"/></a>
+					 <a href="<c:url value='/viewuserstory/${userstory.storyId}'/>"><c:out value="${userstory.storyname}"/></a>
 				</td>
 				<td class="uStatus"><c:out value="${userstory.status}"/></td>	
 					

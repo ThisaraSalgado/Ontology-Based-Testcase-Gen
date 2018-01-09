@@ -68,7 +68,7 @@
 <body>
 <jsp:include page="..//header.jsp" />
 
-<form:form method="get" action="editdeletestory/${storyList.userstoryId}" modelAttribute="fulluserstory">
+<form:form method="get" action="editdeletestory/${storyList.storyId}" modelAttribute="commonModel">
 <div class="container">
 <c:if test="${!empty storyList}">
 
@@ -76,14 +76,14 @@
 		<tbody>
 		
 		
-			<tr><th>User Story Id</th><td>${storyList.userstoryId}</td></tr>
-			<tr><th>User Story Name</th><td>${storyList.userstoryname}</td></tr>			
+			<tr><th>User Story Id</th><td>${storyList.storyId}</td></tr>
+			<tr><th>User Story Name</th><td>${storyList.storyname}</td></tr>			
 			<tr><th>Status</th><td>${storyList.status}</td></tr>
 			<tr><th>Assignee</th><td>${storyList.assignee}</td></tr>
 			<tr><th>Priority</th><td>${storyList.priority}</td></tr>
-			<tr><th>Pre requisites</th><td>${storyList.prerequisites}</td></tr>
+			<tr><th>Pre requisites</th><td>${storyList.prerequites}</td></tr>
 			<tr><th>Narratives</th><td>${storyList.narratives}</td></tr>
-			<tr><th>acceptance Criteria</th><td>${storyList.acceptancecriteria}</td></tr>
+			<tr><th>acceptance Criteria</th><td>${storyList.acceptancecritirea}</td></tr>
 			<tr><th>Start Date</th><td>${storyList.startdate}</td></tr>
 			<tr><th>End Date</th><td>${storyList.duedate}</td></tr>
 		

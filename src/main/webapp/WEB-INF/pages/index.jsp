@@ -36,8 +36,11 @@
 <%-- <h2>${message }</h2> --%>
 
 
-		<form:form method="post" action="createnewstory" modelAttribute="fulluserstory">
-		<form:hidden path="userstoryId"/>
+		<form:form method="post" action="createnewstory" modelAttribute="commonModel">
+		<c:forEach items="${storyList}" var="userstory">
+		<form:hidden path="userstory.storyId"/>
+		
+		</c:forEach>
 		<div class="addButton" >
 				
 				<input id="addButton" class="btn-lg" type="submit" name="actionButton" value="Create new Userstory"></input>
