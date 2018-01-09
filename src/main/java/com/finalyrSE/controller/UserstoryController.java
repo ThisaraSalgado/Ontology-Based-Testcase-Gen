@@ -64,22 +64,8 @@ public class UserstoryController {
 		List<Epic> epicList=new ArrayList<Epic>();
 		
 		if (actionButton.equals("Create new Userstory")){
-			epicList= epicService.getAll();
-			
-			System.out.println(epicList+"epics");
-			
-			System.out.println(epicList.get(0).getEpic_ID());
-			System.out.println(epicList.get(0).getEpicname());
-			/*Map<String,String> epics = new LinkedHashMap<String,String>();
-			
-			epics.put(epicList.get(0).getEpic_id(), epicList.get(0).getEpicname());
-			epics.put(epicList.get(1).getEpic_id(), epicList.get(1).getEpicname());*/
-			//model.addObject("epicList",epicList);
-			
-			//commonModel.setEpicList(epics);
-			
+			epicList= epicService.getAll();											
 			model=new ModelAndView("userstory/userstoryTemplate", "commonModel", commonModel);
-			//model.addObject("epicList",epicList);
 			model.addObject("epicList",epicList);
 			//return model; 
 		}

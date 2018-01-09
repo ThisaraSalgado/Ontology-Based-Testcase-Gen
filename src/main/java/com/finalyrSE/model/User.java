@@ -14,7 +14,14 @@ public class User {
 	private int userId;
 	private String username;
 	private String password;
+	private String userrole;
 	
+	public String getUserrole() {
+		return userrole;
+	}
+	public void setUserrole(String userrole) {
+		this.userrole = userrole;
+	}
 	public int getUserId() {
 		return userId;
 	}
