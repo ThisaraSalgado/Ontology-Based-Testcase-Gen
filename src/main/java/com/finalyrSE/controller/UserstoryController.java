@@ -22,10 +22,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.finalyrSE.model.CommonModel;
 import com.finalyrSE.model.Epic;
 import com.finalyrSE.model.Fulluserstory;
+import com.finalyrSE.model.Testcase;
 import com.finalyrSE.model.Userstory;
 import com.finalyrSE.service.EntityExtractionService;
 import com.finalyrSE.service.EpicService;
 import com.finalyrSE.service.JenaTestService;
+import com.finalyrSE.service.TestcaseService;
 import com.finalyrSE.service.TripletExtracionService;
 import com.finalyrSE.service.UserstoryService;
 
@@ -42,10 +44,10 @@ public class UserstoryController {
 	EntityExtractionService entityextractor;
 	
 	@Autowired
-	TripletExtracionService tripletex;
+	JenaTestService jenaService;
 	
 	@Autowired
-	JenaTestService jenaService;
+	TestcaseService testcaseService;
 	
 	/*@RequestMapping(value="/", method=RequestMethod.GET)
 	public String sayHello(ModelMap model,Map<String,Object> map){
@@ -119,10 +121,29 @@ public class UserstoryController {
 			else{
 				userstoryService.create(userstory);
 				System.out.println("story added to userstory table.");
+				System.out.println(" ========== "+userstory.getStoryId());
 				String user=entitylist.get(0);
 				String predicate=entitylist.get(1);
 				String object=entitylist.get(2);
-				jenaService.jenaWithParam(user, predicate, object);
+				ArrayList<ArrayList<String>> testcaseArray=jenaService.jenaWithParam(user, predicate, object);
+				ArrayList<String> preConditionArray = testcaseArray.get(0);
+				ArrayList<String> testcases = testcaseArray.get(1);
+				String preCondition=preConditionArray.get(0);
+				
+				Testcase t=new Testcase();
+				for(int i=0;i<testcases.size();i++){
+					t.setTestcase_name(testcases.get(i));
+					int lastid=testcaseService.getLastid();
+					t.setTestcase_id(lastid+1);
+					t.setUserstory(userstory);
+					t.setPre_condition(preCondition);
+					t.setStatus("ready");
+					testcaseService.saveTestcase(t);
+				}
+				
+				
+				System.out.println("test case added");
+				
 				model=new ModelAndView("userstory/entities", "commonModel", commonModel);
 				model.addObject("entity",entitylist);
 				return model;
@@ -262,8 +283,7 @@ public class UserstoryController {
 	}*/
 	
 
-	
-	
+
 	@RequestMapping(value="/backtouserstory",method=RequestMethod.GET)
 	public ModelAndView backbutton(Map<String,Object> map){
 		//map.put("fulluserstory", new Fulluserstory());
@@ -275,6 +295,13 @@ public class UserstoryController {
 		model.addObject("storyList",storyList);
 		return model;
 		
+	}
+	
+	public String savetestCase(){
+		Testcase testcase=new Testcase();
+		
+		
+		return null;
 	}
 	
 

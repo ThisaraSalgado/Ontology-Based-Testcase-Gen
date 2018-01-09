@@ -15,14 +15,14 @@ public class Testcase {
 	private String testcase_name;
 	private String pre_condition;
 	private String expected_result;
-	private int status;
+	private String status;
 	private String approveby;
 	
 	private Userstory userstory;
 	
 	public Testcase(){}
 	
-	public Testcase(String testcasename, String precondition, String result, int status,String approvedby, Userstory userstory ){
+	public Testcase(String testcasename, String precondition, String result, String status,String approvedby, Userstory userstory ){
 		this.testcase_name = testcasename;
 		this.pre_condition = precondition;
 		this.expected_result = result;
@@ -32,7 +32,6 @@ public class Testcase {
 	}
 	
 	@Id
-	@GeneratedValue
 	@Column(name="TestCase_ID")
 	public int getTestcase_id() {
 		return testcase_id;
@@ -67,11 +66,11 @@ public class Testcase {
 	}
 	
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
