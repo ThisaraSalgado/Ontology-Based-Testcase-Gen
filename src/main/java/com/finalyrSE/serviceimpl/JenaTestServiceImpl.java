@@ -137,10 +137,13 @@ public class JenaTestServiceImpl implements JenaTestService {
 		String subClassofAction = findSubclass(action);
 		System.out.println( "derived subclass is " + subClassofAction);
 		ArrayList<String> resultPrecond = findPrecondition(action);
-		
+		String Precondition = "";
 		for(int i = 0;i<resultPrecond.size();i++){
-			System.out.println("pre conidtios are " + resultPrecond.get(i));
+			Precondition.concat(resultPrecond.get(i) + ",");
+			//System.out.println("pre conidtios are " + resultPrecond.get(i));
 		}
+		ArrayList<String> finalResultPrecond = new ArrayList<String>();
+		finalResultPrecond.add(Precondition);
 		ArrayList<String> resultDependency; //arraylist for store implicit action dependencies
 		resultDependency = checkImplicits(actor, pred);//find implicit relationships of an given action
 		resultDependency.add(pred);
@@ -190,7 +193,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 		
 		
 		//System.out.println("size of result dependancy array " + resultDependency.size());
-		finalArray.add(resultPrecond);
+		finalArray.add(finalResultPrecond);
 		finalArray.add(finalTestcases);
 	
 		return finalArray;
