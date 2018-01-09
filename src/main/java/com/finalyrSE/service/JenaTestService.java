@@ -11,5 +11,5 @@ public interface JenaTestService {
 	public ArrayList<String> getActionDataProperties(String actor,ArrayList<String> actions);
 	public String checkActor(String actor, String action);
 	public String findSubclass(String action);
-	public String findPrecondition(String action);
+	public ArrayList<String> findPrecondition(String action);
 }

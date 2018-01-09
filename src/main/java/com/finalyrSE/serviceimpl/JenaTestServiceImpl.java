@@ -132,36 +132,46 @@ public class JenaTestServiceImpl implements JenaTestService {
 		String par = action;
 
 		ParameterizedSparqlString pss = new ParameterizedSparqlString();
-
+		
 		//String actex = checkActor(actor, action);
 		
 		String subClassofAction = findSubclass(action);
 		System.out.println( "derived subclass is " + subClassofAction);
+		ArrayList<String> resultPrecond = findPrecondition(action);
+		for(int i = 0;i<resultPrecond.size();i++){
+			System.out.println("pre conidtios are " + resultPrecond.get(i));
+		}
 		ArrayList<String> resultDependency; //arraylist for store implicit action dependencies
 		resultDependency = checkImplicits(actor, pred);//find implicit relationships of an given action
 		resultDependency.add(pred);
 		
 		ArrayList<String> actionProperties;//arraylist to collect action properties
 		ArrayList<String> dataProperties; // arraylist to collect object data properties
-		
+		ArrayList<String> finalTestcases = new ArrayList<String>();
 		if(subClassofAction.equals("objectChange")){
 			actionProperties = getActionDataProperties(act,resultDependency);
 			dataProperties = getObjectDataProperties(act, pred, obj);
 			for(int j = 0 ; j<actionProperties.size();j++){
 				System.out.println("action properties " + actionProperties.get(j));
+				finalTestcases.add(" "+actionProperties.get(j)+"  ");
 			}
 			
 			for(int k = 0 ; k<dataProperties.size();k++){
 				System.out.println("data properties " + dataProperties.get(k));
+				finalTestcases.add(""+action+ " "+object+ " using "+dataProperties.get(k)+"  ");
 			}
 			System.out.println("size of result actionproperty array " + actionProperties.size());
 			System.out.println("size of result dataproperty array " + dataProperties.size());
-			for(int k = 0 ; k<dataProperties.size();k++){
+			
+			for(int l=0; l<finalTestcases.size();l++){
+				System.out.println("all properties " + finalTestcases.get(l));
+			}
+			/*for(int k = 0 ; k<dataProperties.size();k++){
 				System.out.println("data properties " + dataProperties.get(k));
 			}
 			for(int k = 0 ; k<actionProperties.size();k++){
 				System.out.println("data properties " + actionProperties.get(k));
-			}
+			}*/
 		}
 		else if(subClassofAction.equals("objectNotChange")){
 			actionProperties = getActionDataProperties(act,resultDependency);
@@ -491,7 +501,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 	}
 
 	@Override
-	public String findPrecondition(String action) {
+	public ArrayList<String> findPrecondition(String action) {
 		String filename = "C:/common12-Copy-Copy.rdf";
 		System.out.println("called here");
 		// Create an empty model
@@ -523,6 +533,9 @@ public class JenaTestServiceImpl implements JenaTestService {
 		Query query = QueryFactory.create(queryString);
 		QueryExecution qexec = QueryExecutionFactory.create(query, model) ;
 		ResultSet results = qexec.execSelect() ;
+		
+		ArrayList<String> resultPrecondition = new ArrayList<String>();
+		
 		String result = "";
 		while (results.hasNext())
 		{
@@ -532,10 +545,11 @@ public class JenaTestServiceImpl implements JenaTestService {
 		    String resultString = subj.getURI();
 		    
 		    result = resultString.substring(resultString.lastIndexOf("#") +1);
+		    resultPrecondition.add(resultString.substring(resultString.lastIndexOf("#") +1));
 		    //get result as string without URI prefix, but different approach to get in from the query execution
 		    //System.out.println("precondition is " + resultString.substring(resultString.lastIndexOf("#") +1));
 		}
-		return null;
+		return resultPrecondition;
 	}
 
 }
