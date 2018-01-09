@@ -121,14 +121,13 @@ public class JenaTestServiceImpl implements JenaTestService {
 	}
 
 	@Override
-	public String jenaWithParam(String actor, String action, String object) {
+	public ArrayList<ArrayList<String>> jenaWithParam(String actor, String action, String object) {
 		String filename = "C:/common12-Copy-Copy.rdf";
 		System.out.println("file loaded");
+		
 		String act = actor;
-
 		String pred = action;
 		String obj = object;
-
 		String par = action;
 
 		ParameterizedSparqlString pss = new ParameterizedSparqlString();
@@ -138,6 +137,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 		String subClassofAction = findSubclass(action);
 		System.out.println( "derived subclass is " + subClassofAction);
 		ArrayList<String> resultPrecond = findPrecondition(action);
+		
 		for(int i = 0;i<resultPrecond.size();i++){
 			System.out.println("pre conidtios are " + resultPrecond.get(i));
 		}
@@ -147,7 +147,9 @@ public class JenaTestServiceImpl implements JenaTestService {
 		
 		ArrayList<String> actionProperties;//arraylist to collect action properties
 		ArrayList<String> dataProperties; // arraylist to collect object data properties
+		
 		ArrayList<String> finalTestcases = new ArrayList<String>();
+		ArrayList<ArrayList<String>> finalArray = new ArrayList<ArrayList<String>>();
 		if(subClassofAction.equals("objectChange")){
 			actionProperties = getActionDataProperties(act,resultDependency);
 			dataProperties = getObjectDataProperties(act, pred, obj);
@@ -177,6 +179,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 			actionProperties = getActionDataProperties(act,resultDependency);
 			for(int j = 0 ; j<actionProperties.size();j++){
 				System.out.println("action properties " + actionProperties.get(j));
+				finalTestcases.add(" "+actionProperties.get(j)+"  ");
 			}
 		}
 		
@@ -184,9 +187,13 @@ public class JenaTestServiceImpl implements JenaTestService {
 			System.out.println("something went wrong");
 		}
 		
+		
+		
 		//System.out.println("size of result dependancy array " + resultDependency.size());
+		finalArray.add(resultPrecond);
+		finalArray.add(finalTestcases);
 	
-		return null;
+		return finalArray;
 	}
 
 	@Override
