@@ -83,7 +83,7 @@ font-size:20px;
 </head>
 <body>
 <jsp:include page="..//header.jsp" />
-<form:form method="post" action="testcaseview" >
+<form:form method="post" action="testcaseview" ModelAttribute="testcase">
 <div align="center" class="heading"><p>Add New Group</p></div>
 <div class="content">
 <table class="table" width="600">

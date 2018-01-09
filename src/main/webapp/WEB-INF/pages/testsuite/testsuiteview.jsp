@@ -20,7 +20,7 @@ form {
   background-color: #F8F8F8;
 }
 
-.userStoryList{
+.epicList{
 font-family:serif;
 font-weight: bold;
 font-size:25px;
@@ -40,14 +40,14 @@ font-family:serif;
 <jsp:include page="..//header.jsp" />
 
 
-	<form:form method="post"  >
+	<form:form method="post" modelAttribute="commonModel" >
 	<div>
 	
 		<div align="center" class="heading">Test Suite For:</div>
-		<div class="userStoryList">
-		<ul><a href="<c:url value='viewuserstoryvise'/>">Group Management</a></ul>
-		<ul><a href="<c:url value='viewuserstoryvise'/>">User Management</a></ul>
-		<ul><a href="<c:url value='viewuserstoryvise'/>">Server Management</a></ul>
+		<div class="epicList">
+			<c:forEach var="item" items="${epicList}">
+			<ul><a href="<c:url value="viewuserstoryvise/${item.epic_ID} "/>"> ${item.epicname}</a></ul>
+			</c:forEach>
 		</div>
 	</div>
 	</form:form>	

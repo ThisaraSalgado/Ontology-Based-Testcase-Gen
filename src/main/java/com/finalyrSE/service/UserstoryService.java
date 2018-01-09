@@ -14,5 +14,6 @@ public interface UserstoryService {
 	public Userstory find(int userstoryId);
 	public List<Userstory> getAll();
 	public void create(CommonModel commonModel);
+	public List<Userstory> findUserStories(int epicId);
 	
 }
