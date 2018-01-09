@@ -23,10 +23,12 @@
 	font-family:serif;
 	font-weight: bold;
 	color:black;
+	font-size:20px;
 	}
 	td{
 	font-family:serif;
 	color:black;
+	font-size:20px;
 	}	
 	#deletebutton{
 	 background: crimson;

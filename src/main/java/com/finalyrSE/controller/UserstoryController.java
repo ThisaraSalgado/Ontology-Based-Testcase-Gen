@@ -49,10 +49,10 @@ public class UserstoryController {
 		return "userstory/userstoryTemplate"; 
 		}
 		if (actionButton.equals("Delete Selected")){
-			 int [] checkedlist={35,36,37,38,39,40};
+			 int [] checkedlist={68,71};
 			 for(int i=0;i<checkedlist.length;i++){
 				 int userstoryId=checkedlist[i];
-				 //userstoryService.delete(userstoryId);
+				 userstoryService.delete(userstoryId);
 				 System.out.println(checkedlist[i]);
 				 System.out.println("delete#######selected inside for");
 			 }

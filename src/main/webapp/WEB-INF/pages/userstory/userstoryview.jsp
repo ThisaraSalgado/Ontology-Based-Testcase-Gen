@@ -21,7 +21,7 @@
 <script type="text/javascript">
 function selected(){
 	var all_checked = document.querySelectorAll('input[name=checkbox]:checked');
-	document.write(all_checked.length);
+	//document.write(all_checked.length);
 	var selectedIds = [];
 
 	for(var x = 0, l = all_checked.length; x < l;  x++)
@@ -29,9 +29,12 @@ function selected(){
 		selectedIds.push(all_checked[x].value);
 	    //document.write(all_checked[x].value);
 	}
+	//JSON.stringify(selectedIds);
+	//$("#ADOus").attr("action","${ctx}/ADSetting?myOUsArray ="+ selectedIds );
+	//$("#ADOus").submit();
 	return selectedIds; 
+	
 }
-
 
 </script>
 
@@ -47,20 +50,24 @@ color: white;
 background-color: olivedrab;
 font-weight: bold;
 font-family:serif;
+font-size:20px;
 }
 td.uId{
 /*background-color: olivedrab;*/
 font-family:serif;
 font-weight: bold;
+font-size:20px;
 color:black;
 }
 td.uName{
 font-family:serif;
+font-size:20px;
 color:white
 }
 td.uStatus{
 font-family:serif;
 color: green;
+font-size:20px;
 }
 .container {
     position: relative;
@@ -90,10 +97,10 @@ color: green;
 
 </head>
 <body>
-<form:form method="post" action="createnewstory" modelAttribute="fulluserstory">
+<form:form method="post" action="createnewstory/${userstoryId} }" modelAttribute="fulluserstory">
 <div class="container">
 <div class="deletebutton">
-<input id="deleteAllButton" onclick= "selected()" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Delete Selected"></input>
+<input id="deleteAllButton"  onClick="selected()" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Delete Selected"></input>
 </div>
 <div class="content">
 <c:if test="${!empty storyList}">

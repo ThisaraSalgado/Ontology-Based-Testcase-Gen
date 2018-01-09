@@ -14,7 +14,7 @@
 form {
   /* Just to center the form on the page */
   margin: 0 auto;
-  width: 800px;
+  width: 850px;
   /* To see the outline of the form */
   padding: 1em;
   border: 1px solid #CCC;
@@ -29,11 +29,11 @@ form div  {
 label {
   /* To make sure that all labels have the same size and are properly aligned */
   display: inline-block;
-  width: 220px;
+  width: 240px;
   text-align: right;
   font-family:serif;
   font-weight: bold;
-  font-size:15px;
+  font-size:20px;
   padding: 8px 40px 8px 40px;
 }
 
@@ -74,7 +74,7 @@ textarea {
     font-family:serif;
     font-weight: bold;
     /*font-style: italic;*/
-    font-size: 20px;
+    font-size: 25px;
     padding-bottom: 3px;
     color:white;
     }
@@ -87,7 +87,7 @@ textarea {
   	box-shadow: 3px 3px 5px olivedrab;
   	box-sizing: border-box;
     border-radius: 4px;
-    font-size: 15px;
+    font-size: 20px;
     color:#8a97a0;
     margin-bottom: 30px;
     border: 2px solid olivedrab;
@@ -104,6 +104,7 @@ textarea {
     color: white;
     font-weight: bold;
     font-family:serif;
+    width: 250px;
 }
 </style>
 <title>User Story Template</title>
@@ -117,6 +118,14 @@ textarea {
 	<div>
 	
 		<div align="center" class="styleheading">User Story Form</div>
+		<div>
+			<form:label path="userstoryId">Epic No</form:label>
+			<select id="epic" name="epic">
+			  <option value="1">01</option>
+  			  <option value="2">02</option>
+  			  <option value="3">03</option>
+  			 </select>
+		</div>
 		<div>
 			<form:label  path="userstoryname">User Story Name </form:label>
 			<form:textarea path="userstoryname"/>
@@ -167,12 +176,12 @@ textarea {
 		</div>
     
 		</div>
-		<br></br>
+		
 		<div class="button">
-		<div>
+		<div align="center">
 			<input align="right" id="save" type="submit" class="btn-lg" name="actionButton" value="Save" /> 
-		</div>
-		<div>	
+		
+		
 			<input id="savegenerate" type="submit" class="btn-lg" name="actionButton" value="Save and Generate" />
 		</div>
 		</div>

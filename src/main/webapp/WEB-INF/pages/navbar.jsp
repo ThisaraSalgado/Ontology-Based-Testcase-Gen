@@ -25,9 +25,8 @@ display: block;
 		<div class="navb">
 		<ul class="nav navbar-nav">
 			<li><a href="<c:url value='/backtouserstory'/>">User Story</a></li>
-			<li><a href="<c:url value='/testhome'/>">Test Suite</a></li>
-			<li><a href="<c:url value='/tempview'/>">Temp View</a></li>
 			
+			<li><a href="<c:url value='/testsuiteview'/>">Test Suite</a></li>
 		</ul>
 		</div>
 	</div>
