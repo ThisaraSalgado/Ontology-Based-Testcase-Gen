@@ -177,6 +177,7 @@ public class JenaTestServiceImpl implements JenaTestService {
 			actionProperties = getActionDataProperties(act,resultDependency);
 			for(int j = 0 ; j<actionProperties.size();j++){
 				System.out.println("action properties " + actionProperties.get(j));
+				finalTestcases.add(" "+actionProperties.get(j)+"  ");
 			}
 		}
 		
