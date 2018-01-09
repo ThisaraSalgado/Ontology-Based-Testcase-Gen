@@ -10,5 +10,6 @@ public interface EntityExtractionService {
 
 	public ArrayList<String> extractTriplets(String text) ; 
 	public String preProcess(String text);
+	public ArrayList<String> ambiguityExtract(String text);
 
 }

@@ -116,10 +116,8 @@ public class UserstoryController {
 			Userstory userstory=commonModel.getUserstory();
 			String userstorytext=commonModel.getUserstory().getStoryname();
 			ArrayList<String> entitylist=entityextractor.extractTriplets(userstorytext);
-			if(entitylist.size()!= 3){
-				System.out.println("Sentence does not match with the actor, action, object concept.");
-			}
-			else{
+			
+			if(entitylist.size()==3){
 				userstory.setStatus("Generated");
 				userstoryService.create(userstory);
 				System.out.println("story added to userstory table.");
@@ -149,6 +147,47 @@ public class UserstoryController {
 				model=new ModelAndView("userstory/entities", "commonModel", commonModel);
 				model.addObject("entity",entitylist);
 				return model;
+			}
+			
+			if(entitylist.size()!= 3){
+				System.out.println("Sentence does not match with the actor, action, object concept.");
+				ArrayList<String> entitylist1=entityextractor.ambiguityExtract(userstorytext);
+				
+				userstory.setStatus("Generated");
+				userstoryService.create(userstory);
+				System.out.println("story added to userstory table.");
+				System.out.println(" ========== "+userstory.getStoryId());
+				String user=entitylist1.get(0);
+				String predicate=entitylist1.get(1);
+				String object=entitylist1.get(2);
+				ArrayList<ArrayList<String>> testcaseArray=jenaService.jenaWithParam(user, predicate, object);
+				ArrayList<String> preConditionArray = testcaseArray.get(0);
+				ArrayList<String> testcases = testcaseArray.get(1);
+				String preCondition=preConditionArray.get(0);
+				
+				Testcase t=new Testcase();
+				for(int i=0;i<testcases.size();i++){
+					t.setTestcase_name(testcases.get(i));
+					int lastid=testcaseService.getLastid();
+					t.setTestcase_id(lastid+1);
+					t.setUserstory(userstory);
+					t.setPre_condition(preCondition);
+					t.setStatus("ready");
+					testcaseService.saveTestcase(t);
+				}
+				
+				
+				System.out.println("test case added");
+				
+				model=new ModelAndView("userstory/entities", "commonModel", commonModel);
+				model.addObject("entity",entitylist1);
+				return model;
+				
+				
+				
+			}
+			else{
+				System.out.println("errorr");
 			}
 			
 			
