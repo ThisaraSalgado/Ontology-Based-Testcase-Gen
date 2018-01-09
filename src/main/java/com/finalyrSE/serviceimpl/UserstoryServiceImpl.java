@@ -58,4 +58,10 @@ public class UserstoryServiceImpl implements UserstoryService {
 		
 	}
 
+	@Override
+	public List<Userstory> findUserStories(int epicId) {
+		// TODO Auto-generated method stub
+		return userstoryDao.findUserStories(epicId);
+	}
+
 }

@@ -12,4 +12,5 @@ public interface UserstoryDao {
 	public void delete(int userstoryId);
 	public Userstory find(int userstoryId);
 	public List<Userstory> getAll();
+	public List<Userstory> findUserStories(int epicId);
 }
