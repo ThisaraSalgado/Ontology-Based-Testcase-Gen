@@ -85,16 +85,20 @@ public class TestcaseController {
 		System.out.println("In viewuserstoryvise");
 		System.out.println(epicID);
 		ModelAndView model= new ModelAndView();
-		List<Userstory> userstorynames= userstoryService.findUserStories(epicID);
-		//System.out.println("///////////////////////////"+userstorynames);
+		List<Userstory> userstory= userstoryService.findUserStories(epicID);
+		//System.out.println("///////////////////////////"+userstory);
 		model=new ModelAndView("testsuite/viewuserstoryvise");
-		model.addObject("userstorynames",userstorynames);
+		model.addObject("userstory",userstory);
 		return model;
 	}
-	@RequestMapping(value = "/viewtestcaseforselected",method=RequestMethod.GET)
-	public String ViewTestSuite() throws IOException{
+	@RequestMapping(value = "/viewtestcaseforselected/{storyId}",method=RequestMethod.GET)
+	public ModelAndView ViewTestSuite(@PathVariable("storyId") int storyId) throws IOException{
 		System.out.println("In viewtestcaseforselected");
-		return "testsuite/viewtestcaseforselected";
+		System.out.println(storyId);
+		ModelAndView model= new ModelAndView();
+		model=new ModelAndView("testsuite/viewtestcaseforselected");
+		//return "testsuite/viewtestcaseforselected";
+		return model;
 	}
 	@RequestMapping(value= "/testcaseview" , method=RequestMethod.POST)
 	public String Testcaseview(Map<String,Object> map,@ModelAttribute("testcase") Testcase testcase) throws IOException{

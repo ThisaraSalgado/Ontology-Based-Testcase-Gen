@@ -67,7 +67,7 @@ public class UserstoryDaoImpl implements UserstoryDao{
 		// TODO Auto-generated method stub
 		//return currentSession().get(Userstory.class, epicId);
 		
-		String hql1= "SELECT storyname FROM Userstory WHERE Epic_ID=";
+		String hql1= "FROM Userstory WHERE Epic_ID=";
 		String hql2= Integer.toString(epicId) ;
 		String hql= hql1+hql2;
 		System.out.println(hql);
