@@ -53,41 +53,14 @@ Epic Name- Group Management
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="item" items="${userstorynames}">
+			<c:forEach var="item" items="${userstory}">
 			<tr>
-			<td></td>
-			<td> <a href="<c:url value='/viewtestcaseforselected/${item}'/>"><c:out value="${item}"/></a></td>
+			<td class="uId"><c:out value="${item.storyId}"/></td>
+			<td class="uName"> <a href="<c:url value='/viewtestcaseforselected/${item.storyId}'/>"><c:out value="${item.storyname}"/></a></td>
 			<tr>
 			</c:forEach>
 			
 			
-			
-			
-			<tr>
-			<td>1</td>
-			<td ><a href="<c:url value='/viewtestcaseforselected' />">	As a Admin, I want to Create a user group to the system, so that I can add users.</a></td>
-			</tr>
-			<tr>
-			<td>2</td>
-			<td><a href="<c:url value='/viewtestcaseforselected' />">User Admin, need to be able to delete user groups in the system, so that I can manage groups easily</a></td>
-			</tr>
-			<tr>
-			<td>3</td>
-			<td><a href="<c:url value='/viewtestcaseforselected' />">As a User Admin, I need to be able to view users of groups in the system, so that I can manage users in groups easily.</a></td>
-			</tr>
-			<tr>
-			<td>4</td>
-			<td><a href="<c:url value='/viewtestcaseforselected' />">As a User Admin, I need to be able to list user groups in the system, so that I can manage user groups easily.</a></td>
-			</tr>
-			<tr>
-			<td>5</td>
-			<td><a href="<c:url value='/viewtestcaseforselected' />">As a User Admin, I need to be able to update an existing group in the system, so that I can manage users in that group easily</a></td>
-			</tr>
-			<tr>
-			<td>6</td>
-			<td><a href="<c:url value='/viewtestcaseforselected' />">	As a User Admin, I need to be able to view groups of a user in the system, so that I can manage users in groups easily.</a></td>
-			</tr>
-		
 			
 			
 		
