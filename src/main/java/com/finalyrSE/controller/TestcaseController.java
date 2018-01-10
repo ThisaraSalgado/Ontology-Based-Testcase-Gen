@@ -86,6 +86,7 @@ public class TestcaseController {
 		System.out.println(epicID);
 		ModelAndView model= new ModelAndView();
 		List<Userstory> userstorynames= userstoryService.findUserStories(epicID);
+		//System.out.println("///////////////////////////"+userstorynames);
 		model=new ModelAndView("testsuite/viewuserstoryvise");
 		model.addObject("userstorynames",userstorynames);
 		return model;
