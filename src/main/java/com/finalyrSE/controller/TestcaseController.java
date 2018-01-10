@@ -127,6 +127,20 @@ public class TestcaseController {
 		return model;
 	}
 	
+	@RequestMapping(value= "/testcaseview/editdeletetestcase/{testcase_id}" , method=RequestMethod.GET)
+	public ModelAndView Edittestcase(@PathVariable("testcase_id") int testcase_id,@RequestParam String actionButton) throws IOException{
+		System.out.println("In testcaseview/editdeletetestcase");
+		System.out.println(testcase_id);
+		if(actionButton.equals("Edit")){
+			System.out.println("in edit");
+			Testcase testcase= testcaseService.find(testcase_id);
+			ModelAndView model= new ModelAndView("testsuite/testcaseView");
+			model.addObject("testcase", testcase);
+			return model;
+	}
+		return null;
+	}
+	
 	
 /*
 	@RequestMapping(value="/upadatetestcase", method=RequestMethod.POST)
