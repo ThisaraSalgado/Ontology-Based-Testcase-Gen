@@ -67,7 +67,7 @@
 </head>
 <body>
 <jsp:include page="..//header.jsp" />
-<c:url var="action" value="#"></c:url>
+<c:url var="action" value="editdeletetestcase/${testcase.testcase_id}"></c:url>
 	
 <form:form method="get" action="${action}" modelAttribute="testcase">
 	<div class="container">
