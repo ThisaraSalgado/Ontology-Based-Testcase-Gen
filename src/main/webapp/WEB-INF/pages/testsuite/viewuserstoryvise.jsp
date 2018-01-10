@@ -51,6 +51,18 @@ Epic Name- Group Management
 				<th class="id">User Story Id</th>
 				<th>User Story Name</th>
 			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="item" items="${userstorynames}">
+			<tr>
+			<td></td>
+			<td> <a href="<c:url value='/viewtestcaseforselected/${item}'/>"><c:out value="${item}"/></a></td>
+			<tr>
+			</c:forEach>
+			
+			
+			
+			
 			<tr>
 			<td>1</td>
 			<td ><a href="<c:url value='/viewtestcaseforselected' />">	As a Admin, I want to Create a user group to the system, so that I can add users.</a></td>
@@ -76,9 +88,9 @@ Epic Name- Group Management
 			<td><a href="<c:url value='/viewtestcaseforselected' />">	As a User Admin, I need to be able to view groups of a user in the system, so that I can manage users in groups easily.</a></td>
 			</tr>
 		
-			</thead>
 			
-		<tbody>
+			
+		
 		</tbody>
 </table>
 </div>
