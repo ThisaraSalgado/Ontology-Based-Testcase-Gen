@@ -20,6 +20,7 @@ import com.finalyrSE.model.Testcase;
 import com.finalyrSE.model.Userstory;
 //import com.finalyrSE.model.Testcase;
 import com.finalyrSE.service.JenaTestService;
+import com.finalyrSE.service.TestcaseService;
 import com.finalyrSE.service.UserstoryService;
 //import com.finalyrSE.service.TestcaseService;
 import com.finalyrSE.service.EpicService;
@@ -35,6 +36,9 @@ public class TestcaseController {
 	
 	@Autowired
 	UserstoryService userstoryService;
+	
+	@Autowired
+	TestcaseService testcaseService;
 	
 	
 	@RequestMapping(value = "/testhome",method=RequestMethod.GET)
@@ -96,17 +100,34 @@ public class TestcaseController {
 		System.out.println("In viewtestcaseforselected");
 		System.out.println(storyId);
 		ModelAndView model= new ModelAndView();
+		List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
 		model=new ModelAndView("testsuite/viewtestcaseforselected");
 		//return "testsuite/viewtestcaseforselected";
+		System.out.println("///////////////////////////"+testcaseList);
+		model.addObject("testcaseList",testcaseList);
 		return model;
 	}
+	/*
 	@RequestMapping(value= "/testcaseview" , method=RequestMethod.POST)
 	public String Testcaseview(Map<String,Object> map,@ModelAttribute("testcase") Testcase testcase) throws IOException{
 		System.out.println("In testcaseview");
 		//@ModelAttribute("testcase") Testcase testcase;
 		map.put("testcase", new Testcase());
 		return "testsuite/testcaseView";
+	}*/
+	@RequestMapping(value= "/testcaseview/{testcase_id}" , method=RequestMethod.GET)
+	public ModelAndView Testcaseview(@PathVariable("testcase_id") int testcase_id) throws IOException{
+		System.out.println("In testcaseview");
+		System.out.println(testcase_id);
+		//Testcase testcaseModel=new Testcase();
+		Testcase testcase = testcaseService.find(testcase_id);
+		System.out.println("@@@@@@@@@@@@@@@@@"+testcase);
+		ModelAndView model= new ModelAndView("testsuite/testcase");
+		model.addObject("testcase", testcase);
+		return model;
 	}
+	
+	
 /*
 	@RequestMapping(value="/upadatetestcase", method=RequestMethod.POST)
 	public String updatetestcase(Map<String,Object> map,@ModelAttribute("testcase") Testcase testcase) throws IOException{

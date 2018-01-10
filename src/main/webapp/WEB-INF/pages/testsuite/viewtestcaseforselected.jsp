@@ -83,78 +83,35 @@ font-size:20px;
 </head>
 <body>
 <jsp:include page="..//header.jsp" />
-<form:form method="post" action="testcaseview" ModelAttribute="testcase">
-<div align="center" class="heading"><p>Add New Group</p></div>
+<form:form method="post"  ModelAttribute="testcase">
+<div align="center" class="heading"><p></p></div>
 <div class="content">
 <table class="table" width="600">
-<col width="10">
-  <col width="30">
-  <col width="580">
-  <col width="80">
-  <col width="80">
+
+
 		<thead>
 			<tr>
-			<th></th>
+			
 				<th>Test Case ID</th>
 				<th>Test Case</th>
-				<th></th>
-				<th></th>
+				<th>Status</th>
+				
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-			<td class="checkbox"><input name="checkbox" type="checkbox"  id="####" ></td>
-			<td>1</td>
-			<td >Create a group with valid name</td>
-			<td width>
-			<input id="editButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Edit"></input>
-		<td>
-			</tr>
-			<tr>
-			<td class="checkbox"><input name="checkbox" type="checkbox"  id="####" ></td>
-			<td>2</td>
-			<td >Create a group, name with special characters</td>
-			<td>
-			<input id="editButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Edit"></input>
-		<td>
-			</tr>
-			<tr>
-			<td class="checkbox"><input name="checkbox" type="checkbox"  id="####" ></td>
-			<td>3</td>
-			<td >Create a group name with numeric characters</td>
-			<td>
-			<input id="editButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Edit"></input>
-		<td>
-			</tr>
-			<tr>
-			<td class="checkbox"> <input name="checkbox" type="checkbox"  id="####" ></td>
-			<td>4</td>
-			<td >Create a group with lengthy name</td>
-			<td>
-			<input id="editButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Edit"></input>
-		<td>
-			</tr>
-			<tr>
-			<td></td>
-			<td></td>
-			<td ></td>
-			<td></td>
-			<td>
-			<input id="addButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="+"></input>
-		<td>
-			</tr>
+		<c:forEach var="item" items="${testcaseList}">
+		<tr>
+		
+		<td class="tID"><c:out value="${item.testcase_id}"></c:out></td>
+		<td class="tName"><a href="<c:url value='/testcaseview/${item.testcase_id}'/>"><c:out value="${item.testcase_name }"></c:out> </a>  </td>
+		<td class="tStatus"><c:out value="${item.status}"></c:out> </td>
+		</tr>
+		</c:forEach>
 		</tbody>
 		
 </table>
 </div>
 
-		<div>
-			<input id="deleteButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Delete"></input>
-		</div>
-		
-		<div>
-			<input id="sendButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Send For Approve"></input>
-		</div>
 	
 		
 	</form:form>	
