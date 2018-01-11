@@ -121,7 +121,7 @@ public class UserstoryController {
 				userstory.setStatus("Generated");
 				userstoryService.create(userstory);
 				System.out.println("story added to userstory table.");
-				System.out.println(" ========== "+userstory.getStoryId());
+				int story_id=userstory.getStoryId();
 				String user=entitylist.get(0);
 				String predicate=entitylist.get(1);
 				String object=entitylist.get(2);
@@ -142,10 +142,11 @@ public class UserstoryController {
 				}
 				
 				
+				List<Testcase> testcaseList= testcaseService.findTestCases(story_id);
 				System.out.println("test case added");
 				
-				model=new ModelAndView("userstory/entities", "commonModel", commonModel);
-				model.addObject("entity",entitylist);
+				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+				model.addObject("testcaseList",testcaseList);
 				return model;
 			}
 			
@@ -156,7 +157,7 @@ public class UserstoryController {
 				userstory.setStatus("Generated");
 				userstoryService.create(userstory);
 				System.out.println("story added to userstory table.");
-				System.out.println(" ========== "+userstory.getStoryId());
+				int story_id=userstory.getStoryId();
 				String user=entitylist1.get(0);
 				String predicate=entitylist1.get(1);
 				String object=entitylist1.get(2);
@@ -176,11 +177,11 @@ public class UserstoryController {
 					testcaseService.saveTestcase(t);
 				}
 				
-				
+				List<Testcase> testcaseList= testcaseService.findTestCases(story_id);
 				System.out.println("test case added");
 				
-				model=new ModelAndView("userstory/entities", "commonModel", commonModel);
-				model.addObject("entity",entitylist1);
+				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+				model.addObject("testcaseList",testcaseList);
 				return model;
 				
 				

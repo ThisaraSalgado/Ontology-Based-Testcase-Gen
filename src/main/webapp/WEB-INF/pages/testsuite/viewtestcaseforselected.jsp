@@ -83,7 +83,7 @@ font-size:20px;
 </head>
 <body>
 <jsp:include page="..//header.jsp" />
-<form:form method="post"  ModelAttribute="testcase">
+<form:form method="post"  ModelAttribute="commonModel">
 <div align="center" class="heading"><p></p></div>
 <div class="content">
 <table class="table" width="600">
@@ -91,7 +91,6 @@ font-size:20px;
 
 		<thead>
 			<tr>
-			
 				<th>Test Case ID</th>
 				<th>Test Case</th>
 				<th>Status</th>

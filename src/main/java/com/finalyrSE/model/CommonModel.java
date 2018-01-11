@@ -10,7 +10,15 @@ public class CommonModel {
 	private User user;
 	private List<String> epicNameList;
 	Map<String,String> epicList;
+	private Testcase testcase;
 	
+	
+	public Testcase getTestcase() {
+		return testcase;
+	}
+	public void setTestcase(Testcase testcase) {
+		this.testcase = testcase;
+	}
 	public Map<String, String> getEpicList() {
 		return epicList;
 	}

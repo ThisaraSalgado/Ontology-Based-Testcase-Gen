@@ -92,36 +92,36 @@ textarea {
 <body>
 <jsp:include page="..//header.jsp" />
 
-<form:form method="post" action="upadatetestcase" modelAttribute="testcase" >
+<form:form method="post" action="/updatetestcase/${testcase_id}" modelAttribute="commonModel" >
 <div>
 	<div align="center" class="styleheading">Test Case</div>
 	<div>
-		<form:label path="testcase_id">Test case ID</form:label>
-		<form:textarea path="testcase_id"/>
+		<form:label path="testcase.testcase_id">Test case ID</form:label>
+		<form:textarea path="testcase.testcase_id"/>
 	</div>
 	<div>
-	<form:label path="testcase_name">Test case</form:label>
-		<form:textarea path="testcase_name"/>
+	<form:label path="testcase.testcase_name">Test case</form:label>
+		<form:textarea path="testcase.testcase_name"/>
 	
 	</div>
 	<div>
-	<form:label path="pre_condition">Pre Condition</form:label>
-		<form:textarea path="pre_condition"/>
+	<form:label path="testcase.pre_condition">Pre Condition</form:label>
+		<form:textarea path="testcase.pre_condition"/>
 	
 	</div>
 	<div>
-	<form:label path="expected_result">Expected Result</form:label>
-		<form:textarea path="expected_result"/>
+	<form:label path="testcase.expected_result">Expected Result</form:label>
+		<form:textarea path="testcase.expected_result"/>
 	
 	</div>
 	<div>
-	<form:label path="status">Expected Result</form:label>
-		<form:textarea path="status"/>
+	<form:label path="testcase.status">Expected Result</form:label>
+		<form:textarea path="testcase.status"/>
 	
 	</div>
 	<div>
-	<form:label path="approveby">Expected Result</form:label>
-		<form:textarea path="approveby"/>
+	<form:label path="testcase.approveby">Expected Result</form:label>
+		<form:textarea path="testcase.approveby"/>
 	
 	</div>
 	
