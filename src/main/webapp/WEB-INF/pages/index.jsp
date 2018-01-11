@@ -5,11 +5,15 @@
 <head>
 <title>home page</title>
 </head>
-
+<body>
+<jsp:include page="header.jsp" />
 <h2>${message }</h2>
 <h3>user story template</h3>
 
-
-
+<form:form method="post"  modelAttribute="fulluserstory">
+		
+			
+			
+		</form:form>
 </body>
 </html>
