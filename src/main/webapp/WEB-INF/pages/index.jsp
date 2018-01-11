@@ -33,6 +33,7 @@
 <body>
 <jsp:include page="header.jsp" />
 
+
 <%-- <h2>${message }</h2> --%>
 
 
@@ -49,18 +50,10 @@
 
 		<jsp:include page="userstory/userstoryview.jsp" />
 
-			
-
-			
-			
+				
 		</form:form>
 	</div>		
 	
-	
-
-
-
-
 
 </body>
 </html>
