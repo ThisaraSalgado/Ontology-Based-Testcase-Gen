@@ -96,12 +96,12 @@ public class TestcaseController {
 		return model;
 	}
 	@RequestMapping(value = "/viewtestcaseforselected/{storyId}",method=RequestMethod.GET)
-	public ModelAndView ViewTestSuite(@PathVariable("storyId") int storyId) throws IOException{
+	public ModelAndView ViewTestSuite(@ModelAttribute("commonModel") CommonModel commonModel,@PathVariable("storyId") int storyId) throws IOException{
 		System.out.println("In viewtestcaseforselected");
 		System.out.println(storyId);
 		ModelAndView model= new ModelAndView();
 		List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
-		model=new ModelAndView("testsuite/viewtestcaseforselected");
+		model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 		//return "testsuite/viewtestcaseforselected";
 		System.out.println("///////////////////////////"+testcaseList);
 		model.addObject("testcaseList",testcaseList);
@@ -128,26 +128,30 @@ public class TestcaseController {
 	}
 	
 	@RequestMapping(value= "/testcaseview/editdeletetestcase/{testcase_id}" , method=RequestMethod.GET)
-	public ModelAndView Edittestcase(@PathVariable("testcase_id") int testcase_id,@RequestParam String actionButton) throws IOException{
+	public ModelAndView Edittestcase(@ModelAttribute("commonModel") CommonModel commonModel,@PathVariable("testcase_id") int testcase_id,@RequestParam String actionButton) throws IOException{
 		System.out.println("In testcaseview/editdeletetestcase");
 		System.out.println(testcase_id);
 		if(actionButton.equals("Edit")){
 			System.out.println("in edit");
-			Testcase testcase= testcaseService.find(testcase_id);
-			ModelAndView model= new ModelAndView("testsuite/testcaseView");
-			model.addObject("testcase", testcase);
+			Testcase testcase= testcaseService.find(testcase_id); 
+			commonModel.setTestcase(testcase);
+			ModelAndView model= new ModelAndView("testsuite/testcaseView","commonModel", commonModel);
+			//model.addObject("testcase", testcase);
 			return model;
 	}
 		return null;
 	}
 	
 	
-/*
-	@RequestMapping(value="/upadatetestcase", method=RequestMethod.POST)
-	public String updatetestcase(Map<String,Object> map,@ModelAttribute("testcase") Testcase testcase) throws IOException{
+	@RequestMapping(value="/updatetestcase/{testcase_id}", method=RequestMethod.POST)
+	public ModelAndView updatetestcase(Map<String,Object> map, @PathVariable ("testcase_id") int testcase_id ) throws IOException{
 		System.out.println("in update testcase");
+		System.out.println("update num"+testcase_id);
 		//testcaseService.update(testcase);
-		return "testsuite/viewtestcaseforselected";
+		ModelAndView model= new ModelAndView("testsuite/testcaseView");
+		//model.addObject("testcase", testcase);
+		return model;
+		//return "testsuite/viewtestcaseforselected";
 	}
-	*/
+
 }
