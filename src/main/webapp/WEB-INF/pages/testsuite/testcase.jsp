@@ -80,7 +80,7 @@
 		<tr><th>Expected Results</th><td>${testcase.expected_result}</td></tr>
 		<tr><th>Status</th><td>${testcase.status}</td></tr>
 		<tr><th>Approved By</th><td>${testcase.approveby}</td></tr>
-		
+		<tr><th>role</th><td>${sessionScope.role}</td></tr>
 		
 		</tbody>
 	</table>
@@ -88,6 +88,7 @@
 	
 	<div class="button">
 		<div>
+		
 			<input id="deleteButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Delete"></input>
 		</div>
 		<div>
