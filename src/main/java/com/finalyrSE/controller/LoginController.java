@@ -45,14 +45,22 @@ public class LoginController {
 		boolean userExists = loginservice.CheckLogin(user.getUsername(),user.getPassword());
 		if(userExists){
 			System.out.println("logged succesfully");
+			User valid = new User();
+			valid = loginservice.getUser(user.getUsername());
 			//model.put("loginForm", user);
 			//map.put("fulluserstory", new Fulluserstory());
 			//map.put("storyList", userstoryService.getAll());
 			storyList=userstoryService.getAll();
 			//System.out.println(storyList);
-			ModelAndView model=new ModelAndView("index", "commonModel", commonModel);
-			model.addObject("storyList",storyList);
-			return model;
+			System.out.println(valid.getUserrole());
+			if(valid.getUserrole().equals("lead")){
+				return null;
+			}
+			else{
+				ModelAndView model=new ModelAndView("index", "commonModel", commonModel);
+				model.addObject("storyList",storyList);
+				return model;
+			}
 		}else{
 			result.rejectValue("username","invaliduser");
 			ModelAndView model=new ModelAndView("user/login", "commonModel", commonModel);
