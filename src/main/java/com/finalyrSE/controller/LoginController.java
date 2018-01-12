@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +39,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public ModelAndView login(Map<String,Object> map,@ModelAttribute("user")User user,BindingResult result){
+	public ModelAndView login(Map<String,Object> map,@ModelAttribute("user")User user,BindingResult result,HttpServletRequest request){
 		//System.out.println("user name= "+user.getUsername());
 		//System.out.println("password= "+user.getPassword());
 		CommonModel commonModel=new CommonModel();
@@ -53,6 +56,8 @@ public class LoginController {
 			storyList=userstoryService.getAll();
 			//System.out.println(storyList);
 			System.out.println(valid.getUserrole());
+			HttpSession session = request.getSession();
+			session.setAttribute("role", valid.getUserrole());
 			if(valid.getUserrole().equals("lead")){
 				return null;
 			}
@@ -68,9 +73,5 @@ public class LoginController {
 			return model;
 			
 		}
-		
-		
-		
-		
 	}
-}
+}	
