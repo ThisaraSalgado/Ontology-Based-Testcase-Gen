@@ -8,7 +8,7 @@
 <html>
 <head>
 
-<title>User Story Template</title>
+<title>User Story</title>
 
 <style>
 form {
@@ -122,66 +122,73 @@ font-family:serif;
 	
 	<form:form method="post" action="${action}" modelAttribute="commonModel">
 	<div>
-	<div align="center" class="styleheading">User Story Form</div>
-	<table class="table">
-		<tr>
-			<form:hidden path="userstory.storyId"/>
-			<td><form:label  path="userstory.storyname">User Story Name </form:label></td>
-			<td><form:textarea path="userstory.storyname"/></td>
-		</tr>
+		<div align="center" class="styleheading">User Story Form</div>
 		
-		<tr>
-			<td><form:label path="userstory.assignee">Assignee</form:label></td>
-			<td><form:input path="userstory.assignee"/></td>
-		</tr>
 		
-		<tr>
-			<td><form:label path="userstory.status">Status</form:label></td>
-			<td><form:input path="userstory.status"/></td>
-		</tr>
-		
-		<tr>
-			<td><form:label path="userstory.priority">Priority</form:label></td>
-			<td><form:input path="userstory.priority"/></td>
-		</tr>
-		
-		<tr>
-			<td><form:label path="userstory.prerequites">Pre requisites</form:label></td>
-			<td><form:textarea path="userstory.prerequites"/></td>
-		</tr>
-		
-		<tr>
-			<td><form:label path="userstory.narratives">Narratives</form:label></td>
-			<td><form:textarea path="userstory.narratives"/></td>
-		</tr>
-		
-		<tr>
-			<td><form:label path="userstory.acceptancecritirea">Acceptance Criteria</form:label></td>
-			<td><form:textarea path="userstory.acceptancecritirea"/></td>
-		</tr>
-				
-		<tr>
-
-			<td><form:label path="userstory.startdate">Start date</form:label></td>
-			<td><form:input path="userstory.startdate"/></td>
-		</tr>
-		
-		<tr>
-			<td><form:label path="userstory.duedate">Due date</form:label></td>
-			<td><form:input path="userstory.duedate"/></td>
-
-		</tr>
-		
-	</table>
-	
-	
-	<div align="center">	
-			<input align="right" type="submit" class="btn-lg " value="Save"/>
-		
-			<input type="submit" class="btn-lg" value="Save and Generate"/>
-		
+		<div>
+			<form:label path="userstory.epic.Epic_ID">Epic Name</form:label>
+			<form:select path="userstory.epic.Epic_ID">
+       		    <c:forEach var="item" items="${epicList}">
+       				<option value="${item.epic_ID}">${item.epicname}</option>
+   				</c:forEach>
+    		</form:select>
 		</div>
-	</div>
+		
+			<form:label  path="userstory.storyname">User Story Name </form:label>
+			<form:textarea path="userstory.storyname"/>
+
+		</div>
+		
+		<div>
+			<form:label path="userstory.assignee">Assignee</form:label>
+			<form:input path="userstory.assignee"/>
+		</div>
+		
+		
+		<div>
+			<form:label path="userstory.priority">Priority</form:label>
+			<form:select path="userstory.priority">
+			  <option value="High">High</option>
+  			  <option value="Medium">Medium</option>
+  			  <option value="Low">Low</option>
+  			 </form:select>
+		</div>
+		
+		<div>
+			<form:label path="userstory.prerequites">Pre requisites</form:label>
+			<form:textarea path="userstory.prerequites"/>
+		</div>
+		
+		<div>
+			<form:label path="userstory.narratives">Narratives</form:label>
+			<form:textarea path="userstory.narratives"/>
+		</div>
+		
+		<div>
+			<form:label path="userstory.acceptancecritirea">Acceptance Criteria</form:label>
+			<form:textarea path="userstory.acceptancecritirea"/>
+		</div>
+		
+		<div>
+			<form:label path="userstory.startdate">Start date</form:label>
+			<form:input type="date" name="startdate" path="userstory.startdate"/>
+		</div>
+		
+		<div>
+			<form:label path="userstory.duedate">Due date</form:label>
+			<form:input type="date" name="duedate"  path="userstory.duedate"/>
+		</div>
+    
+		</div>
+		
+		<div class="button">
+		<div align="center">
+			<input align="right" id="save" type="submit" class="btn-lg" name="actionButton" value="Save" /> 
+		
+		
+			<input id="savegenerate" type="submit" class="btn-lg" name="actionButton" value="Save and Generate" />
+		</div>
+		</div>
 	</form:form>
 
 </body>

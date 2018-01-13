@@ -9,6 +9,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Test Suite</title>
 <style>
+
+caption { 
+    display: table-caption;
+    text-align: center;
+}
+
 .heading{
 	font-family:serif;
 	font-weight: bold;
@@ -78,6 +84,7 @@ td{
 font-family:serif;
 font-size:20px;
 }
+
 </style>
 
 </head>
@@ -86,8 +93,9 @@ font-size:20px;
 <form:form method="post"  ModelAttribute="commonModel">
 <div align="center" class="heading"><p></p></div>
 <div class="content">
-<table class="table" width="600">
 
+<table class="table" width="600">
+<caption>Test cases for "${userstoryname}"</caption>
 
 		<thead>
 			<tr>

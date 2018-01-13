@@ -101,20 +101,14 @@ public class TestcaseController {
 		System.out.println(storyId);
 		ModelAndView model= new ModelAndView();
 		List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
+		Userstory userstory=userstoryService.find(storyId);
+		String userstoryname=userstory.getStoryname();
 		model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
-		//return "testsuite/viewtestcaseforselected";
-		System.out.println("///////////////////////////"+testcaseList);
 		model.addObject("testcaseList",testcaseList);
+		model.addObject("userstoryname", userstoryname);
 		return model;
 	}
-	/*
-	@RequestMapping(value= "/testcaseview" , method=RequestMethod.POST)
-	public String Testcaseview(Map<String,Object> map,@ModelAttribute("testcase") Testcase testcase) throws IOException{
-		System.out.println("In testcaseview");
-		//@ModelAttribute("testcase") Testcase testcase;
-		map.put("testcase", new Testcase());
-		return "testsuite/testcaseView";
-	}*/
+
 	@RequestMapping(value= "/testcaseview/{testcase_id}" , method=RequestMethod.GET)
 	public ModelAndView Testcaseview(@PathVariable("testcase_id") int testcase_id) throws IOException{
 		System.out.println("In testcaseview");
@@ -122,8 +116,10 @@ public class TestcaseController {
 		//Testcase testcaseModel=new Testcase();
 		Testcase testcase = testcaseService.find(testcase_id);
 		System.out.println("@@@@@@@@@@@@@@@@@"+testcase);
+	
 		ModelAndView model= new ModelAndView("testsuite/testcase");
 		model.addObject("testcase", testcase);
+		
 		return model;
 	}
 	
@@ -136,22 +132,78 @@ public class TestcaseController {
 			Testcase testcase= testcaseService.find(testcase_id); 
 			commonModel.setTestcase(testcase);
 			ModelAndView model= new ModelAndView("testsuite/testcaseView","commonModel", commonModel);
-			//model.addObject("testcase", testcase);
+			model.addObject("testcase", testcase);
 			return model;
-	}
+		}
+		else if(actionButton.equals("Delete")){
+			System.out.println("in delete");
+			Testcase testcase= testcaseService.find(testcase_id);
+			int storyId=testcase.getUserstory().getStoryId();
+			System.out.println(storyId+" delted story id of tid");
+			testcaseService.delete(testcase_id);
+			System.out.println("deleted");
+			
+			ModelAndView model= new ModelAndView();
+			List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
+			Userstory userstory=userstoryService.find(storyId);
+			String userstoryname=userstory.getStoryname();
+			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+			model.addObject("testcaseList",testcaseList);
+			model.addObject("userstoryname", userstoryname);
+			return model;
+			
+		}
 		return null;
 	}
 	
 	
 	@RequestMapping(value="/updatetestcase/{testcase_id}", method=RequestMethod.POST)
-	public ModelAndView updatetestcase(Map<String,Object> map, @PathVariable ("testcase_id") int testcase_id ) throws IOException{
+	public ModelAndView updatetestcase(@ModelAttribute("commonModel") CommonModel commonModel, @PathVariable ("testcase_id") int testcase_id ) throws IOException{
 		System.out.println("in update testcase");
-		System.out.println("update num"+testcase_id);
-		//testcaseService.update(testcase);
-		ModelAndView model= new ModelAndView("testsuite/testcaseView");
-		//model.addObject("testcase", testcase);
+		System.out.println("update num "+testcase_id);
+		Testcase testcase_reslts=commonModel.getTestcase(); // this is to get the bounded rslts from the testcaseview jsp
+		Testcase test=testcaseService.find(testcase_id); //this is to get the story id from test object
+		Userstory userstory=test.getUserstory();
+		testcase_reslts.setUserstory(userstory);
+		commonModel.setTestcase(testcase_reslts);
+		testcaseService.update(testcase_reslts);
+		System.out.println("updated table");
+		Testcase testcase=testcaseService.find(testcase_id); //after updating the table get testcase detials
+		ModelAndView model= new ModelAndView("testsuite/testcase","commonModel", commonModel);
+		model.addObject("testcase", testcase);
 		return model;
-		//return "testsuite/viewtestcaseforselected";
+		
 	}
-
+	
+	@RequestMapping(value="/updatetestcase/editdeletetestcase/{testcase_id}", method=RequestMethod.GET)
+	public ModelAndView editUpdatedtestcases(@ModelAttribute("commonModel") CommonModel commonModel, @PathVariable ("testcase_id") int testcase_id,@RequestParam String actionButton ) throws IOException{
+		System.out.println(testcase_id);
+		if(actionButton.equals("Edit")){
+			System.out.println("in edittt");
+			Testcase testcase= testcaseService.find(testcase_id); 
+			commonModel.setTestcase(testcase);
+			ModelAndView model= new ModelAndView("testsuite/testcaseView","commonModel", commonModel);
+			model.addObject("testcase", testcase);
+			return model;
+		}
+		if(actionButton.equals("Delete")){
+			System.out.println("in deleteeee");
+			Testcase testcase= testcaseService.find(testcase_id);
+			int storyId=testcase.getUserstory().getStoryId();
+			System.out.println(storyId+" delted story id of tid");
+			testcaseService.delete(testcase_id);
+			System.out.println("deleted");
+			
+			ModelAndView model= new ModelAndView();
+			List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
+			Userstory userstory=userstoryService.find(storyId);
+			String userstoryname=userstory.getStoryname();
+			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+			model.addObject("testcaseList",testcaseList);
+			model.addObject("userstoryname", userstoryname);
+			return model;
+		}
+		return null;
+		
+	}
 }

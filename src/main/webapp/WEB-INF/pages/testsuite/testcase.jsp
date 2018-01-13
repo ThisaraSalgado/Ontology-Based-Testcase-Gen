@@ -69,10 +69,11 @@
 <jsp:include page="..//header.jsp" />
 <c:url var="action" value="editdeletetestcase/${testcase.testcase_id}"></c:url>
 	
-<form:form method="get" action="${action}" modelAttribute="testcase">
+<form:form method="get" action="${action}" modelAttribute="commonModel">
 	<div class="container">
 	<c:if test="${!empty testcase}">
 	<table class="table">
+
 		<tbody>
 		<tr><th>Test Case Id</th><td>${testcase.testcase_id}</td></tr>
 		<tr><th>Test Case Name</th><td>${testcase.testcase_name}</td></tr>

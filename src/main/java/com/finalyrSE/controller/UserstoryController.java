@@ -49,15 +49,6 @@ public class UserstoryController {
 	@Autowired
 	TestcaseService testcaseService;
 	
-	/*@RequestMapping(value="/", method=RequestMethod.GET)
-	public String sayHello(ModelMap model,Map<String,Object> map){
-		//model.addAttribute("message", "ONTOLOGY BASED TEST CASE GENERATION");
-		System.out.println("yes");
-		map.put("fulluserstory", new Fulluserstory());
-		map.put("storyList", userstoryService.getAll());
-		return "index";
-	}*/
-	
 	@RequestMapping(value="/createnewstory",method=RequestMethod.POST)
 	public ModelAndView createNewStory(Map<String,Object> map,@ModelAttribute("commonModel") CommonModel commonModel,@RequestParam String actionButton,HttpServletRequest request){
 		System.out.println("in createNewStory");
@@ -144,9 +135,10 @@ public class UserstoryController {
 				
 				List<Testcase> testcaseList= testcaseService.findTestCases(story_id);
 				System.out.println("test case added");
-				
+				String userstoryname=userstory.getStoryname();
 				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 				model.addObject("testcaseList",testcaseList);
+				model.addObject("userstoryname", userstoryname);
 				return model;
 			}
 			
@@ -179,9 +171,10 @@ public class UserstoryController {
 				
 				List<Testcase> testcaseList= testcaseService.findTestCases(story_id);
 				System.out.println("test case added");
-				
+				String userstoryname=userstory.getStoryname();
 				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 				model.addObject("testcaseList",testcaseList);
+				model.addObject("userstoryname", userstoryname);
 				return model;
 				
 				
@@ -190,10 +183,10 @@ public class UserstoryController {
 			else{
 				System.out.println("errorr");
 			}
-			
-			
+				
 		}
-		 return model ;
+		
+		return model ;
 	}
 	
 
@@ -205,8 +198,6 @@ public class UserstoryController {
 		CommonModel commonModel=new CommonModel();
 		Userstory storyList=userstoryService.find(userstoryId);
 		System.out.println(storyList);
-		//map.put("storyList", userstoryService.getAll());
-		//map.put("storyList", full);
 		ModelAndView model=new ModelAndView("userstory/userstory", "commonModel", commonModel);
 		model.addObject("storyList",storyList);
 		return model;
@@ -214,70 +205,215 @@ public class UserstoryController {
 	}
 	
 	@RequestMapping(value="/viewuserstory/editdeletestory/{userstoryId}",method=RequestMethod.GET)
-	public ModelAndView editstory(CommonModel commonModel,@PathVariable("userstoryId") int userstoryId, Map<String,Object> map,@RequestParam String actionButton){
+	public ModelAndView editstory(CommonModel commonModel,@PathVariable("userstoryId") int userstoryId,@RequestParam String actionButton){
 		//CommonModel commonModel=new CommonModel();
+		ModelAndView model=new ModelAndView();
+		Userstory userstory=userstoryService.find(userstoryId);
 		if(actionButton.equals("Edit")){
 			System.out.println("in edit");
-			
-			//System.out.println(actionButton);
-			//System.out.println("edit num "+userstoryId);
-			Userstory full=userstoryService.find(userstoryId);
-			//map.put("fulluserstory", full);
-			commonModel.setUserstory(full);
-			ModelAndView model=new ModelAndView("userstory/edit", "commonModel", commonModel);
-			
+			List<Epic> epicList=new ArrayList<Epic>();
+			epicList= epicService.getAll();	
+			//Userstory userstory=userstoryService.find(userstoryId);
+			commonModel.setUserstory(userstory);
+			model=new ModelAndView("userstory/edit", "commonModel", commonModel);
+			model.addObject("epicList",epicList);
+			model.addObject("userstory", userstory);
 			return model;
 		}
-		//not working with new commonModel, have to update these..//
-	/*	if(actionButton.equals("Delete")){
+		
+		if(actionButton.equals("Delete")){ //user story delete krnna puluwn ekta tst cases hdla nthnm wtrai//
 			System.out.println("in delete");
-			//System.out.println(actionButton);
-			//System.out.println("delete num "+userstoryId);
 			userstoryService.delete(userstoryId);
 			System.out.println("deleted");
-			ModelAndView model=new ModelAndView("redirect:/backtouserstory", "commonModel", commonModel);
+			model=new ModelAndView("redirect:/backtouserstory", "commonModel", commonModel);
 			return model;
-		}*/
-		/*else if(actionButton.equals("Generate")){
-			System.out.println(actionButton);
-			Userstory full=userstoryService.find(userstoryId);
-			System.out.println("in Generate >>>updatestory/editdeletestory");
-			System.out.println(userstoryId);
-			map.put("userstoryname",full.getUserstoryname());
-			System.out.println(full.getUserstoryname());
-			map.put("status",full.getStatus());
-			userstoryService.create(full);
-			String userstorytext=full.getUserstoryname();
+		}
+		else if(actionButton.equals("Generate")){
+			String userstorytext=userstory.getStoryname();
+			ArrayList<String> entitylist=entityextractor.extractTriplets(userstorytext);
 			
-			String text=userstorytext.substring(0,userstorytext.indexOf("so that"));
-			System.out.println(text);
-			String t=text.replace("I need to be able to", "");
-			System.out.println("t= "+t);
-			ArrayList<String> entitylist=entityextractor.entityEx(t);
-			System.out.println("Entity List = "+entitylist);
-			//have to call jena here with these entities given as itsparameters//
-			map.put("storyList", userstoryService.getAll());
-			map.put("entity", entitylist);
-			return "userstory/entities";
-		}*/
+			if(entitylist.size()==3){
+				//userstory.setStatus("Generated");
+				//int story_id=userstory.getStoryId();
+				String user=entitylist.get(0);
+				String predicate=entitylist.get(1);
+				String object=entitylist.get(2);
+				ArrayList<ArrayList<String>> testcaseArray=jenaService.jenaWithParam(user, predicate, object);
+				ArrayList<String> preConditionArray = testcaseArray.get(0);
+				ArrayList<String> testcases = testcaseArray.get(1);
+				String preCondition=preConditionArray.get(0);
+				
+				Testcase t=new Testcase();
+				for(int i=0;i<testcases.size();i++){
+					t.setTestcase_name(testcases.get(i));
+					int lastid=testcaseService.getLastid();
+					t.setTestcase_id(lastid+1);
+					t.setUserstory(userstory);
+					t.setPre_condition(preCondition);
+					t.setStatus("ready");
+					testcaseService.saveTestcase(t);
+				}	
+				
+				List<Testcase> testcaseList= testcaseService.findTestCases(userstoryId);
+				System.out.println("test case added");
+				String userstoryname=userstory.getStoryname();
+				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+				model.addObject("testcaseList",testcaseList);
+				model.addObject("userstoryname", userstoryname);
+				return model;
+			}
+			if(entitylist.size()!= 3){
+				System.out.println("Sentence does not match with the actor, action, object concept.");
+				ArrayList<String> entitylist1=entityextractor.ambiguityExtract(userstorytext);
+				//userstory.setStatus("Generated");
+				//userstoryService.create(userstory);
+				//System.out.println("story added to userstory table.");
+				//int story_id=userstory.getStoryId();
+				String user=entitylist1.get(0);
+				String predicate=entitylist1.get(1);
+				String object=entitylist1.get(2);
+				ArrayList<ArrayList<String>> testcaseArray=jenaService.jenaWithParam(user, predicate, object);
+				ArrayList<String> preConditionArray = testcaseArray.get(0);
+				ArrayList<String> testcases = testcaseArray.get(1);
+				String preCondition=preConditionArray.get(0);
+				
+				Testcase t=new Testcase();
+				for(int i=0;i<testcases.size();i++){
+					t.setTestcase_name(testcases.get(i));
+					int lastid=testcaseService.getLastid();
+					t.setTestcase_id(lastid+1);
+					t.setUserstory(userstory);
+					t.setPre_condition(preCondition);
+					t.setStatus("ready");
+					testcaseService.saveTestcase(t);
+				}
+				
+				List<Testcase> testcaseList= testcaseService.findTestCases(userstoryId);
+				System.out.println("test case added");
+				String userstoryname=userstory.getStoryname();
+				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+				model.addObject("testcaseList",testcaseList);
+				model.addObject("userstoryname", userstoryname);
+				return model;
+				
+				
+				
+			}
+			else{
+				System.out.println("errorr");
+			}
+			
+		}
 		return null;
 	}
 	
 	@RequestMapping(value="/updatestory/{userstoryId}",method=RequestMethod.POST)
-	public ModelAndView update(CommonModel commonModel, @PathVariable("userstoryId") int userstoryId,Map<String,Object> map){
+	public ModelAndView update(@ModelAttribute("commonModel") CommonModel commonModel, @PathVariable("userstoryId") int userstoryId,Map<String,Object> map,@RequestParam String actionButton){
 		System.out.println("in update");
-		System.out.println("update num"+userstoryId);
-		Userstory userstory=commonModel.getUserstory();
-		userstoryService.update(userstory);
+		System.out.println("update num"+userstoryId);		
 		
-		Userstory full=userstoryService.find(userstoryId);
-		//map.put("storyList", full);
+		ModelAndView model=new ModelAndView();
+		List<Userstory> storyList=new ArrayList<Userstory>();
+		if(actionButton.equals("Save")){
+			System.out.println("update-in save");
+			Userstory userstory=commonModel.getUserstory();
+			userstory.setStatus("Pending");
+			userstory.setStoryId(userstoryId);				
+			userstoryService.update(userstory);
+			System.out.println("story updated."); 
+			model=new ModelAndView("index", "commonModel", commonModel);		
+			storyList=userstoryService.getAll();
+			model.addObject("storyList",storyList);
+			return model;
+		}
+		else if(actionButton.equals("Save and Generate")){
+			System.out.println("update-in Save and Generate");
+			Userstory userstory=commonModel.getUserstory();
+			String userstorytext=commonModel.getUserstory().getStoryname();
+			ArrayList<String> entitylist=entityextractor.extractTriplets(userstorytext);
+			
+			if(entitylist.size()==3){
+				userstory.setStatus("Generated");
+				userstory.setStoryId(userstoryId);				
+				userstoryService.update(userstory);
+				System.out.println("story updated.");
+				//int story_id=userstory.getStoryId();
+				String user=entitylist.get(0);
+				String predicate=entitylist.get(1);
+				String object=entitylist.get(2);
+				ArrayList<ArrayList<String>> testcaseArray=jenaService.jenaWithParam(user, predicate, object);
+				ArrayList<String> preConditionArray = testcaseArray.get(0);
+				ArrayList<String> testcases = testcaseArray.get(1);
+				String preCondition=preConditionArray.get(0);
+				
+				Testcase t=new Testcase();
+				for(int i=0;i<testcases.size();i++){
+					t.setTestcase_name(testcases.get(i));
+					int lastid=testcaseService.getLastid();
+					t.setTestcase_id(lastid+1);
+					t.setUserstory(userstory);
+					t.setPre_condition(preCondition);
+					t.setStatus("ready");
+					testcaseService.saveTestcase(t);
+				}
+				
+				
+				List<Testcase> testcaseList= testcaseService.findTestCases(userstoryId);
+				System.out.println("test case added");
+				String userstoryname=userstory.getStoryname();
+				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+				model.addObject("testcaseList",testcaseList);
+				model.addObject("userstoryname", userstoryname);
+				return model;
+			}
+			
+			if(entitylist.size()!= 3){
+				System.out.println("Sentence does not match with the actor, action, object concept.");
+				ArrayList<String> entitylist1=entityextractor.ambiguityExtract(userstorytext);
+				
+				userstory.setStatus("Generated");
+				userstory.setStoryId(userstoryId);				
+				userstoryService.update(userstory);
+				System.out.println("story updated.");
+				//int story_id=userstory.getStoryId();
+				String user=entitylist1.get(0);
+				String predicate=entitylist1.get(1);
+				String object=entitylist1.get(2);
+				ArrayList<ArrayList<String>> testcaseArray=jenaService.jenaWithParam(user, predicate, object);
+				ArrayList<String> preConditionArray = testcaseArray.get(0);
+				ArrayList<String> testcases = testcaseArray.get(1);
+				String preCondition=preConditionArray.get(0);
+				
+				Testcase t=new Testcase();
+				for(int i=0;i<testcases.size();i++){
+					t.setTestcase_name(testcases.get(i));
+					int lastid=testcaseService.getLastid();
+					t.setTestcase_id(lastid+1);
+					t.setUserstory(userstory);
+					t.setPre_condition(preCondition);
+					t.setStatus("ready");
+					testcaseService.saveTestcase(t);
+				}
+				
+				List<Testcase> testcaseList= testcaseService.findTestCases(userstoryId);
+				System.out.println("test case added");
+				String userstoryname=userstory.getStoryname();
+				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+				model.addObject("testcaseList",testcaseList);
+				model.addObject("userstoryname", userstoryname);
+				return model;
+				
+				
+				
+			}
+			else{
+				System.out.println("errorr");
+			}
+			
+			
+		}
 		
-		//System.out.print(full.getAssignee());
-		
-		ModelAndView model=new ModelAndView("userstory/userstory", "commonModel", commonModel);
-		model.addObject("storyList", full);
-		return model;
+		return null;
 	}
 	
 /*	@RequestMapping(value="/updatestory/editdeletestory/{userstoryId}",method=RequestMethod.GET)
@@ -339,12 +475,7 @@ public class UserstoryController {
 		
 	}
 	
-	public String savetestCase(){
-		Testcase testcase=new Testcase();
-		
-		
-		return null;
-	}
+
 	
 
 	

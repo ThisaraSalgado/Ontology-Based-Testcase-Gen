@@ -8,6 +8,7 @@ public interface TestcaseService {
 	public void saveTestcase(Testcase testcase);
 	public int getLastid();
 	public List <Testcase> findTestCases(int storyId);
-	public Testcase find(int testcase_id)
-;
+	public Testcase find(int testcase_id);
+	public void update(Testcase testcase);
+	public void delete(int testcase_id);
 }
