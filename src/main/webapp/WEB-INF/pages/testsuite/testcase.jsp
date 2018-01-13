@@ -68,6 +68,8 @@
 <body>
 <jsp:include page="..//header.jsp" />
 <c:url var="action" value="editdeletetestcase/${testcase.testcase_id}"></c:url>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 	
 <form:form method="get" action="${action}" modelAttribute="testcase">
 	<div class="container">
@@ -85,7 +87,12 @@
 		</tbody>
 	</table>
 	</c:if>
-	
+	<script>
+function hide()
+{
+document.getElementById('sendforapproveButton').style.visibility="hidden";
+}
+</script>
 	<div class="button">
 		<div>
 		
@@ -95,8 +102,9 @@
 			<input id="editButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Edit"></input>
 		</div>
 		<div>
-			<input id="sendforapproveButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Send For Approve"></input>
+			<input id="sendforapproveButton" style="visibility:visible" <c:if test="${fn:substring(sessionScope.role, 0, 5) == 'admin'}"><c:out value="disabled='disabled'"/></c:if>class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Send For Approve"></input>
 		</div>
+		
 	</div>
 	</div>
 	</form:form>
