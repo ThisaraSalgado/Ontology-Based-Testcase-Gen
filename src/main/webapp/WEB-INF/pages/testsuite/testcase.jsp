@@ -71,10 +71,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 	
-<form:form method="get" action="${action}" modelAttribute="testcase">
+<form:form method="get" action="${action}" modelAttribute="commonModel">
 	<div class="container">
 	<c:if test="${!empty testcase}">
 	<table class="table">
+
 		<tbody>
 		<tr><th>Test Case Id</th><td>${testcase.testcase_id}</td></tr>
 		<tr><th>Test Case Name</th><td>${testcase.testcase_name}</td></tr>

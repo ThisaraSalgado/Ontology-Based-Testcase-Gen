@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.finalyrSE.dao.TestcaseDao;
 import com.finalyrSE.model.Testcase;
-import com.finalyrSE.model.Userstory;
 
 @Repository("testcaseDao")
 public class TestcaseDaoImpl implements TestcaseDao{
@@ -56,5 +55,20 @@ public class TestcaseDaoImpl implements TestcaseDao{
 		// TODO Auto-generated method stub
 		return currentSession().get(Testcase.class, testcase_id);
 	}
+	
+	public void update(Testcase testcase) {
+		currentSession().update(testcase);
+		
+	}
+
+	@Override
+	public void delete(int testcase_id) {
+		Testcase testcase=new Testcase();
+		testcase.setTestcase_id(testcase_id);
+		currentSession().delete(testcase);
+		
+	}
+
+
 
 }

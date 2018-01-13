@@ -41,4 +41,16 @@ public class TestcaseServiceImpl implements TestcaseService{
 		return testcaseDao.find(testcase_id);
 	}
 
+	@Override
+	public void update(Testcase testcase) {
+		testcaseDao.update(testcase);
+		
+	}
+
+	@Override
+	public void delete(int testcase_id) {
+		testcaseDao.delete(testcase_id);
+		
+	}
+
 }

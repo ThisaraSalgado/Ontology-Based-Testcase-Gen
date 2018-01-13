@@ -43,9 +43,9 @@ public class UserstoryDaoImpl implements UserstoryDao{
 
 	@Override
 	public void delete(int userstoryId) {
-		Fulluserstory fulluserstory=new Fulluserstory();
-		fulluserstory.setUserstoryId(userstoryId);
-		currentSession().delete(fulluserstory);
+		Userstory userstory=new Userstory();
+		userstory.setStoryId(userstoryId);
+		currentSession().delete(userstory);
 		
 	}
 

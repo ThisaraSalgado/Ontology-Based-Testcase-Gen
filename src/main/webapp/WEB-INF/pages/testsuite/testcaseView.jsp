@@ -91,8 +91,8 @@ textarea {
 </head>
 <body>
 <jsp:include page="..//header.jsp" />
-
-<form:form method="post" action="/updatetestcase/${testcase_id}" modelAttribute="commonModel" >
+<c:url var="action" value="/updatetestcase/${testcase.testcase_id}"></c:url>
+<form:form method="post" action="${action}" modelAttribute="commonModel" >
 <div>
 	<div align="center" class="styleheading">Test Case</div>
 	<div>
@@ -115,12 +115,12 @@ textarea {
 	
 	</div>
 	<div>
-	<form:label path="testcase.status">Expected Result</form:label>
+	<form:label path="testcase.status">Status</form:label>
 		<form:textarea path="testcase.status"/>
 	
 	</div>
 	<div>
-	<form:label path="testcase.approveby">Expected Result</form:label>
+	<form:label path="testcase.approveby">Approved By</form:label>
 		<form:textarea path="testcase.approveby"/>
 	
 	</div>
