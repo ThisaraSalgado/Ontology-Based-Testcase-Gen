@@ -50,9 +50,8 @@ public class UserstoryController {
 	TestcaseService testcaseService;
 	
 	@RequestMapping(value="/createnewstory",method=RequestMethod.POST)
-	public ModelAndView createNewStory(Map<String,Object> map,@ModelAttribute("commonModel") CommonModel commonModel,@RequestParam String actionButton,HttpServletRequest request){
+	public ModelAndView createNewStory(@ModelAttribute("commonModel") CommonModel commonModel,@RequestParam String actionButton,HttpServletRequest request){
 		System.out.println("in createNewStory");
-		//map.put("fulluserstory", new CommonModel());
 		ModelAndView model=new ModelAndView();
 		List<Epic> epicList=new ArrayList<Epic>();
 		
@@ -96,6 +95,8 @@ public class UserstoryController {
 			userstory.setStatus("Pending");
 			userstoryService.create(userstory);
 			System.out.println("story added."); 
+			commonModel.setMessage("User story added succesfully");
+			commonModel.setMsgType("Success");
 			model=new ModelAndView("index", "commonModel", commonModel);		
 			storyList=userstoryService.getAll();
 			model.addObject("storyList",storyList);
@@ -120,7 +121,7 @@ public class UserstoryController {
 				ArrayList<String> preConditionArray = testcaseArray.get(0);
 				ArrayList<String> testcases = testcaseArray.get(1);
 				String preCondition=preConditionArray.get(0);
-				
+				System.out.println("preCondition ===== "+ preCondition);
 				Testcase t=new Testcase();
 				for(int i=0;i<testcases.size();i++){
 					t.setTestcase_name(testcases.get(i));
@@ -130,11 +131,15 @@ public class UserstoryController {
 					t.setPre_condition(preCondition);
 					t.setStatus("ready");
 					testcaseService.saveTestcase(t);
-				}
-				
+				}			
 				
 				List<Testcase> testcaseList= testcaseService.findTestCases(story_id);
 				System.out.println("test case added");
+				
+				
+
+				commonModel.setMessage("User story saved and testcases generated succesfully");
+				commonModel.setMsgType("Success");
 				String userstoryname=userstory.getStoryname();
 				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 				model.addObject("testcaseList",testcaseList);
@@ -145,7 +150,6 @@ public class UserstoryController {
 			if(entitylist.size()!= 3){
 				System.out.println("Sentence does not match with the actor, action, object concept.");
 				ArrayList<String> entitylist1=entityextractor.ambiguityExtract(userstorytext);
-				
 				userstory.setStatus("Generated");
 				userstoryService.create(userstory);
 				System.out.println("story added to userstory table.");
@@ -171,17 +175,23 @@ public class UserstoryController {
 				
 				List<Testcase> testcaseList= testcaseService.findTestCases(story_id);
 				System.out.println("test case added");
+
+				commonModel.setMessage("User story saved and testcases generated succesfully");
+				commonModel.setMsgType("Success");
 				String userstoryname=userstory.getStoryname();
 				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 				model.addObject("testcaseList",testcaseList);
 				model.addObject("userstoryname", userstoryname);
 				return model;
-				
-				
-				
+							
 			}
 			else{
 				System.out.println("errorr");
+				List<Epic> epicList=epicService.getAll();
+				commonModel.setMessage("Error! Unable to find the correct entites for the user story.");
+				commonModel.setMsgType("Error");
+				model=new ModelAndView("userstory/userstoryTemplate", "commonModel", commonModel);
+				model.addObject("epicList",epicList);
 			}
 				
 		}
@@ -205,7 +215,7 @@ public class UserstoryController {
 	}
 	
 	@RequestMapping(value="/viewuserstory/editdeletestory/{userstoryId}",method=RequestMethod.GET)
-	public ModelAndView editstory(CommonModel commonModel,@PathVariable("userstoryId") int userstoryId,@RequestParam String actionButton){
+	public ModelAndView editstory(CommonModel commonModel,@PathVariable("userstoryId") int userstoryId,@RequestParam String actionButton,Map<String,Object> map){
 		//CommonModel commonModel=new CommonModel();
 		ModelAndView model=new ModelAndView();
 		Userstory userstory=userstoryService.find(userstoryId);
@@ -221,12 +231,33 @@ public class UserstoryController {
 			return model;
 		}
 		
-		if(actionButton.equals("Delete")){ //user story delete krnna puluwn ekta tst cases hdla nthnm wtrai//
+		if(actionButton.equals("Delete")){ 
 			System.out.println("in delete");
-			userstoryService.delete(userstoryId);
-			System.out.println("deleted");
-			model=new ModelAndView("redirect:/backtouserstory", "commonModel", commonModel);
-			return model;
+			List<Testcase> list=testcaseService.findTestCases(userstoryId);
+			if(list.size() == 0){
+				userstoryService.delete(userstoryId);
+				commonModel.setMessage("User story id "+userstoryId+" deleted succesfully.");
+				commonModel.setMsgType("Success");
+				System.out.println("deleted");
+				map.put("storyList", userstoryService.getAll());
+				List<Userstory> storyList=new ArrayList<Userstory>();
+				storyList=userstoryService.getAll();
+				model=new ModelAndView("index", "commonModel", commonModel);
+				model.addObject("storyList",storyList);
+				return model;
+			}else{
+				System.out.println("can't delete");
+				commonModel.setMessage("Can't delete user story id " + userstoryId+" . It contains test cases.");
+				commonModel.setMsgType("Error");
+				map.put("storyList", userstoryService.getAll());
+				List<Userstory> storyList=new ArrayList<Userstory>();
+				storyList=userstoryService.getAll();
+				model=new ModelAndView("index", "commonModel", commonModel);
+				model.addObject("storyList",storyList);
+				return model;
+			}
+			
+			
 		}
 		else if(actionButton.equals("Generate")){
 			String userstorytext=userstory.getStoryname();
@@ -266,7 +297,7 @@ public class UserstoryController {
 				return model;
 			}
 			if(entitylist.size()!= 3){
-				System.out.println("Sentence does not match with the actor, action, object concept.");
+				System.out.println("in ambiguity word checking.");
 				ArrayList<String> entitylist1=entityextractor.ambiguityExtract(userstorytext);
 				//userstory.setStatus("Generated");
 				//userstoryService.create(userstory);
@@ -419,50 +450,12 @@ public class UserstoryController {
 		return null;
 	}
 	
-/*	@RequestMapping(value="/updatestory/editdeletestory/{userstoryId}",method=RequestMethod.GET)
-	public String editstoryu(@PathVariable("userstoryId") int userstoryId, Map<String,Object> map,@RequestParam String actionButton){
-		if(actionButton.equals("Edit")){
-			System.out.println("in edit");
-			//System.out.println(actionButton);
-			//System.out.println("edit num "+userstoryId);
-			Fulluserstory full=userstoryService.find(userstoryId);
-			map.put("fulluserstory", full);
-			return "userstory/edit";
-		}
-		if(actionButton.equals("Delete")){
-			System.out.println("in delete");
-			//System.out.println(actionButton);
-			//System.out.println("delete num "+userstoryId);
-			userstoryService.delete(userstoryId);
-			System.out.println("deleted");
-			return "redirect:/backtouserstory";
-		}
-		else if(actionButton.equals("Generate")){
-			System.out.println(actionButton);
-			Fulluserstory full=userstoryService.find(userstoryId);
-			System.out.println("in Generate >>>updatestory/editdeletestory");
-			System.out.println(userstoryId);
-			map.put("userstoryname",full.getUserstoryname());
-			System.out.println(full.getUserstoryname());
-			map.put("status",full.getStatus());
-			userstoryService.create(full);
-			String userstorytext=full.getUserstoryname();
-			
-			String text=userstorytext.substring(0,userstorytext.indexOf("so that"));
-			System.out.println(text);
-			String t=text.replace("I need to be able to", "");
-			System.out.println("t= "+t);
-			ArrayList<String> entitylist=entityextractor.entityEx(t);
-			System.out.println("Entity List = "+entitylist);
-			//have to call jena here with these entities given as itsparameters//
-			map.put("storyList", userstoryService.getAll());
-			map.put("entity", entitylist);
-			return "userstory/entities";
-			//return "redirect:/addnewstory";
-		}
+/*	@RequestMapping(value="/viewuserstory/editdeletestory/createnewstory",method=RequestMethod.GET)
+	public ModelAndView createNew(@ModelAttribute("commonModel") CommonModel commonModel,@RequestParam String actionButton,HttpServletRequest request){
 		return null;
-	}*/
-	
+		
+	}
+*/
 
 
 	@RequestMapping(value="/backtouserstory",method=RequestMethod.GET)

@@ -1,36 +1,32 @@
 package com.finalyrSE.model;
 
-import java.util.List;
-import java.util.Map;
 
 public class CommonModel {
 	private Epic epic;
 	private Fulluserstory fulluserstory;
 	private Userstory userstory;
 	private User user;
-	private List<String> epicNameList;
-	Map<String,String> epicList;
 	private Testcase testcase;
+	private String message;
+	private String msgType;
 	
-	
+	public String getMsgType() {
+		return msgType;
+	}
+	public void setMsgType(String msgType) {
+		this.msgType = msgType;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
 	public Testcase getTestcase() {
 		return testcase;
 	}
 	public void setTestcase(Testcase testcase) {
 		this.testcase = testcase;
-	}
-	public Map<String, String> getEpicList() {
-		return epicList;
-	}
-	public void setEpicList(Map<String, String> epicList) {
-		this.epicList = epicList;
-	}
-	
-	public List<String> getEpicNameList() {
-		return epicNameList;
-	}
-	public void setEpicNameList(List<String> epicNameList) {
-		this.epicNameList = epicNameList;
 	}
 	public Epic getEpic() {
 		return epic;

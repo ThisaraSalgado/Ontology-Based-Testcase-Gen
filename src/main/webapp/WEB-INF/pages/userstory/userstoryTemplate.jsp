@@ -2,14 +2,20 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/core/css/hello.css" />
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <html>
 <head>
+<script>
+function saveButton(){
+	$("#saveButtonmod").modal();
+}
+</script>
+
 <style>
 form {
   /* Just to center the form on the page */
@@ -107,16 +113,6 @@ textarea {
     width: 250px;
 }
 </style>
-<script type="text/javascript">
-function validateForm() {
-    var x = document.forms["template"]["storyname"].value;
-    if (x == "") {
-        alert("Storyname must be filled out");
-        document.write();
-        return false;
-    }
-}
-</script>
 
 <title>User Story Template</title>
 </head>
@@ -191,9 +187,29 @@ function validateForm() {
 			<input align="right" id="save" type="submit" class="btn-lg" name="actionButton" value="Save" /> 
 		
 		
-			<input id="savegenerate" type="submit" class="btn-lg" name="actionButton" value="Save and Generate" />
+			<input id="savegenerate" type="button" class="btn-lg" value="Save and Generate" onclick="javascript:saveButton()"/>
 		</div>
 		</div>
+		
+		<!-- Modal for the Save and Generate button -->
+<div class="modal fade" id="saveButtonmod" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Confirm test case generate</h4>
+      </div>
+      <div class="modal-body">
+        Confirm generating test cases for this user story?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+        <button id="sendButton" type="submit" class="btn btn-primary"  value="Save and Generate" name="actionButton"> Confirm </button>
+      </div>
+    </div>
+  </div>
+</div>	
+		
 	</form:form>
 
 </body>
