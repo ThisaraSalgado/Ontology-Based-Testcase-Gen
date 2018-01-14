@@ -154,6 +154,25 @@ public class TestcaseController {
 			return model;
 			
 		}
+		
+		else if(actionButton.equals("Send For Approve")){
+			System.out.println("in Send For Approve");
+			Testcase testcase= testcaseService.find(testcase_id); 
+			testcase.setStatus("Pending");
+			testcaseService.update(testcase);
+			System.out.println(testcase.getStatus());	
+			
+			int storyId=testcase.getUserstory().getStoryId();
+			ModelAndView model= new ModelAndView();
+			List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
+			Userstory userstory=userstoryService.find(storyId);
+			String userstoryname=userstory.getStoryname();
+			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+			model.addObject("testcaseList",testcaseList);
+			model.addObject("userstoryname", userstoryname);
+			return model;
+		}
+		
 		return null;
 	}
 	
@@ -204,6 +223,9 @@ public class TestcaseController {
 			model.addObject("userstoryname", userstoryname);
 			return model;
 		}
+		
+		
+		
 		return null;
 		
 	}
