@@ -2,10 +2,11 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <html>
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Test Suite</title>
 <style>
@@ -51,18 +52,8 @@ background: olivedrab;
     font-weight: bold;
     font-family:serif;
 	}	
-	#editButton{
-	background: midnightblue;
-    border: none;
-    padding: 8px 10px 8px 10px;
-    border-radius: 25px;
-    margin-right: 30px;
-    /*margin-left: 50px;*/
-    color: white;
-    font-weight: bold;
-    font-family:serif;
-	}
-	#sendButton{
+	
+	#addnew{
 	background: olivedrab;
     border: none;
     padding: 8px 20px 8px 20px;
@@ -114,7 +105,8 @@ font-size:20px;
 </head>
 <body>
 <jsp:include page="..//header.jsp" />
-<form:form method="post"  ModelAttribute="commonModel">
+<c:url var="action" value="/addnew/${storyId}"></c:url>
+<form:form method="post"  action="${action}" ModelAttribute="commonModel">
 <div align="center" class="heading"><p></p></div>
 <div class="content">
 <div>	
@@ -157,8 +149,12 @@ font-size:20px;
 		
 </table>
 </div>
+<div class="row">
+<div class="col-md-10"></div>
+<div class="col-md-2">
+			<input align="right" id="addnew" type="submit" class="btn-lg" name="actionButton" value="Add New" /> </div>
 
-	
+	</div>
 		
 	</form:form>	
 </body>

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -153,6 +154,25 @@ public class TestcaseController {
 			return model;
 			
 		}
+		
+		else if(actionButton.equals("Send For Approve")){
+			System.out.println("in Send For Approve");
+			Testcase testcase= testcaseService.find(testcase_id); 
+			testcase.setStatus("Pending");
+			testcaseService.update(testcase);
+			System.out.println(testcase.getStatus());	
+			
+			int storyId=testcase.getUserstory().getStoryId();
+			ModelAndView model= new ModelAndView();
+			List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
+			Userstory userstory=userstoryService.find(storyId);
+			String userstoryname=userstory.getStoryname();
+			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+			model.addObject("testcaseList",testcaseList);
+			model.addObject("userstoryname", userstoryname);
+			return model;
+		}
+		
 		return null;
 	}
 	
@@ -203,7 +223,47 @@ public class TestcaseController {
 			model.addObject("userstoryname", userstoryname);
 			return model;
 		}
+		
+		
+		
 		return null;
 		
 	}
+	@RequestMapping(value="/addnew/{storyId}", method=RequestMethod.POST)
+	public ModelAndView addNew(@ModelAttribute("commonModel") CommonModel commonModel, @PathVariable ("storyId") int storyId )throws IOException{
+		System.out.println("add new");
+		System.out.println(storyId);
+		Userstory userstory= userstoryService.find(storyId);
+		commonModel.setUserstory(userstory);
+		ModelAndView model= new ModelAndView();
+		model=new ModelAndView("testsuite/addnew", "commonModel", commonModel);
+		model.addObject("userstory", userstory);
+		return model;
+	}
+	
+	@RequestMapping(value="/saveadded/{storyId}", method=RequestMethod.POST)
+	public ModelAndView saveNew(@ModelAttribute("commonModel") CommonModel commonModel, @PathVariable ("storyId") int storyId )throws IOException{
+		System.out.println("save add new");
+		//Userstory userstory= commonModel.getUserstory();
+		System.out.println(storyId);
+		Testcase testcase=commonModel.getTestcase();
+		int id=testcaseService.getLastid();
+		System.out.println(id+" id");
+		testcase.setTestcase_id(id+1);
+		Userstory userstory= userstoryService.find(storyId);
+		testcase.setUserstory(userstory);
+		commonModel.setTestcase(testcase);
+		testcase.setStatus("ready");
+		testcaseService.saveTestcase(testcase);
+
+		ModelAndView model= new ModelAndView();
+		List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
+		String userstoryname=userstory.getStoryname();
+		model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+		model.addObject("testcaseList",testcaseList);
+		model.addObject("userstoryname", userstoryname);
+		return model;
+		
+	}
+	
 }

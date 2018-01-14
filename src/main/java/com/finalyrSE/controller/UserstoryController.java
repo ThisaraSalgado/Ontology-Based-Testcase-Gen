@@ -289,6 +289,9 @@ public class UserstoryController {
 				System.out.println("test case added");
 				String userstoryname=userstory.getStoryname();
 				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+				//userstory= userstoryService.find(userstoryId);
+				//commonModel.setUserstory(userstory);
+				model.addObject("storyId", userstoryId);
 				model.addObject("testcaseList",testcaseList);
 				model.addObject("userstoryname", userstoryname);
 				return model;

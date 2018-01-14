@@ -114,8 +114,6 @@ textarea {
 }
 </style>
 
-
-
 <title>User Story Template</title>
 </head>
 <body>
@@ -123,7 +121,7 @@ textarea {
 
 	<c:url var="action" value="/addnewstory"></c:url>
 
-	<form:form method="post" action="${action}" modelAttribute="commonModel">
+	<form:form name="template" method="post" action="${action}"  modelAttribute="commonModel">
 	<div>
 		<div align="center" class="styleheading">User Story Form</div>
 		
@@ -138,7 +136,7 @@ textarea {
 		</div>
 		
 			<form:label  path="userstory.storyname">User Story Name </form:label>
-			<form:textarea path="userstory.storyname"/>
+			<form:textarea name="storyname" path="userstory.storyname" />
 
 		</div>
 		

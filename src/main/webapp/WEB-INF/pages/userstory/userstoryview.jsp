@@ -19,6 +19,7 @@
 
 
 <script type="text/javascript">
+<%--
 function selected(){
 	var all_checked = document.querySelectorAll('input[name=checkbox]:checked');
 	//document.write(all_checked.length);
@@ -33,7 +34,7 @@ function selected(){
 	//$("#ADOus").attr("action","${ctx}/ADSetting?myOUsArray ="+ selectedIds );
 	//$("#ADOus").submit();
 	return selectedIds; 
-	
+--%>	
 }
 
 </script>
@@ -86,7 +87,6 @@ font-size:20px;
     left:1100px;
     top: 100px
 }
-
 .content{
 	position: relative;
     width: 80%;
@@ -142,17 +142,19 @@ font-size:20px;
 </div>
 
 <div class="container">
-<div class="deletebutton">
+<%-- <div class="deletebutton">
 <input id="deleteAllButton"  onClick="selected()" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Delete Selected"></input>
-</div>
+</div> --%>
 <div class="content">
 
 
 <c:if test="${!empty storyList}">
+<div class="row">
+<div class="col-md-12">
 		<table class="table">
 		<thead>
 			<tr>
-			<th></th>
+			
 				<th>User Story Id</th>
 				<th>User Story Name</th>
 				<th>Status</th>
@@ -163,7 +165,7 @@ font-size:20px;
 			<c:forEach items="${storyList}" var="userstory">
 			
 				<tr>
-				<td class="checkbox"><input name="checkbox" type="checkbox" value="${userstory.storyId}" id="####" ></td>
+				<%-- <td class="checkbox"><input name="checkbox" type="checkbox" value="${userstory.storyId}" id="####" ></td> --%>
 				<td class="uId"><c:out value="${userstory.storyId}"/></td>
 				<td class="uName">
 					 <a href="<c:url value='/viewuserstory/${userstory.storyId}'/>"><c:out value="${userstory.storyname}"/></a>
