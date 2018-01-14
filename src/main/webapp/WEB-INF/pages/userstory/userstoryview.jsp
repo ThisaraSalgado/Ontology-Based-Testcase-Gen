@@ -87,7 +87,6 @@ font-size:20px;
     left:1100px;
     top: 100px
 }
-
 .content{
 	position: relative;
     width: 80%;
@@ -109,10 +108,12 @@ font-size:20px;
 <div class="content">
 
 <c:if test="${!empty storyList}">
+<div class="row">
+<div class="col-md-12">
 		<table class="table">
 		<thead>
 			<tr>
-			<th></th>
+			
 				<th>User Story Id</th>
 				<th>User Story Name</th>
 				<th>Status</th>
@@ -138,6 +139,7 @@ font-size:20px;
 		<%-- 
 			<a href="<c:url value='/edit/${userstory.userstoryId}'/>">EDIT</a>
 			<a href="<c:url value='/delete/${userstory.userstoryId}'/>">DELETE</a> --%>
+		
 		</c:if>
 		</div>
 		</div>
