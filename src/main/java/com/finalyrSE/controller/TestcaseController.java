@@ -247,6 +247,9 @@ public class TestcaseController {
 		//Userstory userstory= commonModel.getUserstory();
 		System.out.println(storyId);
 		Testcase testcase=commonModel.getTestcase();
+		int id=testcaseService.getLastid();
+		System.out.println(id+" id");
+		testcase.setTestcase_id(id+1);
 		Userstory userstory= userstoryService.find(storyId);
 		testcase.setUserstory(userstory);
 		commonModel.setTestcase(testcase);

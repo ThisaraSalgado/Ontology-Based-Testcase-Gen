@@ -95,10 +95,10 @@ textarea {
 <form:form method="post" action="${action}" modelAttribute="commonModel" >
 <div>
 	<div align="center" class="styleheading">Test Case</div>
-	<div>
+	<%-- <div>
 		<form:label path="testcase.testcase_id">Test case ID</form:label>
 		<form:textarea path="testcase.testcase_id"/>
-	</div>
+	</div> --%>
 	<div>
 	<form:label path="testcase.testcase_name">Test case</form:label>
 		<form:textarea path="testcase.testcase_name"/>
