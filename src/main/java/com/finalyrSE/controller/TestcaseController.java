@@ -111,6 +111,7 @@ public class TestcaseController {
 		model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 		model.addObject("testcaseList",testcaseList);
 		model.addObject("userstoryname", userstoryname);
+		model.addObject("storyId", storyId);
 		return model;
 	}
 
@@ -168,6 +169,7 @@ public class TestcaseController {
 			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 			model.addObject("testcaseList",testcaseList);
 			model.addObject("userstoryname", userstoryname);
+			model.addObject("storyId", storyId);
 			return model;
 			
 		}
@@ -187,6 +189,7 @@ public class TestcaseController {
 			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 			model.addObject("testcaseList",testcaseList);
 			model.addObject("userstoryname", userstoryname);
+			model.addObject("storyId", storyId);
 			return model;
 		}
 		else if(actionButton.equals("Approve")){
@@ -204,6 +207,7 @@ public class TestcaseController {
 			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 			model.addObject("testcaseList",testcaseList);
 			model.addObject("userstoryname", userstoryname);
+			model.addObject("storyId", storyId);
 			return model;
 		}
 		return null;
@@ -218,6 +222,7 @@ public class TestcaseController {
 		Testcase test=testcaseService.find(testcase_id); //this is to get the story id from test object
 		Userstory userstory=test.getUserstory();
 		testcase_reslts.setUserstory(userstory);
+		testcase_reslts.setTestcase_id(testcase_id);
 		commonModel.setTestcase(testcase_reslts);
 		testcaseService.update(testcase_reslts);
 		System.out.println("updated table");
@@ -267,6 +272,7 @@ public class TestcaseController {
 			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 			model.addObject("testcaseList",testcaseList);
 			model.addObject("userstoryname", userstoryname);
+			model.addObject("storyId", storyId);
 			return model;
 		}
 		else if(actionButton.equals("Send For Approve")){
@@ -284,6 +290,7 @@ public class TestcaseController {
 			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 			model.addObject("testcaseList",testcaseList);
 			model.addObject("userstoryname", userstoryname);
+			model.addObject("storyId", storyId);
 			return model;
 		}
 		else if(actionButton.equals("Approve")){
@@ -301,6 +308,7 @@ public class TestcaseController {
 			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 			model.addObject("testcaseList",testcaseList);
 			model.addObject("userstoryname", userstoryname);
+			model.addObject("storyId", storyId);
 			return model;
 		}
 		
@@ -343,6 +351,7 @@ public class TestcaseController {
 		model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 		model.addObject("testcaseList",testcaseList);
 		model.addObject("userstoryname", userstoryname);
+		model.addObject("storyId", storyId);
 		return model;
 		
 	}

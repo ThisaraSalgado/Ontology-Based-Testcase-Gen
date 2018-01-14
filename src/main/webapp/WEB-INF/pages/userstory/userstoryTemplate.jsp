@@ -112,6 +112,32 @@ textarea {
     font-family:serif;
     width: 250px;
 }
+
+.msgSuccess {
+    color: green;
+    font-family: "Verdana", Times, serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+.msgError{
+
+    color:red;
+    font-family: "Verdana", Times, serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+.msgInfo{
+
+   color:blue;
+    font-family: "Verdana", Times, serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
 </style>
 
 <title>User Story Template</title>
@@ -123,6 +149,21 @@ textarea {
 
 	<form:form name="template" method="post" action="${action}"  modelAttribute="commonModel">
 	<div>
+	<div>	
+<c:if test="${not empty commonModel.message}">
+    				<tr>
+	        			<td colspan="2" class="msgSuccess" align="center">
+	        				<c:set var="msgType" value="${commonModel.msgType}"/>  
+	        				<c:if test="${msgType =='Error'}">
+	        					<div class="msgError"><c:out value="${commonModel.message}"></c:out></div>
+	        				</c:if>
+	        				<c:if test="${msgType =='Success'}">
+	        					<div class="msgInfo"><c:out value="${commonModel.message}"></c:out></div>
+	        				</c:if>
+	        			</td>
+	        		</tr>
+        </c:if>
+</div>
 		<div align="center" class="styleheading">User Story Form</div>
 		
 		

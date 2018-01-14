@@ -67,9 +67,7 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
 		if(text1.contains("need")){
 			text2 = text1.split("i need to be able to"); // this phrase get removed//
 		}
-		 
-
-		
+		 		
 		Properties props=new Properties();
 		props.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,parse");
 		StanfordCoreNLP pipeline=new StanfordCoreNLP(props);
@@ -121,17 +119,20 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
 							if(dep.reln().toString().equals("root")){
 								if(POS_tag.equals("NN")){
 									actor=depword;
+									Annotation tokenAnnotation = new Annotation(actor);
+									pipeline.annotate(tokenAnnotation);  // necessary for the LemmaAnnotation to be set.
+									List<CoreMap> list = tokenAnnotation.get(SentencesAnnotation.class);
+									String tokenLemma = list.get(0).get(TokensAnnotation.class).get(0).get(LemmaAnnotation.class);
+									//System.out.println(tokenLemma);
+									returnArray.add(0,tokenLemma);
+									System.out.println("actor= "+tokenLemma);
 								}
 								else{
 									System.out.println("actor not valid");
+									returnArray.add(0,"Invalid");
+									return returnArray;
 								}
-								Annotation tokenAnnotation = new Annotation(actor);
-								pipeline.annotate(tokenAnnotation);  // necessary for the LemmaAnnotation to be set.
-								List<CoreMap> list = tokenAnnotation.get(SentencesAnnotation.class);
-								String tokenLemma = list.get(0).get(TokensAnnotation.class).get(0).get(LemmaAnnotation.class);
-								//System.out.println(tokenLemma);
-								returnArray.add(0,tokenLemma);
-								System.out.println("actor= "+tokenLemma);			
+											
 							}
 							
 						}
@@ -177,8 +178,10 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
 									//System.out.println(tokenLemma);
 									returnArray.add(2,tokenLemma);
 									System.out.println("object= "+tokenLemma);
-								}		
-							}						
+								}	
+								
+							}
+							
 						}				
 					}												
 			}		
@@ -251,7 +254,9 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
 							predicate=word;
 							returnArray.add(1,predicate);
 							System.out.println("predicate= "+predicate);
-						}
+						}/*else{
+							returnArray.add(1,"Invalid");
+						}*/
 					}
 					
 				}
@@ -319,7 +324,13 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
 								List<CoreMap> list = tokenAnnotation.get(SentencesAnnotation.class);
 								String tokenLemma = list.get(0).get(TokensAnnotation.class).get(0).get(LemmaAnnotation.class);
 								//System.out.println(tokenLemma);
-								returnArray.add(2,tokenLemma);
+								if(returnArray.size()==2){
+									returnArray.add(2,tokenLemma);
+								}
+								else{
+									returnArray.add(1,"Invalid");
+								}
+								
 								System.out.println("object= "+tokenLemma);
 							}
 													
