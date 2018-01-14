@@ -109,6 +109,18 @@ public class UserstoryController {
 			String userstorytext=commonModel.getUserstory().getStoryname();
 			ArrayList<String> entitylist=entityextractor.extractTriplets(userstorytext);
 			
+			for(int i=0;i<entitylist.size();i++){
+				if(entitylist.get(i).equals("Invalid")){
+					System.out.println("errorr with invalid entity");
+					List<Epic> epicList=epicService.getAll();
+					commonModel.setMessage("Error! Invalid input user story");
+					commonModel.setMsgType("Error");
+					model=new ModelAndView("userstory/userstoryTemplate", "commonModel", commonModel);
+					model.addObject("epicList",epicList);
+					return model;
+				}
+			}
+			
 			if(entitylist.size()==3){
 				userstory.setStatus("Generated");
 				userstoryService.create(userstory);
@@ -136,8 +148,6 @@ public class UserstoryController {
 				List<Testcase> testcaseList= testcaseService.findTestCases(story_id);
 				System.out.println("test case added");
 				
-				
-
 				commonModel.setMessage("User story saved and testcases generated succesfully");
 				commonModel.setMsgType("Success");
 				String userstoryname=userstory.getStoryname();
@@ -151,40 +161,56 @@ public class UserstoryController {
 			if(entitylist.size()!= 3){
 				System.out.println("Sentence does not match with the actor, action, object concept.");
 				ArrayList<String> entitylist1=entityextractor.ambiguityExtract(userstorytext);
-				userstory.setStatus("Generated");
-				userstoryService.create(userstory);
-				System.out.println("story added to userstory table.");
-				int story_id=userstory.getStoryId();
-				String user=entitylist1.get(0);
-				String predicate=entitylist1.get(1);
-				String object=entitylist1.get(2);
-				ArrayList<ArrayList<String>> testcaseArray=jenaService.jenaWithParam(user, predicate, object);
-				ArrayList<String> preConditionArray = testcaseArray.get(0);
-				ArrayList<String> testcases = testcaseArray.get(1);
-				String preCondition=preConditionArray.get(0);
 				
-				Testcase t=new Testcase();
-				for(int i=0;i<testcases.size();i++){
-					t.setTestcase_name(testcases.get(i));
-					int lastid=testcaseService.getLastid();
-					t.setTestcase_id(lastid+1);
-					t.setUserstory(userstory);
-					t.setPre_condition(preCondition);
-					t.setStatus("ready");
-					testcaseService.saveTestcase(t);
-				}
+				for(int i=0;i<entitylist1.size();i++){
+					if(entitylist1.get(i).trim().equals("Invalid")){
+						System.out.println(entitylist1.get(i));
+						System.out.println("errorr with invalid entity");
+						List<Epic> epicList=epicService.getAll();
+						commonModel.setMessage("Error! Invalid input user story");
+						commonModel.setMsgType("Error");
+						model=new ModelAndView("userstory/userstoryTemplate", "commonModel", commonModel);
+						model.addObject("epicList",epicList);
+						return model;
+					}
+				}	
 				
-				List<Testcase> testcaseList= testcaseService.findTestCases(story_id);
-				System.out.println("test case added");
+						userstory.setStatus("Generated");
+						userstoryService.create(userstory);
+						System.out.println("story added to userstory table.");
+						int story_id=userstory.getStoryId();
+						String user=entitylist1.get(0);
+						String predicate=entitylist1.get(1);
+						String object=entitylist1.get(2);
+						ArrayList<ArrayList<String>> testcaseArray=jenaService.jenaWithParam(user, predicate, object);
+						ArrayList<String> preConditionArray = testcaseArray.get(0);
+						ArrayList<String> testcases = testcaseArray.get(1);
+						String preCondition=preConditionArray.get(0);
+						
+						Testcase t=new Testcase();
+						for(int j=0;j<testcases.size();j++){
+							t.setTestcase_name(testcases.get(j));
+							int lastid=testcaseService.getLastid();
+							t.setTestcase_id(lastid+1);
+							t.setUserstory(userstory);
+							t.setPre_condition(preCondition);
+							t.setStatus("ready");
+							testcaseService.saveTestcase(t);
+						}
+						
+						List<Testcase> testcaseList= testcaseService.findTestCases(story_id);
+						System.out.println("test case added");
 
-				commonModel.setMessage("User story saved and testcases generated succesfully");
-				commonModel.setMsgType("Success");
-				String userstoryname=userstory.getStoryname();
-				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
-				model.addObject("testcaseList",testcaseList);
-				model.addObject("userstoryname", userstoryname);
-				model.addObject("storyId", story_id);
-				return model;
+						commonModel.setMessage("User story saved and testcases generated succesfully");
+						commonModel.setMsgType("Success");
+						String userstoryname=userstory.getStoryname();
+						model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+						model.addObject("testcaseList",testcaseList);
+						model.addObject("userstoryname", userstoryname);
+						model.addObject("storyId", story_id);
+						return model;
+					
+				
 							
 			}
 			else{
@@ -267,8 +293,20 @@ public class UserstoryController {
 			String userstorytext=userstory.getStoryname();
 			ArrayList<String> entitylist=entityextractor.extractTriplets(userstorytext);
 			
+			for(int i=0;i<entitylist.size();i++){
+				if(entitylist.get(i).equals("Invalid")){
+					System.out.println("errorr with invalid entity");
+					List<Epic> epicList=epicService.getAll();
+					commonModel.setMessage("Error! Invalid input user story");
+					commonModel.setMsgType("Error");
+					model=new ModelAndView("userstory/userstoryTemplate", "commonModel", commonModel);
+					model.addObject("epicList",epicList);
+					return model;
+				}
+			}
+			
 			if(entitylist.size()==3){
-				//userstory.setStatus("Generated");
+				userstory.setStatus("Generated");
 				//int story_id=userstory.getStoryId();
 				String user=entitylist.get(0);
 				String predicate=entitylist.get(1);
@@ -305,10 +343,21 @@ public class UserstoryController {
 			if(entitylist.size()!= 3){
 				System.out.println("in ambiguity word checking.");
 				ArrayList<String> entitylist1=entityextractor.ambiguityExtract(userstorytext);
-				//userstory.setStatus("Generated");
-				//userstoryService.create(userstory);
-				//System.out.println("story added to userstory table.");
-				//int story_id=userstory.getStoryId();
+				
+				for(int i=0;i<entitylist1.size();i++){
+					if(entitylist1.get(i).trim().equals("Invalid")){
+						System.out.println(entitylist1.get(i));
+						System.out.println("errorr with invalid entity");
+						List<Epic> epicList=epicService.getAll();
+						commonModel.setMessage("Error! Invalid input user story");
+						commonModel.setMsgType("Error");
+						model=new ModelAndView("userstory/userstoryTemplate", "commonModel", commonModel);
+						model.addObject("epicList",epicList);
+						return model;
+					}
+				}	
+				
+				userstory.setStatus("Generated");
 				String user=entitylist1.get(0);
 				String predicate=entitylist1.get(1);
 				String object=entitylist1.get(2);
@@ -339,8 +388,7 @@ public class UserstoryController {
 				model.addObject("userstoryname", userstoryname);
 				return model;
 				
-				
-				
+							
 			}
 			else{
 				System.out.println("errorr");
@@ -352,7 +400,7 @@ public class UserstoryController {
 			}
 			
 		}
-		return null;
+		return model;
 	}
 	
 	@RequestMapping(value="/updatestory/{userstoryId}",method=RequestMethod.POST)
@@ -369,6 +417,8 @@ public class UserstoryController {
 			userstory.setStoryId(userstoryId);				
 			userstoryService.update(userstory);
 			System.out.println("story updated."); 
+			commonModel.setMessage("User story added succesfully");
+			commonModel.setMsgType("Success");
 			model=new ModelAndView("index", "commonModel", commonModel);		
 			storyList=userstoryService.getAll();
 			model.addObject("storyList",storyList);
@@ -412,6 +462,7 @@ public class UserstoryController {
 				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 				model.addObject("testcaseList",testcaseList);
 				model.addObject("userstoryname", userstoryname);
+				model.addObject("storyId", userstoryId);
 				return model;
 			}
 			
@@ -449,6 +500,7 @@ public class UserstoryController {
 				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 				model.addObject("testcaseList",testcaseList);
 				model.addObject("userstoryname", userstoryname);
+				model.addObject("storyId", userstoryId);
 				return model;
 				
 				
