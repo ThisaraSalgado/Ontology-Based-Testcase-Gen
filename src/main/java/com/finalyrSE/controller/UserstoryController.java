@@ -144,6 +144,7 @@ public class UserstoryController {
 				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 				model.addObject("testcaseList",testcaseList);
 				model.addObject("userstoryname", userstoryname);
+				model.addObject("storyId", story_id);
 				return model;
 			}
 			
@@ -182,6 +183,7 @@ public class UserstoryController {
 				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 				model.addObject("testcaseList",testcaseList);
 				model.addObject("userstoryname", userstoryname);
+				model.addObject("storyId", story_id);
 				return model;
 							
 			}
@@ -225,6 +227,8 @@ public class UserstoryController {
 			epicList= epicService.getAll();	
 			//Userstory userstory=userstoryService.find(userstoryId);
 			commonModel.setUserstory(userstory);
+			commonModel.setMessage("User story edited succesfully");
+			commonModel.setMsgType("Success");
 			model=new ModelAndView("userstory/edit", "commonModel", commonModel);
 			model.addObject("epicList",epicList);
 			model.addObject("userstory", userstory);
@@ -288,6 +292,8 @@ public class UserstoryController {
 				List<Testcase> testcaseList= testcaseService.findTestCases(userstoryId);
 				System.out.println("test case added");
 				String userstoryname=userstory.getStoryname();
+				commonModel.setMessage("User story saved and testcases generated succesfully");
+				commonModel.setMsgType("Success");
 				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 				//userstory= userstoryService.find(userstoryId);
 				//commonModel.setUserstory(userstory);
@@ -325,7 +331,10 @@ public class UserstoryController {
 				List<Testcase> testcaseList= testcaseService.findTestCases(userstoryId);
 				System.out.println("test case added");
 				String userstoryname=userstory.getStoryname();
+				commonModel.setMessage("User story saved and testcases generated succesfully");
+				commonModel.setMsgType("Success");
 				model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+				model.addObject("storyId", userstoryId);
 				model.addObject("testcaseList",testcaseList);
 				model.addObject("userstoryname", userstoryname);
 				return model;
@@ -335,6 +344,11 @@ public class UserstoryController {
 			}
 			else{
 				System.out.println("errorr");
+				List<Epic> epicList=epicService.getAll();
+				commonModel.setMessage("Error! Unable to find the correct entites for the user story.");
+				commonModel.setMsgType("Error");
+				model=new ModelAndView("userstory/userstoryTemplate", "commonModel", commonModel);
+				model.addObject("epicList",epicList);
 			}
 			
 		}

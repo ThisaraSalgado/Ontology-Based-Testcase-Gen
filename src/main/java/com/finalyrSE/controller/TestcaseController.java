@@ -145,6 +145,8 @@ public class TestcaseController {
 			System.out.println("in edit");
 			Testcase testcase= testcaseService.find(testcase_id); 
 			commonModel.setTestcase(testcase);
+			/*commonModel.setMessage("Test case edited succesfully.");
+			commonModel.setMsgType("Success");*/
 			ModelAndView model= new ModelAndView("testsuite/testcaseView","commonModel", commonModel);
 			model.addObject("testcase", testcase);
 			return model;
@@ -161,6 +163,8 @@ public class TestcaseController {
 			List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
 			Userstory userstory=userstoryService.find(storyId);
 			String userstoryname=userstory.getStoryname();
+			commonModel.setMessage("Test case deleted succesfully.");
+			commonModel.setMsgType("Success");
 			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 			model.addObject("testcaseList",testcaseList);
 			model.addObject("userstoryname", userstoryname);
@@ -240,6 +244,8 @@ public class TestcaseController {
 			System.out.println("in edittt");
 			Testcase testcase= testcaseService.find(testcase_id); 
 			commonModel.setTestcase(testcase);
+			/*commonModel.setMessage("Test case edited succesfully.");
+			commonModel.setMsgType("Success");*/
 			ModelAndView model= new ModelAndView("testsuite/testcaseView","commonModel", commonModel);
 			model.addObject("testcase", testcase);
 			return model;
@@ -256,12 +262,47 @@ public class TestcaseController {
 			List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
 			Userstory userstory=userstoryService.find(storyId);
 			String userstoryname=userstory.getStoryname();
+			commonModel.setMessage("Test case deleted succesfully.");
+			commonModel.setMsgType("Success");
 			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 			model.addObject("testcaseList",testcaseList);
 			model.addObject("userstoryname", userstoryname);
 			return model;
 		}
-		
+		else if(actionButton.equals("Send For Approve")){
+			System.out.println("in Send For Approve");
+			Testcase testcase= testcaseService.find(testcase_id); 
+			testcase.setStatus("Pending");
+			testcaseService.update(testcase);
+			System.out.println(testcase.getStatus());	
+			
+			int storyId=testcase.getUserstory().getStoryId();
+			ModelAndView model= new ModelAndView();
+			List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
+			Userstory userstory=userstoryService.find(storyId);
+			String userstoryname=userstory.getStoryname();
+			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+			model.addObject("testcaseList",testcaseList);
+			model.addObject("userstoryname", userstoryname);
+			return model;
+		}
+		else if(actionButton.equals("Approve")){
+			System.out.println("Approve");
+			Testcase testcase= testcaseService.find(testcase_id); 
+			testcase.setStatus("Approved");
+			testcaseService.update(testcase);
+			System.out.println(testcase.getStatus());	
+			
+			int storyId=testcase.getUserstory().getStoryId();
+			ModelAndView model= new ModelAndView();
+			List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
+			Userstory userstory=userstoryService.find(storyId);
+			String userstoryname=userstory.getStoryname();
+			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+			model.addObject("testcaseList",testcaseList);
+			model.addObject("userstoryname", userstoryname);
+			return model;
+		}
 		
 		
 		return null;
@@ -297,6 +338,8 @@ public class TestcaseController {
 		ModelAndView model= new ModelAndView();
 		List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
 		String userstoryname=userstory.getStoryname();
+		commonModel.setMessage("New test case added succesfully.");
+		commonModel.setMsgType("Success");
 		model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
 		model.addObject("testcaseList",testcaseList);
 		model.addObject("userstoryname", userstoryname);
