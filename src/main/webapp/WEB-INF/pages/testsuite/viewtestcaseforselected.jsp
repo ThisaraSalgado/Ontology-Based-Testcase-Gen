@@ -126,7 +126,7 @@ font-size:20px;
 </div>
 
 <table class="table" width="600">
-<caption>Test cases for "${userstoryname}"</caption>
+<%-- <caption>Test cases for "${userstoryname}"</caption> --%>
 
 		<thead>
 			<tr>

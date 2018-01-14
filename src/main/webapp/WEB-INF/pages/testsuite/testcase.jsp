@@ -82,7 +82,7 @@ function deleteButon(){
 	<table class="table">
 
 		<tbody>
-		<tr><th>Test Case Id</th><td>${testcase.testcase_id}</td></tr>
+		<%-- <tr><th>Test Case Id</th><td>${testcase.testcase_id}</td></tr> --%>
 		<tr><th>Test Case Name</th><td>${testcase.testcase_name}</td></tr>
 		<tr><th>PreCondition</th><td>${testcase.pre_condition}</td></tr>
 		<tr><th>Expected Results</th><td>${testcase.expected_result}</td></tr>
@@ -104,7 +104,7 @@ function deleteButon(){
 			<input id="editButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Edit"></input>
 		</div>
 		<div>
-			<input id="sendforapproveButton" style="visibility:visible" <c:if test="${fn:substring(sessionScope.role, 0, 5) == 'admin'}"><c:out value="disabled='disabled'"/></c:if>class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Send For Approve"></input>
+			<input id="sendforapproveButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Send For Approve"></input>
 		</div>
 		
 	</div>
@@ -119,7 +119,7 @@ function deleteButon(){
         <h4 class="modal-title" id="myModalLabel">Confirm delete</h4>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete this user story?
+        Are you sure you want to delete this test case?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>

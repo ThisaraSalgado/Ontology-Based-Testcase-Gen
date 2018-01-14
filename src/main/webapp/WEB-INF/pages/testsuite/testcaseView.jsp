@@ -94,11 +94,26 @@ textarea {
 <c:url var="action" value="/updatetestcase/${testcase.testcase_id}"></c:url>
 <form:form method="post" action="${action}" modelAttribute="commonModel" >
 <div>
+<div>	
+<c:if test="${not empty commonModel.message}">
+    				<tr>
+	        			<td colspan="2" class="msgSuccess" align="center">
+	        				<c:set var="msgType" value="${commonModel.msgType}"/>  
+	        				<c:if test="${msgType =='Error'}">
+	        					<div class="msgError"><c:out value="${commonModel.message}"></c:out></div>
+	        				</c:if>
+	        				<c:if test="${msgType =='Success'}">
+	        					<div class="msgInfo"><c:out value="${commonModel.message}"></c:out></div>
+	        				</c:if>
+	        			</td>
+	        		</tr>
+        </c:if>
+</div>
 	<div align="center" class="styleheading">Test Case</div>
-	<div>
+<%-- 	<div>
 		<form:label path="testcase.testcase_id">Test case ID</form:label>
 		<form:textarea path="testcase.testcase_id"/>
-	</div>
+	</div> --%>
 	<div>
 	<form:label path="testcase.testcase_name">Test case</form:label>
 		<form:textarea path="testcase.testcase_name"/>
