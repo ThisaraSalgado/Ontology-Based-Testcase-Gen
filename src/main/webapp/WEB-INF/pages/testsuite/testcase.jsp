@@ -2,12 +2,17 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <html>
 <head>
-	<title>user story</title>
+<script>
+function deleteButon(){
+	console.log("came");
+	$("#deleteButtonmod").modal();
+}
+</script>
 	
 	<style>
 	
@@ -97,7 +102,7 @@ document.getElementById('sendforapproveButton').style.visibility="hidden";
 	<div class="button">
 		<div>
 		
-			<input id="deleteButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Delete"></input>
+			<input id="deleteButton" class="btn-lg btn-primary pull-right" type="button" value="Delete" onclick="javascript:deleteButon()"></input>
 		</div>
 		<div>
 			<input id="editButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Edit"></input>
@@ -108,6 +113,26 @@ document.getElementById('sendforapproveButton').style.visibility="hidden";
 		
 	</div>
 	</div>
+	
+					<!-- Modal for the delete button -->
+<div class="modal fade" id=deleteButtonmod tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Confirm delete</h4>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this user story?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+        <button id="sendButton" type="submit" class="btn btn-primary"  value="Delete" name="actionButton"> Confirm </button>
+      </div>
+    </div>
+  </div>
+</div>	
+
 	</form:form>
 	</body>
 </html>

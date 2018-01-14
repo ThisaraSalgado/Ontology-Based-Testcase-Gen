@@ -42,11 +42,11 @@ public class TestcaseDaoImpl implements TestcaseDao{
 		String hql1="FROM Testcase WHERE Story_ID=";
 		String hql2= Integer.toString(storyId) ;
 		String hql = hql1+hql2;
-		System.out.println(hql);
+		//System.out.println(hql);
 		Query query = currentSession().createQuery(hql);
-		System.out.println(query);
+		//System.out.println(query);
 		List<Testcase> results = query.list();
-		System.out.println("$$$$$$$$$$$$$$$$$$"+results);
+		System.out.println("all test cases ="+results);
 		return results;
 	}
 

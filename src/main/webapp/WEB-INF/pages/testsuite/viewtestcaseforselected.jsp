@@ -85,6 +85,30 @@ font-family:serif;
 font-size:20px;
 }
 
+.msgSuccess {
+    color: green;
+    font-family: "Verdana", Times, serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+.msgError{
+
+    color:red;
+    font-family: "Verdana", Times, serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+.msgInfo{
+
+   color:blue;
+    font-family: "Verdana", Times, serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
 </style>
 
 </head>
@@ -93,6 +117,21 @@ font-size:20px;
 <form:form method="post"  ModelAttribute="commonModel">
 <div align="center" class="heading"><p></p></div>
 <div class="content">
+<div>	
+<c:if test="${not empty commonModel.message}">
+    				<tr>
+	        			<td colspan="2" class="msgSuccess" align="center">
+	        				<c:set var="msgType" value="${commonModel.msgType}"/>  
+	        				<c:if test="${msgType =='Error'}">
+	        					<div class="msgError"><c:out value="${commonModel.message}"></c:out></div>
+	        				</c:if>
+	        				<c:if test="${msgType =='Success'}">
+	        					<div class="msgInfo"><c:out value="${commonModel.message}"></c:out></div>
+	        				</c:if>
+	        			</td>
+	        		</tr>
+        </c:if>
+</div>
 
 <table class="table" width="600">
 <caption>Test cases for "${userstoryname}"</caption>

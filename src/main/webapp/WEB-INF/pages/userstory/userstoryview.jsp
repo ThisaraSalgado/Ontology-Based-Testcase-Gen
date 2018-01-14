@@ -92,6 +92,30 @@ font-size:20px;
     width: 80%;
 }
 
+.msgSuccess {
+    color: green;
+    font-family: "Verdana", Times, serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+.msgError{
+
+    color:red;
+    font-family: "Verdana", Times, serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+.msgInfo{
+
+   color:blue;
+    font-family: "Verdana", Times, serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
 </style>
 
 
@@ -101,11 +125,28 @@ font-size:20px;
 
 <form:form method="post" action="createnewstory" modelAttribute="commonModel">
 
+<div>	
+<c:if test="${not empty commonModel.message}">
+    				<tr>
+	        			<td colspan="2" class="msgSuccess" align="center">
+	        				<c:set var="msgType" value="${commonModel.msgType}"/>  
+	        				<c:if test="${msgType =='Error'}">
+	        					<div class="msgError"><c:out value="${commonModel.message}"></c:out></div>
+	        				</c:if>
+	        				<c:if test="${msgType =='Success'}">
+	        					<div class="msgInfo"><c:out value="${commonModel.message}"></c:out></div>
+	        				</c:if>
+	        			</td>
+	        		</tr>
+        </c:if>
+</div>
+
 <div class="container">
 <div class="deletebutton">
 <input id="deleteAllButton"  onClick="selected()" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Delete Selected"></input>
 </div>
 <div class="content">
+
 
 <c:if test="${!empty storyList}">
 		<table class="table">
@@ -134,9 +175,7 @@ font-size:20px;
 		</tbody>
 		
 		</table>
-		<%-- 
-			<a href="<c:url value='/edit/${userstory.userstoryId}'/>">EDIT</a>
-			<a href="<c:url value='/delete/${userstory.userstoryId}'/>">DELETE</a> --%>
+		
 		</c:if>
 		</div>
 		</div>
