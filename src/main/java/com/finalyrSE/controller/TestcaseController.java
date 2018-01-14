@@ -171,6 +171,7 @@ public class TestcaseController {
 		else if(actionButton.equals("Send For Approve")){
 			System.out.println("in Send For Approve");
 			Testcase testcase= testcaseService.find(testcase_id); 
+			
 			testcase.setStatus("Pending");
 			testcaseService.update(testcase);
 			System.out.println(testcase.getStatus());	
