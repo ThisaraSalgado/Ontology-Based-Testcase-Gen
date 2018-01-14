@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.SystemPropertyUtils;
@@ -111,17 +115,26 @@ public class TestcaseController {
 	}
 
 	@RequestMapping(value= "/testcaseview/{testcase_id}" , method=RequestMethod.GET)
-	public ModelAndView Testcaseview(@PathVariable("testcase_id") int testcase_id) throws IOException{
+	public ModelAndView Testcaseview(@PathVariable("testcase_id") int testcase_id,HttpServletRequest request) throws IOException{
 		System.out.println("In testcaseview");
 		System.out.println(testcase_id);
 		//Testcase testcaseModel=new Testcase();
 		Testcase testcase = testcaseService.find(testcase_id);
 		System.out.println("@@@@@@@@@@@@@@@@@"+testcase);
-	
-		ModelAndView model= new ModelAndView("testsuite/testcase");
-		model.addObject("testcase", testcase);
+		HttpSession session = request.getSession();
+		System.out.println("========"+session.getAttribute("role"));
+		if(session.getAttribute("role").equals("lead")){
+			System.out.println("role lead");
+			ModelAndView model= new ModelAndView("testsuite/testcaseLead");
+			model.addObject("testcase", testcase);
+			return model;
+			
+		}else{
+			ModelAndView model= new ModelAndView("testsuite/testcase");
+			model.addObject("testcase", testcase);
+			return model;
+		}
 		
-		return model;
 	}
 	
 	@RequestMapping(value= "/testcaseview/editdeletetestcase/{testcase_id}" , method=RequestMethod.GET)
@@ -172,13 +185,29 @@ public class TestcaseController {
 			model.addObject("userstoryname", userstoryname);
 			return model;
 		}
-		
+		else if(actionButton.equals("Approve")){
+			System.out.println("Approve");
+			Testcase testcase= testcaseService.find(testcase_id); 
+			testcase.setStatus("Approved");
+			testcaseService.update(testcase);
+			System.out.println(testcase.getStatus());	
+			
+			int storyId=testcase.getUserstory().getStoryId();
+			ModelAndView model= new ModelAndView();
+			List<Testcase> testcaseList= testcaseService.findTestCases(storyId);
+			Userstory userstory=userstoryService.find(storyId);
+			String userstoryname=userstory.getStoryname();
+			model=new ModelAndView("testsuite/viewtestcaseforselected", "commonModel", commonModel);
+			model.addObject("testcaseList",testcaseList);
+			model.addObject("userstoryname", userstoryname);
+			return model;
+		}
 		return null;
 	}
 	
 	
 	@RequestMapping(value="/updatetestcase/{testcase_id}", method=RequestMethod.POST)
-	public ModelAndView updatetestcase(@ModelAttribute("commonModel") CommonModel commonModel, @PathVariable ("testcase_id") int testcase_id ) throws IOException{
+	public ModelAndView updatetestcase(@ModelAttribute("commonModel") CommonModel commonModel, @PathVariable ("testcase_id") int testcase_id,HttpServletRequest request) throws IOException{
 		System.out.println("in update testcase");
 		System.out.println("update num "+testcase_id);
 		Testcase testcase_reslts=commonModel.getTestcase(); // this is to get the bounded rslts from the testcaseview jsp
@@ -188,10 +217,19 @@ public class TestcaseController {
 		commonModel.setTestcase(testcase_reslts);
 		testcaseService.update(testcase_reslts);
 		System.out.println("updated table");
-		Testcase testcase=testcaseService.find(testcase_id); //after updating the table get testcase detials
-		ModelAndView model= new ModelAndView("testsuite/testcase","commonModel", commonModel);
-		model.addObject("testcase", testcase);
-		return model;
+		HttpSession session = request.getSession();
+		if(session.getAttribute("role").equals("lead")){
+			Testcase testcase=testcaseService.find(testcase_id); //after updating the table get testcase detials
+			ModelAndView model= new ModelAndView("testsuite/testcaseLead","commonModel", commonModel);
+			model.addObject("testcase", testcase);
+			return model;
+		}else{
+			Testcase testcase=testcaseService.find(testcase_id); //after updating the table get testcase detials
+			ModelAndView model= new ModelAndView("testsuite/testcase","commonModel", commonModel);
+			model.addObject("testcase", testcase);
+			return model;
+		}
+		
 		
 	}
 	

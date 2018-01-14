@@ -104,7 +104,7 @@ function deleteButon(){
 			<input id="editButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Edit"></input>
 		</div>
 		<div>
-			<input id="sendforapproveButton" style="visibility:visible" <c:if test="${fn:substring(sessionScope.role, 0, 5) == 'admin'}"><c:out value="disabled='disabled'"/></c:if>class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Send For Approve"></input>
+			<input id="sendforapproveButton" class="btn-lg btn-primary pull-right" type="submit" name="actionButton" value="Approve"></input>
 		</div>
 		
 	</div>

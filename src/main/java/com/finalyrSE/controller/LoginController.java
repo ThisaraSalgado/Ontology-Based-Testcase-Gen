@@ -58,18 +58,19 @@ public class LoginController {
 			System.out.println(valid.getUserrole());
 			HttpSession session = request.getSession();
 			session.setAttribute("role", valid.getUserrole());
-			if(valid.getUserrole().equals("lead")){
+			
+			/*if(valid.getUserrole().equals("lead")){
 				return null;
-			}
-			else{
-				ModelAndView model=new ModelAndView("index", "commonModel", commonModel);
-				model.addObject("storyList",storyList);
-				return model;
-			}
+			}*/
+			
+			ModelAndView model=new ModelAndView("index", "commonModel", commonModel);
+			model.addObject("storyList",storyList);
+			return model;
+			
 		}else{
 			result.rejectValue("username","invaliduser");
 			ModelAndView model=new ModelAndView("user/login", "commonModel", commonModel);
-			((Model) model).addAttribute("message", "Username or Password is incorrect.");
+			model.addObject("message", "Username or Password is incorrect.");
 			return model;
 			
 		}
